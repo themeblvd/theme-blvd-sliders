@@ -44,7 +44,9 @@ define( 'TB_SLIDERS_PLUGIN_URL', plugins_url( '' , __FILE__ ) );
  */
 
 function themeblvd_sliders_init() {
-
+	
+	global $_themeblvd_sliders_admin;
+	
 	// Check to make sure Theme Blvd Framework 2.2+ is running
 	if( ! defined( 'TB_FRAMEWORK_VERSION' ) || version_compare( TB_FRAMEWORK_VERSION, '2.2.0', '<' ) ) {
 		add_action( 'admin_notices', 'themeblvd_sliders_warning' );
@@ -58,7 +60,7 @@ function themeblvd_sliders_init() {
 	if( is_admin() ){
 		if ( themeblvd_supports( 'admin', 'sliders' ) && current_user_can( themeblvd_admin_module_cap( 'sliders' ) ) ) {
 			include_once( TB_SLIDERS_PLUGIN_DIR . '/admin/class-tb-sliders.php' );
-			$admin_page = new Theme_Blvd_Sliders_Admin();
+			$_themeblvd_sliders_admin = new Theme_Blvd_Sliders_Admin();
 		}
 	} else {
 		include_once( TB_SLIDERS_PLUGIN_DIR . '/frontend/sliders-display.php' );
