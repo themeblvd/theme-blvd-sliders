@@ -190,7 +190,7 @@ class Theme_Blvd_Sliders_Admin {
 	 * @return string $value Value for slide's specific option
 	 */
 	
-	public function slide_value( $slide_options, $type, $sub_type = null ) {
+	private function slide_value( $slide_options, $type, $sub_type = null ) {
 		
 		$value = null;
 		
