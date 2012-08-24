@@ -344,7 +344,7 @@ class Theme_Blvd_Sliders_Admin {
 			),
 			array( 
 				'name' 		=> __( 'Slider Type', 'themeblvd_sliders' ),
-				'desc' 		=> __( 'Select which type of slider among the theme\'s currently supported slider types.', 'themeblvd_sliders' ),
+				'desc' 		=> __( 'Select which type of slider among the currently supported slider types.', 'themeblvd_sliders' ),
 				'id' 		=> 'slider_type',
 				'type' 		=> 'select',
 				'options' 	=> $slider_types

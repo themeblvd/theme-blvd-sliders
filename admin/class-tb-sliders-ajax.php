@@ -70,7 +70,7 @@ class Theme_Blvd_Sliders_Ajax {
 			update_post_meta( $post_id, 'settings', $options );
 			
 			// Respond with edit page for the new slider and ID
-			$types = themeblvd_get_recognized_sliders();
+			$types = $this->admin_page->get_sliders();
 			echo $post_id.'[(=>)]';
 			$this->admin_page->edit_slider( $post_id, $types );
 			
