@@ -353,7 +353,7 @@ class Theme_Blvd_Sliders_Admin {
 		$options = apply_filters( 'themeblvd_add_slider_options', $options );
 		
 		// Build form
-		$form = optionsframework_fields( 'options', $options, null, false );
+		$form = themeblvd_option_fields( 'options', $options, null, false );
 		?>
 		<div class="metabox-holder">
 			<div class="postbox">
@@ -701,7 +701,7 @@ class Theme_Blvd_Sliders_Admin {
 						);
 		
 						// Display form element
-						$form = optionsframework_fields( 'info', $info_options, $info_settings, false );
+						$form = themeblvd_option_fields( 'info', $info_options, $info_settings, false );
 						echo $form[0]; 
 						?>
 					</div><!-- .post-box (end) -->
@@ -710,7 +710,7 @@ class Theme_Blvd_Sliders_Admin {
 							<h3 class="hndle"><?php echo $types[$type]['name'].' '.__( 'Options', 'themeblvd_sliders' ); ?></h3>
 							<?php 
 							// Slider Options
-							$form = optionsframework_fields( 'options', $options, $settings, false );
+							$form = themeblvd_option_fields( 'options', $options, $settings, false );
 							echo $form[0];
 							?>
 						</div><!-- .post-box (end) -->
