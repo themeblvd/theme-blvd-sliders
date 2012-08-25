@@ -2,7 +2,6 @@
 /**
  * Slider Manager Ajax
  */
-
 class Theme_Blvd_Sliders_Ajax {
 	
 	public $admin_page;
@@ -12,9 +11,8 @@ class Theme_Blvd_Sliders_Ajax {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param $modules Object from Theme_Blvd_Slider_Modules class
+	 * @param $admin_page Object from Theme_Blvd_Sliders_Admin class
 	 */
-	
 	public function __construct( $admin_page ) {
 		
 		// Add general slider admin functions for use within Ajax
@@ -35,7 +33,6 @@ class Theme_Blvd_Sliders_Ajax {
 	 *
 	 * @since 2.0.0 
 	 */
-	
 	public function add_slider() {
 		
 		// Make sure Satan isn't lurking
@@ -84,7 +81,6 @@ class Theme_Blvd_Sliders_Ajax {
 	 *
 	 * @since 1.0.0
 	 */
-	
 	public function save_slider() {
 		
 		// Make sure Satan isn't lurking
@@ -302,7 +298,6 @@ class Theme_Blvd_Sliders_Ajax {
 	 *
 	 * @since 1.0.0
 	 */
-	
 	public function update_table() {
 		$this->admin_page->manage_sliders();
 		die();
@@ -313,7 +308,6 @@ class Theme_Blvd_Sliders_Ajax {
 	 *
 	 * @since 1.0.0
 	 */
-	
 	public function delete_slider() {
 		
 		// Make sure Satan isn't lurking
@@ -353,7 +347,6 @@ class Theme_Blvd_Sliders_Ajax {
 	 *
 	 * @since 1.0.0
 	 */
-	
 	public function edit_slider() {
 		$slider_id = $_POST['data'];
 		$types = $this->admin_page->get_sliders();
