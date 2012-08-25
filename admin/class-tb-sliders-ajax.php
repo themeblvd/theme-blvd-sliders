@@ -148,7 +148,7 @@ class Theme_Blvd_Sliders_Ajax {
 					
 					// Custom Content
 					if( isset( $slides[$key]['custom'] ) )
-						$slides[$key]['custom'] = apply_filters( 'of_sanitize_textarea', $slide['custom'] );
+						$slides[$key]['custom'] = apply_filters( 'themeblvd_sanitize_textarea', $slide['custom'] );
 					
 					// Elements
 					if( isset( $slide['elements'] ) ) {
@@ -164,21 +164,21 @@ class Theme_Blvd_Sliders_Ajax {
 							switch( $element_key ) {
 								case 'image_link' :
 									if( ! in_array( $element['target'], $targets  ) ) $element['target'] = '_self';
-									$slides[$key]['elements'][$element_key]['url'] = apply_filters( 'of_sanitize_text', $element['url'] );
+									$slides[$key]['elements'][$element_key]['url'] = apply_filters( 'themeblvd_sanitize_text', $element['url'] );
 									break;
 									
 								case 'headline' :
-									$slides[$key]['elements'][$element_key] = apply_filters( 'of_sanitize_textarea', $element );
+									$slides[$key]['elements'][$element_key] = apply_filters( 'themeblvd_sanitize_textarea', $element );
 									break;
 									
 								case 'description' :
-									$slides[$key]['elements'][$element_key] = apply_filters( 'of_sanitize_textarea', $element );
+									$slides[$key]['elements'][$element_key] = apply_filters( 'themeblvd_sanitize_textarea', $element );
 									break;
 									
 								case 'button' :
 									if( ! in_array( $element['target'], $targets  ) ) $element['target'] = '_self';
-									$slides[$key]['elements'][$element_key]['url'] = apply_filters( 'of_sanitize_text', $element['url'] );
-									$slides[$key]['elements'][$element_key]['text'] = apply_filters( 'of_sanitize_text', $element['text'] );
+									$slides[$key]['elements'][$element_key]['url'] = apply_filters( 'themeblvd_sanitize_text', $element['url'] );
+									$slides[$key]['elements'][$element_key]['text'] = apply_filters( 'themeblvd_sanitize_text', $element['text'] );
 									break;
 							}
 						}
@@ -234,8 +234,8 @@ class Theme_Blvd_Sliders_Ajax {
 				}
 				
 				// For a value to be submitted to database it must pass through a sanitization filter
-				if ( has_filter( 'of_sanitize_' . $option['type'] ) ) {
-					$clean[$option_id] = apply_filters( 'of_sanitize_' . $option['type'], $data['options'][$option_id], $option );
+				if ( has_filter( 'themeblvd_sanitize_' . $option['type'] ) ) {
+					$clean[$option_id] = apply_filters( 'themeblvd_sanitize_' . $option['type'], $data['options'][$option_id], $option );
 				}
 				
 			}

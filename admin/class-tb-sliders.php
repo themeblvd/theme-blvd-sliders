@@ -9,7 +9,6 @@ class Theme_Blvd_Sliders_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	
 	public function __construct() {
 		
 		// Add slider admin page
@@ -26,11 +25,8 @@ class Theme_Blvd_Sliders_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	
 	public function add_page() {
 		$admin_page = add_object_page( 'Slider Manager', 'Sliders', themeblvd_admin_module_cap( 'sliders' ), 'themeblvd_sliders', array( $this, 'admin_page' ), 'div', 31 );
-		add_action( 'admin_print_styles-'.$admin_page, 'optionsframework_load_styles' );
-		add_action( 'admin_print_scripts-'.$admin_page, 'optionsframework_load_scripts' );
 		add_action( 'admin_print_styles-'.$admin_page, array( $this, 'load_styles' ) );
 		add_action( 'admin_print_scripts-'.$admin_page, array( $this, 'load_scripts' ) );
 		add_action( 'admin_print_styles-'.$admin_page, 'optionsframework_mlu_css', 0 );
@@ -42,10 +38,10 @@ class Theme_Blvd_Sliders_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	
 	public function load_styles() {
-		wp_enqueue_style('sharedframework-style', THEMEBLVD_ADMIN_ASSETS_URI . '/css/admin-style.css', null, TB_FRAMEWORK_VERSION );
-		wp_enqueue_style('sliderframework-style', TB_SLIDERS_PLUGIN_URL . '/admin/css/sliders-style.css', null, TB_SLIDERS_PLUGIN_VERSION );
+		wp_enqueue_style( 'themeblvd_admin', TB_FRAMEWORK_URI . '/admin/assets/css/admin-style.css', null, TB_FRAMEWORK_VERSION );
+		wp_enqueue_style( 'themeblvd_options', TB_FRAMEWORK_URI . '/admin/options/css/admin-style.css', null, TB_FRAMEWORK_VERSION );
+		wp_enqueue_style( 'themeblvd_sliders', TB_SLIDERS_PLUGIN_URI . '/admin/css/sliders-style.css', null, TB_SLIDERS_PLUGIN_VERSION );
 	}
 	
 	/**
@@ -53,12 +49,13 @@ class Theme_Blvd_Sliders_Admin {
 	 *
 	 * @since 1.0.0 
 	 */
-	
 	public function load_scripts() {
-		wp_enqueue_script('jquery-ui-sortable');
-		wp_enqueue_script('sharedframework-scripts', THEMEBLVD_ADMIN_ASSETS_URI . '/js/shared.js', array('jquery'), TB_FRAMEWORK_VERSION );
-		wp_enqueue_script('sliderframework-scripts', TB_SLIDERS_PLUGIN_URL . '/admin/js/sliders.js', array('jquery'), TB_SLIDERS_PLUGIN_VERSION );
-		wp_localize_script('sharedframework-scripts', 'themeblvd_sliders', themeblvd_get_admin_locals( 'js' ) );
+		wp_enqueue_script( 'jquery-ui-core');
+		wp_enqueue_script( 'jquery-ui-sortable' );
+		wp_enqueue_script( 'themeblvd_admin', TB_FRAMEWORK_URI . '/admin/assets/js/shared.js', array('jquery'), TB_FRAMEWORK_VERSION );
+		wp_localize_script( 'themeblvd_admin', 'themeblvd', themeblvd_get_admin_locals( 'js' ) );
+		wp_enqueue_script( 'themeblvd_options', TB_FRAMEWORK_URI . '/admin/options/js/options.js', array('jquery'), TB_FRAMEWORK_VERSION );
+		wp_enqueue_script( 'themeblvd_sliders', TB_SLIDERS_PLUGIN_URI . '/admin/js/sliders.js', array('jquery'), TB_SLIDERS_PLUGIN_VERSION );
 	}
 	
 	/**
@@ -66,7 +63,6 @@ class Theme_Blvd_Sliders_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	
 	function admin_page() {
 		$types = $this->get_sliders();
 		?>
@@ -150,7 +146,6 @@ class Theme_Blvd_Sliders_Admin {
 	 * @param $type string type of slider
 	 * @return $default_options array all default options 
 	 */
-	
 	public function slider_defaults( $type ) {
 		
 		$default_options = array();
@@ -189,7 +184,6 @@ class Theme_Blvd_Sliders_Admin {
 	 * @param string $sub_type Nested type of options (optional)
 	 * @return string $value Value for slide's specific option
 	 */
-	
 	public function slide_value( $slide_options, $type, $sub_type = null ) {
 		
 		$value = null;
@@ -280,7 +274,6 @@ class Theme_Blvd_Sliders_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	
 	public function manage_sliders() {
 		
 		// Setup columns for management table
@@ -325,7 +318,6 @@ class Theme_Blvd_Sliders_Admin {
 	 *
 	 * @param $types array All default sliders
 	 */
-	
 	public function new_slider( $types ) {
 		
 		// Setup slider types for options array
@@ -386,7 +378,6 @@ class Theme_Blvd_Sliders_Admin {
 	 * @param string $slide_id ID for individual slide
 	 * @param array $slide_options any current options for current slide
 	 */
-	
 	public function edit_slide( $slider_id, $slider_type, $slide_id, $slide_options = null, $visibility = null ) {
 		global $_wp_additional_image_sizes;
 		$slider_types = $this->get_sliders();
@@ -644,7 +635,6 @@ class Theme_Blvd_Sliders_Admin {
 	 * @param $id string ID of slider to edit
 	 * @param $types array all default slider info
 	 */
-	
 	public function edit_slider( $id, $types ) {
 		
 		// Get slider custom post
@@ -756,7 +746,6 @@ class Theme_Blvd_Sliders_Admin {
 	 *
 	 * @return array
 	 */
-	 
 	function get_sliders() {
 		
 		global $_themeblvd_user_sliders;
