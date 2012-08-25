@@ -59,7 +59,7 @@ function themeblvd_sliders_init() {
 	// Separate frontend and admin sections
 	if( is_admin() ){
 		if ( themeblvd_supports( 'admin', 'sliders' ) && current_user_can( themeblvd_admin_module_cap( 'sliders' ) ) ) {
-			include_once( TB_SLIDERS_PLUGIN_DIR . '/admin/class-tb-sliders.php' );
+			include_once( TB_SLIDERS_PLUGIN_DIR . '/admin/class-tb-sliders-admin.php' );
 			$_themeblvd_sliders_admin = new Theme_Blvd_Sliders_Admin();
 		}
 	} else {
