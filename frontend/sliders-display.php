@@ -136,15 +136,15 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 																<?php endif; ?>
 																<?php if( in_array( 'description', $elements ) || in_array( 'button', $elements ) ) : ?>
 																	<div class="slide-description">
-																		<span>
+																		<div class="slide-description-inner">
 																			<?php if( in_array( 'description', $elements ) ) : ?>
 																				<p class="slide-description-text"><?php echo do_shortcode( stripslashes( $slide['elements']['description'] ) ); ?></p>
 																			<?php endif; ?>
 																			<?php if( in_array( 'button', $elements ) && $slide['elements']['button']['text'] ) : ?>
 																				<p class="slide-description-button"><?php echo themeblvd_button( stripslashes( $slide['elements']['button']['text'] ), $slide['elements']['button']['url'], 'default', $slide['elements']['button']['target'], 'medium' ); ?></p>
 																			<?php endif; ?>
-																		</span>
-																	</div><!-- .description (end) -->
+																		</div><!-- .slide-description-inner (end) -->
+																	</div><!-- .slide-description (end) -->
 																<?php endif; ?>
 															</div><!-- .content-inner (end) -->
 														</div><!-- .content (end) -->
