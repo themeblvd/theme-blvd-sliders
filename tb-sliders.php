@@ -3,7 +3,7 @@
 Plugin Name: Theme Blvd Sliders
 Plugin URI: 
 Description: This plugin works in conjuction with the Theme Blvd framework and its core addons to allow you to add sliders to your website.
-Version: 1.0.0
+Version: 1.0.1
 Author: Jason Bobich
 Author URI: http://jasonbobich.com
 License: GPL2
@@ -26,7 +26,7 @@ License: GPL2
 
 */
 
-define( 'TB_SLIDERS_PLUGIN_VERSION', '1.0.0' );
+define( 'TB_SLIDERS_PLUGIN_VERSION', '1.0.1' );
 define( 'TB_SLIDERS_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'TB_SLIDERS_PLUGIN_URI', plugins_url( '' , __FILE__ ) );
 
