@@ -44,6 +44,11 @@ Sliders you create can be utilized within your website in two ways.
 
 == Changelog ==
 
+= 1.0.1 =
+
+* Added "clearfix" class for staged images in slides.
+* Changed <span> in slide description to <div> for markup validation.
+
 = 1.0.0 =
 
 * This is the first release.
