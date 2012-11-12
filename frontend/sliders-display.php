@@ -122,7 +122,7 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 									?>
 									<li class="slide tight <?php echo $classes; ?>">
 										<div class="slide-body">
-											<div class="grid-protection">
+											<div class="grid-protection clearfix">
 												<?php // Custom Slides ?>
 												<?php if( isset( $slide['custom'] ) ) : ?>
 													<?php echo $slide['custom']; ?>
