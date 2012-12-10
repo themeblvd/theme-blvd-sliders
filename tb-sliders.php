@@ -3,7 +3,7 @@
 Plugin Name: Theme Blvd Sliders
 Plugin URI: 
 Description: This plugin works in conjuction with the Theme Blvd framework and its core addons to allow you to add sliders to your website.
-Version: 1.0.1
+Version: 1.0.2
 Author: Jason Bobich
 Author URI: http://jasonbobich.com
 License: GPL2
@@ -26,7 +26,7 @@ License: GPL2
 
 */
 
-define( 'TB_SLIDERS_PLUGIN_VERSION', '1.0.1' );
+define( 'TB_SLIDERS_PLUGIN_VERSION', '1.0.2' );
 define( 'TB_SLIDERS_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'TB_SLIDERS_PLUGIN_URI', plugins_url( '' , __FILE__ ) );
 
@@ -65,6 +65,7 @@ function themeblvd_sliders_init() {
 	} else {
 		include_once( TB_SLIDERS_PLUGIN_DIR . '/frontend/sliders-display.php' );
 		add_action( 'themeblvd_standard_slider', 'themeblvd_standard_slider_default', 9, 3 ); // JS located within the theme because also works with other elements
+		add_action( 'themeblvd_slider_auto', 'themeblvd_standard_slider_default', 9, 3 );
 		add_action( 'themeblvd_carrousel_slider', 'themeblvd_carrousel_slider_default', 9, 3 );
 		add_action( 'themeblvd_carrousel_slider_js', 'themeblvd_carrousel_slider_js_default', 10, 2 );
 		add_action( 'themeblvd_slider_fallback', 'themeblvd_slider_fallback_default', 10, 3 );

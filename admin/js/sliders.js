@@ -126,7 +126,7 @@ jQuery(document).ready(function($) {
 
 			// Prepare the edit tab
 			$('#slider_blvd .nav-tab-wrapper a.nav-edit-slider').text(themeblvd.edit_slider+': '+name).addClass(page[0]+'-edit');
-			$('#slider_blvd #edit_slider .ajax-mitt').html(page[1]);
+			$('#slider_blvd #edit_slider .ajax-mitt').html(page[1]).themeblvd('options', 'setup');
 			
 			// Setup elements
 			$('#slider_blvd .slide-element-check input').each(function(){
@@ -277,7 +277,7 @@ jQuery(document).ready(function($) {
 	
 	// Edit slider binded events
 	$('#slider_blvd .slide-set-type select').live('change', function(){
-		slider_blvd.type( $(this)  );
+		slider_blvd.type( $(this) );
 	});
 	$('#slider_blvd .slide-position').live('change', function(){
 		slider_blvd.position( $(this) );

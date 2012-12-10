@@ -55,6 +55,7 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 		
 	// Start output
 	themeblvd_standard_slider_js( $slider, $settings ); // This function is declared within the theme framework because its used for other stuff, too.
+	
 	?>
 	<div id="tb-slider-<?php echo $slider; ?>" class="slider-wrapper standard-slider-wrapper<?php if($hide) echo ' slider_has_mobile_fallback';?>">
 		<div class="slider-inner<?php echo $classes; ?>">	
@@ -89,7 +90,8 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 											}
 											if( ! $image_url ) {
 												// This should only get used if user updates to v2.1.0 and 
-												// didn't re-save their slider. 
+												// didn't re-save their slider.
+												// ... Or using the "Post Slider" element added in v2.2.1
 												$attachment = wp_get_attachment_image_src( $slide['image']['id'], $image_size );
 												$image_url = $attachment[0];
 											}
