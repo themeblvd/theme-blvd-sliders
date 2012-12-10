@@ -394,3 +394,35 @@ function themeblvd_shortcode_slider( $atts ) {
 	echo '</div><!-- .element (end) -->';
 	return ob_get_clean();
 }
+
+/**
+ * Custom slider
+ *
+ * @since 2.0.2
+ *
+ * @param array $atts Standard WordPress shortcode attributes
+ */
+
+function themeblvd_shortcode_slider_auto( $atts ) {
+	// Try to guess what the user is intending and 
+	// adjust source so the user doesn't have to.
+	if( empty( $atts['source'] ) ){
+		$atts['source'] = 'tag'; // Default source
+		if( ! empty( $atts['category'] ) )
+			$atts['source'] = 'category';
+		if( ! empty( $atts['query'] ) )
+			$atts['source'] = 'query';
+	}
+	// Output
+	ob_start();
+	echo '<div class="element element-slider element-slider-standard'.themeblvd_get_classes( 'element_post_slider', true ).'">';
+	echo '<div class="element-inner">';
+	echo '<div class="element-inner-wrap">';
+	echo '<div class="grid-protection">';
+	themeblvd_slider_auto( uniqid( 'post_slider_'.rand() ), $atts );
+	echo '</div><!-- .grid-protection (end) -->';
+	echo '</div><!-- .element-inner-wrap (end) -->';
+	echo '</div><!-- .element-inner (end) -->';
+	echo '</div><!-- .element (end) -->';
+	return ob_get_clean();
+}

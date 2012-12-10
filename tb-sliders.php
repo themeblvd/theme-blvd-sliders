@@ -70,6 +70,7 @@ function themeblvd_sliders_init() {
 		add_action( 'themeblvd_carrousel_slider_js', 'themeblvd_carrousel_slider_js_default', 10, 2 );
 		add_action( 'themeblvd_slider_fallback', 'themeblvd_slider_fallback_default', 10, 3 );
 		add_shortcode( 'slider', 'themeblvd_shortcode_slider' );
+		add_shortcode( 'post_slider', 'themeblvd_shortcode_slider_auto' );
 	}
 
 }
