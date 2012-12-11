@@ -56,6 +56,9 @@ function themeblvd_sliders_init() {
 	// Register post type
 	add_action( 'init', 'themeblvd_sliders_register_post_type' );
 	
+	// Register Builder elements
+	add_filter( 'themeblvd_registered_elements', 'themeblvd_sliders_registered_elements' );
+	
 	// Separate frontend and admin sections
 	if( is_admin() ){
 		if ( themeblvd_supports( 'admin', 'sliders' ) && current_user_can( themeblvd_admin_module_cap( 'sliders' ) ) ) {
@@ -121,4 +124,18 @@ function themeblvd_sliders_register_post_type(){
 		'can_export'		=> true
 	);
 	register_post_type( 'tb_slider', $args );
+}
+
+/**
+ * Add plugin's builder elements to current registered 
+ * framework elements.
+ *
+ * @since 1.0.2
+ */
+ 
+function themeblvd_sliders_registered_elements( $elements ) {
+	$elements[] = 'slider';
+	$elements[] = 'post_slider';
+	// @todo -- Add quick slider element
+	return $elements;
 }
