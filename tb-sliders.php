@@ -56,9 +56,6 @@ function themeblvd_sliders_init() {
 	// Register post type
 	add_action( 'init', 'themeblvd_sliders_register_post_type' );
 	
-	// Register Builder elements
-	add_filter( 'themeblvd_registered_elements', 'themeblvd_sliders_registered_elements' );
-	
 	// Separate frontend and admin sections
 	if( is_admin() ){
 		if ( themeblvd_supports( 'admin', 'sliders' ) && current_user_can( themeblvd_admin_module_cap( 'sliders' ) ) ) {
@@ -78,6 +75,21 @@ function themeblvd_sliders_init() {
 
 }
 add_action( 'after_setup_theme', 'themeblvd_sliders_init' );
+
+/**
+ * Run anything that needs to be ready before we get 
+ * to the theme framework's API system.
+ *
+ * @since 1.0.2
+ */
+ 
+function themeblvd_sliders_api(){
+	
+	// Register Builder elements
+	add_filter( 'themeblvd_registered_elements', 'themeblvd_sliders_registered_elements' );
+
+}
+add_action( 'plugins_loaded', 'themeblvd_sliders_api' );
 
 /**
  * Register text domain for localization.
