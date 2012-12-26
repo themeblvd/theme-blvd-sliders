@@ -133,7 +133,7 @@ class Theme_Blvd_Sliders_Ajax {
 					}	
 					
 					// Media position
-					if( $slider['positions'] ) {
+					if( $slider['positions'] && $slide['slide_type'] != 'custom' ) {
 						$media = $slide['slide_type'];
 						$slides[$key]['position'] = $slide['position_'.$media]; // Which select we pull from depends on teh type of slide, image or video
 						if( ! array_key_exists( $slide['position_'.$media], $slider['positions'] ) ) {
@@ -143,7 +143,7 @@ class Theme_Blvd_Sliders_Ajax {
 					}
 					
 					// Custom Content
-					if( isset( $slides[$key]['custom'] ) )
+					if( isset( $slide['custom'] ) )
 						$slides[$key]['custom'] = apply_filters( 'themeblvd_sanitize_textarea', $slide['custom'] );
 					
 					// Elements
@@ -188,10 +188,11 @@ class Theme_Blvd_Sliders_Ajax {
 					if( $slide['slide_type'] != 'video' )
 						unset( $slides[$key]['video'] );
 					if( $slide['slide_type'] == 'custom' ) {
+						unset( $slides[$key]['position_image'] );
+						unset( $slides[$key]['position_video'] );
 						unset( $slides[$key]['elements'] );
 						unset( $slides[$key]['position'] );
 					}
-	
 				}
 			}
 		}
