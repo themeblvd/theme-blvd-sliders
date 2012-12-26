@@ -46,6 +46,7 @@ Sliders you create can be utilized within your website in two ways.
 
 = 1.0.2 =
 
+* Fixed bug with "custom" type slides not saving.
 * Added support for "Post Slider" element.
 * Added `[post_slider]` shortcode.
 * Added support for minor admin UI improvements in Theme Blvd framework v2.2.1 update.
