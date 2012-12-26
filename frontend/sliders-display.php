@@ -396,7 +396,7 @@ function themeblvd_shortcode_slider( $atts ) {
 }
 
 /**
- * Custom slider
+ * Post slider shortcode - [post_slider]
  *
  * @since 2.0.2
  *
@@ -404,6 +404,10 @@ function themeblvd_shortcode_slider( $atts ) {
  */
 
 function themeblvd_shortcode_slider_auto( $atts ) {
+	
+	if( ! function_exists( 'themeblvd_slider_auto' ) )
+		return __( 'Your theme does not support the [post_slider] shortcode.', 'themeblvd_sliders' );
+	
 	// Try to guess what the user is intending and 
 	// adjust source so the user doesn't have to.
 	if( empty( $atts['source'] ) ){
