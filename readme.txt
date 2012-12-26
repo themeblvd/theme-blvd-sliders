@@ -10,8 +10,6 @@ When using a Theme Blvd theme, this plugin gives you slick interface to build cu
 
 When using a Theme Blvd theme, this plugin gives you slick interface to build custom, responsive sliders that can then be incorporated throughout your website via shortcode or [custom layouts](http://wordpress.org/extend/plugins/theme-blvd-layout-builder/).
 
-Quick video run-through will be here after it's made ...
-
 = Quick Feature Overview =
 
 * WordPress admin interface to create custom sliders.
