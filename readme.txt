@@ -16,7 +16,9 @@ Quick video run-through will be here after it's made ...
 
 * WordPress admin interface to create custom sliders.
 * An element added to the [Layout Builder](http://wordpress.org/extend/plugins/theme-blvd-layout-builder/) to include a custom slider.
+* An element added to the [Layout Builder](http://wordpress.org/extend/plugins/theme-blvd-layout-builder/) to include a slider generated from posts (with Theme Blvd framework v2.2.1+).
 * A shortcode for inserting custom sliders into pages and posts - `[slider id="your-slider"]`
+* A shortcode for inserting sliders generated from posts (with Theme Blvd framework v2.2.1+) - `[post_slider category="foo"]` `[post_slider tag="bar"]`
 * Sliders are responsive and will scale to fit their surrounding container.
 * Two slider types included by default - [Flexslider](http://flexslider.woothemes.com) and [Roundabout](http://fredhq.com/projects/roundabout)
 * Slider types are extendable through Theme Blvd framework API. - [View Docs](http://dev.themeblvd.com/tutorial/add-custom-slider/)
