@@ -30,7 +30,7 @@ function themeblvd_carrousel_slider_js_default( $id, $options ) {
 /**
  * Standard Slider - default action for themeblvd_standard_slider
  *
- * @since 2.0.0
+ * @since 1.0.0
  *
  * @param var $slider ID of current slider
  * @param array $settings Current settings for slider
@@ -39,6 +39,9 @@ function themeblvd_carrousel_slider_js_default( $id, $options ) {
 
 function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 	
+	// Extend slides
+	$slides = apply_filters( 'themeblvd_standard_slides', $slides, $slider, $settings );
+
 	// Configure additional CSS classes
 	$classes = themeblvd_get_classes( 'slider_standard', true );
 	$settings['nav_standard'] == '1' ? $classes .= ' show-nav_standard' : $classes .= ' hide-nav_standard';
@@ -52,10 +55,9 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 	if( isset( $settings['mobile_fallback'] ) )
 		if( $settings['mobile_fallback'] == 'full_list' || $settings['mobile_fallback'] == 'first_slide' )
 			$hide = true;
-		
+
 	// Start output
 	themeblvd_standard_slider_js( $slider, $settings ); // This function is declared within the theme framework because its used for other stuff, too.
-	
 	?>
 	<div id="tb-slider-<?php echo $slider; ?>" class="slider-wrapper standard-slider-wrapper<?php if($hide) echo ' slider_has_mobile_fallback';?>">
 		<div class="slider-inner<?php echo $classes; ?>">	
@@ -201,7 +203,14 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
  */
  
 function themeblvd_carrousel_slider_default( $slider, $settings, $slides ) {
+	
+	// Extend slides
+	$slides = apply_filters( 'themeblvd_carrousel_slides', $slides, $slider, $settings );
+
+	// Insert javascript
 	do_action( 'themeblvd_carrousel_slider_js', $slider, $settings );
+	
+	// CSS Classes
 	$classes = themeblvd_get_classes( 'slider_carrousel', true );
 	
 	// Hide on mobile?
