@@ -47,6 +47,7 @@ Sliders you create can be utilized within your website in two ways.
 = 1.0.3 =
 
 * Added filter on slides array when displaying sliders.
+* Adjusted category and tag parameters for `[post_slider]` shortcode.
 
 = 1.0.2 =
 

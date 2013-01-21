@@ -417,15 +417,27 @@ function themeblvd_shortcode_slider_auto( $atts ) {
 	if( ! function_exists( 'themeblvd_slider_auto' ) )
 		return __( 'Your theme does not support the [post_slider] shortcode.', 'themeblvd_sliders' );
 	
-	// Try to guess what the user is intending and 
-	// adjust source so the user doesn't have to.
-	if( empty( $atts['source'] ) ){
-		$atts['source'] = 'tag'; // Default source
-		if( ! empty( $atts['category'] ) )
-			$atts['source'] = 'category';
-		if( ! empty( $atts['query'] ) )
-			$atts['source'] = 'query';
-	}
+	$default = array(
+		'fx' 				=> 'slide', 	// Effect for transitions
+		'timeout' 			=> '3',			// Time between auto trasitions in seconds
+		'nav_standard' 		=> '1',			// Show standard nav - true, false
+		'nav_arrows'		=> '1',			// Show nav arrows - true, false
+		'pause_play'		=> '1',			// Show pause/play buttons - true, false
+		'pause_on_hover' 	=> 'disable',	// Pause on hover - pause_on, pause_on_off, disable
+		'image' 			=> 'full',		// How to display featured images - full, align-right, align-left
+		'image_link' 		=> 'permalink',	// Where image link goes - permalink, lightbox, none
+		'button' 			=> '',			// Text for button to lead to permalink - leave empty to hide
+		'tag' 				=> '',			// Tag(s) to include/exclude
+		'category_name'		=> '',			// Category slug(s) to include/exclude
+		'cat'				=> '',			// Category ID(s) to include/exclude
+		'numberposts' 		=> '5',			// Number of posts/slides
+		'orderby' 			=> 'date',		// Orderby param for posts query
+		'order'				=> 'DESC',		// Order param for posts query
+		'query' 			=> '',			// Custom query string
+		'mobile_fallback' 	=> 'full_list'	// How to display on mobile - full_list, first_slide, display
+	);
+    $atts = shortcode_atts( $default, $atts );
+
 	// Output
 	ob_start();
 	echo '<div class="element element-slider element-slider-standard'.themeblvd_get_classes( 'element_post_slider', true ).'">';
