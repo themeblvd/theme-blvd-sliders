@@ -48,6 +48,8 @@ Sliders you create can be utilized within your website in two ways.
 
 * Added filter on slides array when displaying sliders.
 * Adjusted category and tag parameters for `[post_slider]` shortcode.
+* Changed slide description/button area to use div's and not paragraph tags.
+* Added wp auto formatting to slide description. Can turn off by filtering "themeblvd_sliders_desc_auto" to false.
 
 = 1.0.2 =
 
