@@ -144,7 +144,7 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 																			<?php if( in_array( 'description', $elements ) ) : ?>
 																				<?php
 																				$description = stripslashes( $slide['elements']['description'] );
-																				if( apply_filters( 'themeblvd_sliders_desc_auto', true ) )
+																				if( apply_filters( 'themeblvd_standard_slider_desc', true, $slide, $slider, $settings ) )
 																					$description = apply_filters('themeblvd_the_content', $description);
 																				?>
 																				<div class="slide-description-text">
@@ -153,7 +153,17 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 																			<?php endif; ?>
 																			<?php if( in_array( 'button', $elements ) && $slide['elements']['button']['text'] ) : ?>
 																				<div class="slide-description-button">
-																					<?php echo themeblvd_button( stripslashes( $slide['elements']['button']['text'] ), $slide['elements']['button']['url'], 'default', $slide['elements']['button']['target'], 'medium' ); ?>
+																					<?php
+																					$button_atts = apply_filters( 'themeblvd_standard_slider_button', array(
+																						'text' 		=> $slide['elements']['button']['text'],
+																						'url'		=> $slide['elements']['button']['url'],
+																						'color'		=> 'default',
+																						'target'	=> $slide['elements']['button']['target'],
+																						'size'		=> 'medium'
+
+																					), $slide, $slider, $settings );
+																					echo themeblvd_button( stripslashes( $button_atts['text'] ), $button_atts['url'], $button_atts['color'], $button_atts['target'], $button_atts['size'] ); 
+																					?>
 																				</div>
 																			<?php endif; ?>
 																		</div><!-- .slide-description-inner (end) -->
