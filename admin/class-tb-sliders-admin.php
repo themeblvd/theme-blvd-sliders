@@ -67,7 +67,7 @@ class Theme_Blvd_Sliders_Admin {
 		$types = $this->get_sliders();
 		?>
 		<div id="slider_blvd">
-			<div id="optionsframework" class="wrap">
+			<div id="optionsframework" class="wrap tb-options-js">
 			    
 			    <div class="admin-module-header">
 			    	<?php do_action( 'themeblvd_admin_module_header', 'sliders' ); ?>
