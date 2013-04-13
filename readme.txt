@@ -2,7 +2,7 @@
 Author URI: http://www.jasonbobich.com
 Contributors: themeblvd
 Tags: slider, sliders, slideshow, slideshows, flexslider, gallery, Theme Blvd, themeblvd, Jason Bobich
-Stable Tag: 1.0.3
+Stable Tag: 1.0.4
 
 When using a Theme Blvd theme, this plugin gives you slick interface to build custom sliders.
 
