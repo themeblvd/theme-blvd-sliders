@@ -42,12 +42,22 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 	// Extend slides
 	$slides = apply_filters( 'themeblvd_standard_slides', $slides, $slider, $settings );
 
+	// With some different user options and ways this function 
+	// can be utilized, there are going to be some inconsitancy 
+	// with booleans. Let's fix that.
+	if( $settings['nav_standard'] === false || $settings['nav_standard'] == '0' || $settings['nav_standard'] == 'false' )
+		$settings['nav_standard'] = false;
+	if( $settings['nav_arrows'] === false || $settings['nav_arrows'] == '0' || $settings['nav_arrows'] == 'false' )
+		$settings['nav_arrows'] = false;
+	if( $settings['pause_play'] === false || $settings['pause_play'] == '0' || $settings['pause_play'] == 'false' )
+		$settings['pause_play'] = false;
+
 	// Configure additional CSS classes
 	$classes = themeblvd_get_classes( 'slider_standard', true );
-	$settings['nav_standard'] == '1' ? $classes .= ' show-nav_standard' : $classes .= ' hide-nav_standard';
-	$settings['nav_arrows'] == '1' ? $classes .= ' show-nav_arrows' : $classes .= ' hide-nav_arrows';
-	$settings['pause_play'] == '1' ? $classes .= ' show-pause_play' : $classes .= ' hide-pause_play';
-	if( $settings['nav_standard'] == '0' && $settings['nav_arrows'] == '0' )
+	$classes .= $settings['nav_standard'] ? ' show-nav_standard' : ' hide-nav_standard';	
+	$classes .= $settings['nav_arrows'] ? ' show-nav_arrows' : ' hide-nav_arrows';
+	$classes .= $settings['pause_play'] ? ' show-pause_play' : ' hide-pause_play';
+	if( ! $settings['nav_standard'] && ! $settings['nav_arrows'] )
 		$classes .= ' hide-full_nav';
 	
 	// Hide on mobile?

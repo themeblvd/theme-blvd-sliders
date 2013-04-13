@@ -44,6 +44,10 @@ Sliders you create can be utilized within your website in two ways.
 
 == Changelog ==
 
+= 1.0.4 =
+
+* Fixed non-working `nav_standard`, `nav_arrows`, and `pause_play` options of `[post_slider]` shortcode.
+
 = 1.0.3 =
 
 * Added filter on slides array when displaying sliders.
