@@ -88,9 +88,9 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 										if( $slide['slide_type'] == 'image' ) {
 											// Image Size
 											if( $slide['position'] == 'full' )
-												$image_size = 'slider-large';
+												$image_size = apply_filters('themeblvd_standard_slider_full_size', 'slider-large', $slider, $settings);
 											else
-												$image_size = 'slider-staged';
+												$image_size = apply_filters('themeblvd_standard_slider_staged_size', 'slider-staged', $slider, $settings);
 											// Image URL
 											$image_url = null;
 											$image_title = null;
@@ -100,10 +100,8 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 												$attachment = get_post( $slide['image']['id'], OBJECT );
 												$image_title = $attachment->post_title;
 											}
-											if( ! $image_url ) {
-												// This should only get used if user updates to v2.1.0 and 
-												// didn't re-save their slider.
-												// ... Or using the "Post Slider" element added in v2.2.1
+											if( ! $image_url || apply_filters('themeblvd_standard_slider_force_url', false) || ( ! is_ssl() && strpos($image_url, 'https://') ) ) {
+												// Force to query image from DB.
 												$attachment = wp_get_attachment_image_src( $slide['image']['id'], $image_size );
 												$image_url = $attachment[0];
 											}
@@ -273,7 +271,8 @@ function themeblvd_carrousel_slider_default( $slider, $settings, $slides ) {
 										$attachment = get_post( $slide['image']['id'], OBJECT );
 										$image_title = $attachment->post_title;
 									}
-									if( ! $image_url ) {
+									if( ! $image_url || apply_filters('themeblvd_carrousel_force_url', false) || ( ! is_ssl() && strpos($image_url, 'https://') ) ) {
+										// Force to query image from DB.
 										$attachment = wp_get_attachment_image_src( $slide['image']['id'], $crop );
 										$image_url = $attachment[0];
 									}
