@@ -59,6 +59,7 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 	$classes .= $settings['pause_play'] ? ' show-pause_play' : ' hide-pause_play';
 	if( ! $settings['nav_standard'] && ! $settings['nav_arrows'] )
 		$classes .= ' hide-full_nav';
+	$classes = apply_filters( 'themeblvd_slider_wrapper_classes', $classes );
 	
 	// Hide on mobile?
 	$hide = '';
@@ -67,7 +68,7 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 			$hide = true;
 
 	// Start output
-	themeblvd_standard_slider_js( $slider, $settings ); // This function is declared within the theme framework because its used for other stuff, too.
+	do_action( 'themeblvd_standard_slider_plugin_js', $slider, $settings );
 	?>
 	<div id="tb-slider-<?php echo $slider; ?>" class="slider-wrapper standard-slider-wrapper<?php if($hide) echo ' slider_has_mobile_fallback';?>">
 		<div class="slider-inner<?php echo $classes; ?>">	
@@ -77,54 +78,39 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 						<div class="tb-loader"></div>
 						<ul class="slides">
 							<?php if( ! empty( $slides ) ) : ?>
+
+								<?php // @todo -- Determine max height before loop of slides based on the largest full width image slide ?>
+
 								<?php foreach( $slides as $slide ) : ?>
-									<?php
-									if( ! isset( $slide['custom'] ) ) {
-										// Setup CSS classes									
-										$classes = 'media-'.$slide['position'].' '.$slide['slide_type'].'-slide';									
+									<?php							
+									// Image slides
+									if( $slide['slide_type'] == 'image' )
+										$image_atts = themeblvd_sliders_get_image_atts( 'standard', $slide, $slider, $settings );
+
+									// Video slides
+									if( $slide['slide_type'] == 'video' ) {
+										if( $slide['position'] == 'full' ) {
+											// Backups in case user did soemthing funky
+											$slide['elements']['headline'] = null; 
+											$slide['elements']['description'] = null;
+											$slide['elements']['button']['url'] = null;
+										}
+										$video = themeblvd_sliders_get_video( $slider, $slide );
+									}
+
+									// Slide classes
+									if( $slide['slide_type'] == 'custom' ) {
+										$slide_classes = 'custom';
+									} else {
+										$slide_classes = 'media-'.$slide['position'].' '.$slide['slide_type'].'-slide';									
+										if( $slide['slide_type'] == 'image' )
+											$slide_classes .= ' size-'.$image_atts['size'];
 										if( $slide['position'] == 'full' && $slide['slide_type'] == 'image' )
-											$classes .= ' full-image';
-										// Image setup
-										if( $slide['slide_type'] == 'image' ) {
-											// Image Size
-											if( $slide['position'] == 'full' )
-												$image_size = apply_filters('themeblvd_standard_slider_full_size', 'slider-large', $slider, $settings);
-											else
-												$image_size = apply_filters('themeblvd_standard_slider_staged_size', 'slider-staged', $slider, $settings);
-											// Image URL
-											$image_url = null;
-											$image_title = null;
-											if( isset( $slide['image'][$image_size] ) && $slide['image'][$image_size] )
-												$image_url = $slide['image'][$image_size]; // We do a strict check here so no errors will be thrown with old versions of the framework.
-											if( isset( $slide['image']['id'] ) ) {
-												$attachment = get_post( $slide['image']['id'], OBJECT );
-												$image_title = $attachment->post_title;
-											}
-											if( ! $image_url || apply_filters('themeblvd_standard_slider_force_url', false) || ( ! is_ssl() && strpos($image_url, 'https://') ) ) {
-												// Force to query image from DB.
-												$attachment = wp_get_attachment_image_src( $slide['image']['id'], $image_size );
-												$image_url = $attachment[0];
-											}
-										}
-										// Video Setup
-										if( $slide['slide_type'] == 'video' && $slide['position'] == 'full' ) {
-											$slide['elements']['headline'] = null; // Backup in case user did soemthing funky
-											$slide['elements']['description'] = null; // Backup in case user did soemthing funky
-											$slide['elements']['button']['url'] = null; // Backup in case user did soemthing funky
-										}
-										if( $slide['slide_type'] == 'video' ) {	
-											// Attributes
-											if( $slide['position'] == 'full' )
-												$atts = array( 'height' => '350' );
-											else
-												$atts = array( 'width' => '564' );
-											// Get HTML
-											$video = wp_oembed_get( $slide['video'], $atts );
-											// Set error message
-											if( ! $video )
-												$video = '<p>'.themeblvd_get_local( 'no_video' ).'</p>';
-										}
-										// Elements
+											$slide_classes .= ' full-image';
+									}
+
+									// Elements
+									if( $slide['slide_type'] != 'custom' ) {
 										$elements = array();
 										if( isset( $slide['elements']['include'] ) && is_array( $slide['elements']['include'] ) )
 											$elements = $slide['elements']['include'];
@@ -190,7 +176,7 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 																		<a href="<?php echo $slide['elements']['image_link']['url']; ?>" target="<?php echo $slide['elements']['image_link']['target']; ?>" class="image-link external"><span>Image Link</span></a>
 																	<?php endif; ?>
 																<?php endif; ?>
-																<img src="<?php echo $image_url; ?>" alt="<?php echo $image_title; ?>" />
+																<img src="<?php echo $image_atts['url']; ?>" alt="<?php echo $image_atts['alt']; ?>" />
 															<?php else : ?>
 																<?php echo $video; ?>
 															<?php endif; ?>
@@ -257,30 +243,17 @@ function themeblvd_carrousel_slider_default( $slider, $settings, $slides ) {
 			<ul class="carrousel-slider">
 				<?php if( $slides ) : ?>
 					<?php foreach( $slides as $slide ) : ?>
-						<li class="slide">
+						<?php
+						// Image
+						$image_atts = themeblvd_sliders_get_image_atts( 'carrousel', $slide, $slider, $settings );
+						// Elements
+						$elements = array();
+						if( isset( $slide['elements']['include'] ) && is_array( $slide['elements']['include'] ) )
+							$elements = $slide['elements']['include'];
+						?>
+						<li class="slide size-<?php echo $image_atts['size']; ?>">
 							<div class="slide-body">
 								<div class="grid-protection">
-									<?php
-									// Image
-									$crop = apply_filters( 'themeblvd_carrousel_image_size', 'grid_4' );
-									$image_url = null;
-									$image_title = null;
-									if( isset( $slide['image'][$crop] ) && $slide['image'][$crop] )
-										$image_url = $slide['image'][$crop];
-									if( isset( $slide['image']['id'] ) ) {
-										$attachment = get_post( $slide['image']['id'], OBJECT );
-										$image_title = $attachment->post_title;
-									}
-									if( ! $image_url || apply_filters('themeblvd_carrousel_force_url', false) || ( ! is_ssl() && strpos($image_url, 'https://') ) ) {
-										// Force to query image from DB.
-										$attachment = wp_get_attachment_image_src( $slide['image']['id'], $crop );
-										$image_url = $attachment[0];
-									}
-									// Elements
-									$elements = array();
-									if( isset( $slide['elements']['include'] ) && is_array( $slide['elements']['include'] ) )
-										$elements = $slide['elements']['include'];
-									?>
 									<?php if( in_array( 'image_link', $elements ) ) : ?>
 										<?php if( $slide['elements']['image_link']['target'] == 'lightbox' ) : ?>
 											<a href="<?php echo $slide['elements']['image_link']['url']; ?>" class="image-link enlarge" rel="themeblvd_lightbox" title=""><span><i class="icon-plus"></i></span></a>
@@ -288,7 +261,7 @@ function themeblvd_carrousel_slider_default( $slider, $settings, $slides ) {
 											<a href="<?php echo $slide['elements']['image_link']['url']; ?>" target="<?php echo $slide['elements']['image_link']['target']; ?>" class="image-link external"><span><i class="icon-external-link"></i></span></a>
 										<?php endif; ?>
 									<?php endif; ?>
-									<img src="<?php echo $image_url; ?>" alt="<?php echo $image_title; ?>" />
+									<img src="<?php echo $image_atts['url']; ?>" alt="<?php echo $image_atts['alt']; ?>" />
 								</div><!-- .grid-protection (end) -->
 							</div><!-- .slide-body (end) -->
 						</li>
