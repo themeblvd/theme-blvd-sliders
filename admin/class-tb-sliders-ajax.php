@@ -125,10 +125,10 @@ class Theme_Blvd_Sliders_Ajax {
 					
 					// Image URL's ready to be be used in actual slider
 					if( isset( $slides[$key]['image']['id'] ) ) {
-						$sizes = themeblvd_get_image_sizes();
-						foreach( $sizes as $id => $atts ) {
-							$image = wp_get_attachment_image_src( $slides[$key]['image']['id'], $id );
-							$slides[$key]['image'][$id] = $image[0];
+						$sizes = get_intermediate_image_sizes();
+						foreach( $sizes as $size ) {
+							$image = wp_get_attachment_image_src( $slides[$key]['image']['id'], $size  );
+							$slides[$key]['image'][$size ] = $image[0];
 						}
 					}	
 					
