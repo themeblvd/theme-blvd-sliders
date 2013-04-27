@@ -61,6 +61,10 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 		$classes .= ' hide-full_nav';
 	$classes = apply_filters( 'themeblvd_slider_wrapper_classes', $classes );
 	
+	// Max height
+	$max_height = themeblvd_sliders_get_max_height( $slider, $slides, $settings );
+	// @todo -- Determine max height before loop of slides based on the largest full width image slide
+
 	// Hide on mobile?
 	$hide = '';
 	if( isset( $settings['mobile_fallback'] ) )
@@ -78,47 +82,10 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 						<div class="tb-loader"></div>
 						<ul class="slides">
 							<?php if( ! empty( $slides ) ) : ?>
-
-								<?php // @todo -- Determine max height before loop of slides based on the largest full width image slide ?>
-
-								<?php foreach( $slides as $slide ) : ?>
-									<?php							
-									// Image slides
-									if( $slide['slide_type'] == 'image' )
-										$image_atts = themeblvd_sliders_get_image_atts( 'standard', $slide, $slider, $settings );
-
-									// Video slides
-									if( $slide['slide_type'] == 'video' ) {
-										if( $slide['position'] == 'full' ) {
-											// Backups in case user did soemthing funky
-											$slide['elements']['headline'] = null; 
-											$slide['elements']['description'] = null;
-											$slide['elements']['button']['url'] = null;
-										}
-										$video = themeblvd_sliders_get_video( $slider, $slide );
-									}
-
-									// Slide classes
-									if( $slide['slide_type'] == 'custom' ) {
-										$slide_classes = 'custom';
-									} else {
-										$slide_classes = 'media-'.$slide['position'].' '.$slide['slide_type'].'-slide';									
-										if( $slide['slide_type'] == 'image' )
-											$slide_classes .= ' size-'.$image_atts['size'];
-										if( $slide['position'] == 'full' && $slide['slide_type'] == 'image' )
-											$slide_classes .= ' full-image';
-									}
-
-									// Elements
-									if( $slide['slide_type'] != 'custom' ) {
-										$elements = array();
-										if( isset( $slide['elements']['include'] ) && is_array( $slide['elements']['include'] ) )
-											$elements = $slide['elements']['include'];
-										if( $slide['slide_type'] == 'video' && $slide['position'] == 'full' )
-											$elements = array(); // Full width video slide can't have elements.
-									}
-									?>
-									<li class="slide tight <?php echo $classes; ?>">
+								<?php foreach( $slides as $slide ) : ?>					
+									<?php $media = themeblvd_sliders_get_media( $slider, $slide, $settings, 'standard', $max_height ); ?>
+									<?php $elements = themeblvd_sliders_get_elements( $slider, $slide ); ?>
+									<li class="slide tight <?php echo themeblvd_sliders_get_slide_classes( $slider, $slide, $media ); ?>"<?php echo $max_height; ?>>
 										<div class="slide-body">
 											<div class="grid-protection clearfix">
 												<?php // Custom Slides ?>
@@ -176,9 +143,9 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 																		<a href="<?php echo $slide['elements']['image_link']['url']; ?>" target="<?php echo $slide['elements']['image_link']['target']; ?>" class="image-link external"><span>Image Link</span></a>
 																	<?php endif; ?>
 																<?php endif; ?>
-																<img src="<?php echo $image_atts['url']; ?>" alt="<?php echo $image_atts['alt']; ?>" />
+																<img src="<?php echo $media['url']; ?>" alt="<?php echo $media['alt']; ?>" />
 															<?php else : ?>
-																<?php echo $video; ?>
+																<?php echo $media['video']; ?>
 															<?php endif; ?>
 														</div><!-- .media-inner (end) -->
 													</div><!-- .media (end) -->
@@ -245,7 +212,7 @@ function themeblvd_carrousel_slider_default( $slider, $settings, $slides ) {
 					<?php foreach( $slides as $slide ) : ?>
 						<?php
 						// Image
-						$image_atts = themeblvd_sliders_get_image_atts( 'carrousel', $slide, $slider, $settings );
+						$image_atts = themeblvd_sliders_get_media( $slider, $slide, $settings, 'carrousel' );
 						// Elements
 						$elements = array();
 						if( isset( $slide['elements']['include'] ) && is_array( $slide['elements']['include'] ) )

@@ -205,6 +205,12 @@ class Theme_Blvd_Sliders_Admin {
 	    		if( isset( $slide_options['position'] ) )
 	    			$value = $slide_options['position'];
 	    		break;
+
+	    	// Image position	
+	    	case 'image_size' :
+	    		if( isset( $slide_options['image_size'] ) )
+	    			$value = $slide_options['image_size'];
+	    		break;
 	    	
 	    	// Included elements	
 	    	case 'include' :
@@ -416,7 +422,7 @@ class Theme_Blvd_Sliders_Admin {
 											<div class="field section-upload">
 												<?php
 												if( version_compare(TB_FRAMEWORK_VERSION, '2.2.2', '>=') ) {
-													
+													// @todo ... Add new media uploader
 												} else {
 													$current_image = $this->slide_value( $slide_options, 'image' );
 													echo optionsframework_medialibrary_uploader( 'slides['.$slide_id.']', 'slider', $slide_id.'image', $current_image, null, null, $slider_id, null, __( 'Get Image', 'themeblvd_sliders' ) );
@@ -449,9 +455,9 @@ class Theme_Blvd_Sliders_Admin {
 								<?php if( $slider_types[$slider_type]['positions'] ) : ?>
 									<h4 class="header_has_icon"><?php _e( 'How would you like to display the media?', 'themeblvd_sliders' ); ?></h4>
 									<?php $position = $this->slide_value( $slide_options, 'position' ); ?>
+									
 									<select class="slide-position slide-position-image" name="slides[<?php echo $slide_id; ?>][position_image]">
 										<?php
-										$sizes = $_wp_additional_image_sizes;
 										foreach( $slider_types[$slider_type]['positions'] as $key => $value ) {
 					        				// Set name for option
 					        				$name = '';
@@ -466,14 +472,37 @@ class Theme_Blvd_Sliders_Admin {
 						        					$name = __( 'Aligned Right', 'themeblvd_sliders' );
 						        					break;	
 					        				}
-					        				// Set display dimensions for option
-					        				$dimensions = '';
-					        				if( isset( $sizes[$value] ) )
-						        				$dimensions = ' <span class="dimensions">('.$sizes[$value]['width'].'x'.$sizes[$value]['height'].')</span>';
-					        				echo '<option '.selected( $key, $position, false ).' value="'.$key.'">'.$name.$dimensions.'</option>';
+					        				$exclude_dimensions = $key == 'full' ? true : false;
+					        				echo '<option '.selected( $key, $position, false ).' value="'.$key.'">'.$this->get_image_size_desc($value, $name, $exclude_dimensions).'</option>';
 					        			}
 					        			?>
 									</select>
+									
+									<?php if( isset( $slider_types[$slider_type]['positions']['full'] ) ) : ?>
+										<select class="slide-crop" name="slides[<?php echo $slide_id; ?>][image_size]">
+											<?php
+											$full_size = $slider_types[$slider_type]['positions']['full'];
+											$image_size = $this->slide_value( $slide_options, 'image_size' );
+											
+											// First option is the default framework "slider-large" image size
+											echo '<option '.selected( 'slider-large', $image_size, false ).' value="'.$full_size.'">'.$this->get_image_size_desc($full_size, __('Default', 'themeblvd_sliders')).'</option>';
+
+											// Now get all WP-registered image sizes and make them available for selection.
+											$wp_image_sizes = get_intermediate_image_sizes();
+											if( $wp_image_sizes ) {
+												foreach( $wp_image_sizes as $size ) {
+													if( $size == $full_size )
+														continue;
+													echo '<option '.selected( $size, $image_size, false ).' value="'.$size.'">'.$this->get_image_size_desc($size).'</option>';
+												}
+											}
+
+											// Add option for raw image, with no crop.
+											echo '<option '.selected( $size, $image_size, false ).' value="no-crop">'.__('Do not crop image.', 'themeblvd_sliders').'</option>';
+											?>
+										</select>
+									<?php endif; ?>
+									
 									<select class="slide-position slide-position-video" name="slides[<?php echo $slide_id; ?>][position_video]">
 										<?php
 										foreach( $slider_types[$slider_type]['positions'] as $key => $value ) {
@@ -494,7 +523,8 @@ class Theme_Blvd_Sliders_Admin {
 					        			}
 					        			?>
 									</select>
-									<p class="note image-note"><?php _e( 'When you upload an image, it must be at a minimum the size listed above in order for WordPress to generate and register the crop size. Images will be scaled down proportionally from their respective crop sizes depending on where the slider is placed.', 'themeblvd_sliders' ); ?></p>
+									<p class="note image-note"><?php _e( 'When you upload an image, it must be at a minimum the size selected above in order for WordPress to generate and register the crop size. Images will be scaled down proportionally from their respective crop sizes depending on where the slider is placed.', 'themeblvd_sliders' ); ?></p>
+								
 								<?php endif; ?>
 							</div><!-- .slide-section (end) -->
 							<?php if( ! empty( $slider_types ) && ! empty( $slider_types[$slider_type]['elements'] ) ) : ?>
@@ -743,6 +773,56 @@ class Theme_Blvd_Sliders_Admin {
 		}
 	}
 	
+	/**
+	 * Get a user-friendly description of a crop size.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return string
+	 */
+	function get_image_size_desc( $id, $name = '', $exclude_dimensions = false ) {
+
+		global $_wp_additional_image_sizes;
+
+		// Can we just skip the dimensions?
+		if( $exclude_dimensions ) {
+			$desc = $name ? $name : $id;
+			return apply_filters( 'themeblvd_sliders_image_size_desc', $desc, $id, $name );
+		}
+
+		// Determine width, height, and crop mode
+		if( isset( $_wp_additional_image_sizes[$id]['width'] ) )
+			$width = intval( $_wp_additional_image_sizes[$id]['width'] ); // For theme-added sizes
+		else
+			$width = get_option( "{$id}_size_w" ); // For default sizes set in options
+		
+		if( isset( $_wp_additional_image_sizes[$id]['height'] ) )
+			$height = intval( $_wp_additional_image_sizes[$id]['height'] ); // For theme-added sizes
+		else
+			$height = get_option( "{$id}_size_h" ); // For default sizes set in options
+		
+		if( isset( $_wp_additional_image_sizes[$id]['crop'] ) )
+			$crop = intval( $_wp_additional_image_sizes[$id]['crop'] ); // For theme-added sizes
+		else
+			$crop = get_option( "{$id}_crop" ); // For default sizes set in options
+
+		// Crop mode message
+		if( $crop )
+			$crop_desc = __('hard crop', 'themeblvd_sliders');
+		else if( $height == 9999 )
+			$crop_desc = __('no height crop', 'themeblvd_sliders');
+		else
+			$crop_desc = __('soft crop', 'themeblvd_sliders');
+
+		// Piece together description
+		$desc = $name ? $name : $id;
+		$desc = sprintf( "$desc (%d x %d, %s)", $width, $height, $crop_desc );
+		if( ! isset( $_wp_additional_image_sizes[$id] ) )
+			$desc .= ' -- '.__('WordPress size', 'themeblvd_sliders');
+
+		return apply_filters( 'themeblvd_sliders_image_size_desc', $desc, $id, $name );
+	}
+
 	/**
 	 * Get recognized sliders.
 	 *
