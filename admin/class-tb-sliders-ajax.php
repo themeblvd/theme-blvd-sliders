@@ -96,10 +96,10 @@ class Theme_Blvd_Sliders_Ajax {
 		$slider_type = get_post_meta( $slider_id, 'type', true );
 		$tb_sliders = $this->admin_page->get_sliders();
 		$slider = $tb_sliders[$slider_type];
-		$targets = array( '_self', '_blank', 'lighbox' );
+		$targets = array( '_self', '_blank', 'lighbox', 'lightbox_video' );
 		$options = array();
 		$slides = array();
-		
+
 		// Slides
 		if( isset( $data['slides'] ) ) {
 			
@@ -118,7 +118,7 @@ class Theme_Blvd_Sliders_Ajax {
 					// Image attributes - Alot of stuff here is pretty heavy, but 
 					// by saving all of this in the WP admin, we're saving a ton 
 					// of DB queries when the slider displays on the frontend.
-					if( isset( $slides[$key]['image']['id'] ) ) {
+					if( isset( $slides[$key]['image']['id'] ) && $slide['slide_type'] == 'image' ) {
 						
 						global $_wp_additional_image_sizes;
 
@@ -227,18 +227,19 @@ class Theme_Blvd_Sliders_Ajax {
 					}
 					
 					// Remove elements that aren't needed
+					unset( $slides[$key]['position_image'], $slides[$key]['position_video'] ); // Both replaced by single "position" key
+					
 					if( $slide['slide_type'] != 'custom' )
 						unset( $slides[$key]['custom'] );
+					
 					if( $slide['slide_type'] != 'image' )
-						unset( $slides[$key]['image'] );
+						unset( $slides[$key]['image'], $slides[$key]['image_size'] );
+					
 					if( $slide['slide_type'] != 'video' )
 						unset( $slides[$key]['video'] );
-					if( $slide['slide_type'] == 'custom' ) {
-						unset( $slides[$key]['position_image'] );
-						unset( $slides[$key]['position_video'] );
-						unset( $slides[$key]['elements'] );
-						unset( $slides[$key]['position'] );
-					}
+					
+					if( $slide['slide_type'] == 'custom' )
+						unset( $slides[$key]['elements'], $slides[$key]['position'] );
 				}
 			}
 		}
@@ -321,6 +322,7 @@ class Theme_Blvd_Sliders_Ajax {
 		echo $current_slider_id.'[(=>)]';
 		
 		// Display update message
+		// echo 'DEBUG: <pre>'; print_r($debug); echo '</pre>';
 		echo '<div id="setting-error-save_options" class="updated fade settings-error ajax-update">';
 		echo '	<p><strong>'.__( 'Slider saved.', 'themeblvd_sliders' ).'</strong></p>';
 		echo '</div>';
