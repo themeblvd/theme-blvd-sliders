@@ -542,7 +542,7 @@ class Theme_Blvd_Sliders_Admin {
 														<tr class="element-image_link slide-element-header">
 															<td class="slide-element-check"><input value="image_link" type="checkbox" name="slides[<?php echo $slide_id; ?>][elements][include][]"<?php echo $this->slide_value($slide_options, 'include', 'image_link'); ?> /></td>
 															<td class="slide-element-name"><?php _e( 'Image Link', 'themeblvd_sliders' ); ?></td>
-															<td class="slide-element-help"><a href="#" class="help-icon tooltip-link" title="<?php _e( 'This will allow you to apply a link to the image of this slide. You can configure it to open a webpage or a lightbox popup of different media types.', 'themeblvd_sliders' ); ?>">Help</a></td>
+															<td class="slide-element-help"><a href="#" class="help-icon tooltip-link" title="<?php _e( 'This will allow you to apply a link to the image of this slide. You can configure it to open a webpage or a lightbox popup of different media types. If you\'re linking to a Lightbox Image, use the image file URL. If you\'re linking to a Lightbox Video, you can put in the URL to the Vimeo or YouTube video page.', 'themeblvd_sliders' ); ?>">Help</a></td>
 														</tr>
 														<tr class="element-image_link slide-element-options">
 															<td colspan="3">
@@ -552,7 +552,8 @@ class Theme_Blvd_Sliders_Admin {
 																	<select name="slides[<?php echo $slide_id; ?>][elements][image_link][target]">
 																		<option value="_self" <?php selected( $target, '_self' ); ?>><?php _e( 'Same Window', 'themeblvd_sliders' ); ?></option>
 																		<option value="_blank" <?php selected( $target, '_blank' ); ?>><?php _e( 'New Window', 'themeblvd_sliders' ); ?></option>
-																		<option value="lightbox" <?php selected( $target, 'lightbox' ); ?>><?php _e( 'Lightbox Popup', 'themeblvd_sliders' ); ?></option>
+																		<option value="lightbox" <?php selected( $target, 'lightbox' ); ?>><?php _e( 'Lightbox Image', 'themeblvd_sliders' ); ?></option>
+																		<option value="lightbox_video" <?php selected( $target, 'lightbox_video' ); ?>><?php _e( 'Lightbox Video', 'themeblvd_sliders' ); ?></option>
 																	</select>
 																</div><!-- .field (end) -->
 																<div class="field">
@@ -626,7 +627,8 @@ class Theme_Blvd_Sliders_Admin {
 																<select name="slides[<?php echo $slide_id; ?>][elements][button][target]">
 																	<option value="_self" <?php selected( $target, '_self' ); ?>><?php _e( 'Same Window', 'themeblvd_sliders' ); ?></option>
 																	<option value="_blank" <?php selected( $target, '_blank' ); ?>><?php _e( 'New Window', 'themeblvd_sliders' ); ?></option>
-																	<option value="lightbox" <?php selected( $target, 'lightbox' ); ?>><?php _e( 'Lightbox Popup', 'themeblvd_sliders' ); ?></option>
+																	<option value="lightbox" <?php selected( $target, 'lightbox' ); ?>><?php _e( 'Lightbox Image', 'themeblvd_sliders' ); ?></option>
+																	<option value="lightbox_video" <?php selected( $target, 'lightbox_video' ); ?>><?php _e( 'Lightbox Video', 'themeblvd_sliders' ); ?></option>
 																</select>
 															</div><!-- .field (end) -->
 															<div class="field">
