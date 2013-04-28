@@ -158,7 +158,7 @@ jQuery(document).ready(function($) {
 				value = object.val(),
 				position = object.closest('.widget-content').find('.slide-position-'+value).val();
 				name = object.find('option[value="'+value+'"]').text();	
-			
+
 			parent.removeClass('type-image type-video type-custom');
 			parent.addClass('type-'+value);
 			object.parent().find('strong').text(name);
@@ -175,18 +175,30 @@ jQuery(document).ready(function($) {
 					opposite = 'video';
 					parent.find('.slide-position-image').show();
 					parent.find('.slide-crop').show();
-					if( parent.find('.slide-position').val() == 'full' )
-						parent.find('.slide-crop').show();
-					else
-						parent.find('.slide-crop').hide();
+					
 					parent.find('.slide-position-video').hide();
 					parent.find('.image-note').show();
+					
 					if( parent.find('.slide-elements .element-image_link input').is(':checked') )
 						parent.find('.slide-elements .element-image_link').show();
 					else
 						parent.find('.slide-elements .element-image_link:first').show();
+					
 					parent.find('.slide-elements-warning').hide();
 					parent.find('.slide-elements').show();
+
+					if( parent.find('.slide-position').val() == 'full' )
+					{
+						parent.find('.slide-crop').show();
+						parent.find('.element-button').hide();
+					}
+					else
+					{
+						parent.find('.slide-crop').hide();
+						parent.find('.element-button.slide-element-header').show().find('input').each(function(){
+							slider_blvd.elements( $(this) );
+						});
+					}
 				}
 				else if(value == 'video')
 				{
@@ -236,9 +248,17 @@ jQuery(document).ready(function($) {
 			{
 				var slide_crop = object.closest('.widget-content').find('.slide-crop');
 				if(object.val() == 'full')
-					slide_crop.show();
+				{
+					object.closest('.widget-content').find('.slide-crop').show();
+					object.closest('.widget-content').find('.element-button').hide();
+				}
 				else
-					slide_crop.hide();
+				{
+					object.closest('.widget-content').find('.slide-crop').hide();
+					object.closest('.widget-content').find('.element-button.slide-element-header').show().find('input').each(function(){
+						slider_blvd.elements( $(this) );
+					});
+				}
 			}
 		},
 		

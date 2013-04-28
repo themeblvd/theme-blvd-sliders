@@ -112,7 +112,7 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 																					<?php echo $description; ?>
 																				</div>
 																			<?php endif; ?>
-																			<?php if( in_array( 'button', $elements ) && $slide['elements']['button']['text'] ) : ?>
+																			<?php if( $slide['position'] != 'full' && in_array( 'button', $elements ) && $slide['elements']['button']['text'] ) : ?>
 																				<div class="slide-description-button">
 																					<?php
 																					$button_atts = apply_filters( 'themeblvd_standard_slider_button', array(
