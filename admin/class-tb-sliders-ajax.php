@@ -226,6 +226,11 @@ class Theme_Blvd_Sliders_Ajax {
 						}
 					}
 					
+					// Video Max Height
+					if( isset( $slide['video_height'] ) ) {
+						$slides[$key]['video_height'] = intval($slide['video_height']);
+					}
+
 					// Remove elements that aren't needed
 					unset( $slides[$key]['position_image'], $slides[$key]['position_video'] ); // Both replaced by single "position" key
 					
@@ -236,7 +241,7 @@ class Theme_Blvd_Sliders_Ajax {
 						unset( $slides[$key]['image'], $slides[$key]['image_size'] );
 					
 					if( $slide['slide_type'] != 'video' )
-						unset( $slides[$key]['video'] );
+						unset( $slides[$key]['video'], $slides[$key]['video_height'] );
 					
 					if( $slide['slide_type'] == 'custom' )
 						unset( $slides[$key]['elements'], $slides[$key]['position'] );

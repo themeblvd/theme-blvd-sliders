@@ -230,6 +230,14 @@ class Theme_Blvd_Sliders_Admin {
 	    			$value = $slide_options['video'];
 	    		break;
 			
+			// Video Height
+			case 'video_height' :
+				if( isset( $slide_options['video_height'] ) )
+					$value = $slide_options['video_height'];
+				else
+					$value = 0;
+				break;
+
 			// Image link
 	    	case 'image_link' :
 				if( $sub_type == 'target' ) {
@@ -451,9 +459,10 @@ class Theme_Blvd_Sliders_Admin {
 							?>
 						</div><!-- .slide-set-media (end) -->
 						<div class="slide-include-elements">
+							
 							<div class="slide-section">
 								<?php if( $slider_types[$slider_type]['positions'] ) : ?>
-									<h4 class="header_has_icon"><?php _e( 'How would you like to display the media?', 'themeblvd_sliders' ); ?></h4>
+									<h4 class="header_has_icon"><?php _e( 'Media Display', 'themeblvd_sliders' ); ?></h4>
 									<?php $position = $this->slide_value( $slide_options, 'position' ); ?>
 									
 									<select class="slide-position slide-position-image" name="slides[<?php echo $slide_id; ?>][position_image]">
@@ -510,7 +519,7 @@ class Theme_Blvd_Sliders_Admin {
 					        				$name = '';
 					        				switch( $key ) {
 						        				case 'full' :
-						        					$name = __( 'Full Size', 'themeblvd_sliders' );
+						        					$name = __( 'Full Width', 'themeblvd_sliders' );
 						        					break;
 						        				case 'align-left' :
 						        					$name = __( 'Aligned Left', 'themeblvd_sliders' );
@@ -523,13 +532,22 @@ class Theme_Blvd_Sliders_Admin {
 					        			}
 					        			?>
 									</select>
+									
+									<div class="slide-video-height mini-control clearfix">
+										<input type="text" value="<?php echo $this->slide_value( $slide_options, 'video_height' ); ?>" name="slides[<?php echo $slide_id; ?>][video_height]" class="numeric" />
+										<label for="slides[<?php echo $slide_id; ?>][video_height]">
+											<?php _e( 'Maximum Video Height (use 0 for default)', 'themeblvd_sliders' ); ?>
+										</label>
+									</div>
+
 									<p class="note image-note"><?php _e( 'When you upload an image, it must be at a minimum the size selected above in order for WordPress to generate and register the crop size. Images will be scaled down proportionally from their respective crop sizes depending on where the slider is placed.', 'themeblvd_sliders' ); ?></p>
-								
+
 								<?php endif; ?>
 							</div><!-- .slide-section (end) -->
+
 							<?php if( ! empty( $slider_types ) && ! empty( $slider_types[$slider_type]['elements'] ) ) : ?>
 								<div class="slide-section">
-									<h4><?php _e( 'Would you like to include additional elements?', 'themeblvd_sliders' ); ?></h4>
+									<h4><?php _e( 'Slide Elements', 'themeblvd_sliders' ); ?></h4>
 									<table class="widefat slide-elements">
 										<tbody>
 										<?php

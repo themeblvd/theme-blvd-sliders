@@ -177,6 +177,7 @@ jQuery(document).ready(function($) {
 					parent.find('.slide-crop').show();
 					
 					parent.find('.slide-position-video').hide();
+					parent.find('.slide-video-height').hide();
 					parent.find('.image-note').show();
 					
 					if( parent.find('.slide-elements .element-image_link input').is(':checked') )
@@ -206,6 +207,7 @@ jQuery(document).ready(function($) {
 					parent.find('.slide-elements .element-image_link').hide();
 					parent.find('.slide-position-video').show();
 					parent.find('.slide-position-image').hide();
+					parent.find('.slide-video-height').show();
 					parent.find('.slide-crop').hide();
 					parent.find('.image-note').hide();
 					if(position == 'full')

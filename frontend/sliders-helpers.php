@@ -8,7 +8,7 @@
  * @param array $slide All data for slide
  * @param array $settings Settings for slider 
  * @param string $slider_type Type of slider, standard or carrousel
- * @return array Style for height, style="max-height:XXpx"
+ * @return int Max height number
  */
 
 function themeblvd_sliders_get_max_height( $slider, $slides, $settings, $slider_type = 'standard' ) {
@@ -17,28 +17,56 @@ function themeblvd_sliders_get_max_height( $slider, $slides, $settings, $slider_
 	$height = 0;
 	$height_style = '';
 
-	// Get all full width slides w/valid image sizes and a hard crop. 
+	// Determine the maximum height allowed for this set of slides.
+	// 1) Could be a full size Image with the tallest height.
+	// 2) Could be a video with the tallest "Max Height" setting.
+	// 3) If a Staged video or image slide exists, then exit w/no max height.
 	if( $slides ) {
 		foreach( $slides as $id => $slide ) {
-			if( $slide['slide_type'] == 'image' && $slide['position_image'] == 'full' ) {
+
+			// Staged videos or images will throw off 
+			// overall height in responsive setup.
+			if( $slide['position'] != 'full' ) {
+				$height = 0;
+				break;
+			}
+
+			// Looking for tallest full size image or video
+			if( $slide['slide_type'] == 'image' ) {
 				if( ! empty( $slide['image_size'] ) ) {
-					if( $slide['image_size']['valid'] && $slide['image_size']['crop'] && $slide['image_size']['crop'] != 9999 )
+					if( $slide['image_size']['valid'] && $slide['image_size']['crop'] && $slide['image_size']['height'] != 9999 )
 						if( $slide['image_size']['height'] > $height )
 							$height = $slide['image_size']['height'];
 				} else {
 					// Fallback if slider was saved before v1.1
 					$height = $_wp_additional_image_sizes['slider-large']; // @todo Check!!!
 				}
-			} else if( $slide['slide_type'] == 'image' ) {
-				// @todo ...
+			} else if( $slide['slide_type'] == 'video' ) {
+				if( ! empty( $slide['video_height'] ) && $slide['video_height'] > $height )
+					$height = $slide['video_height'];
 			}
 		}
 	}
 
-	if( $height > 0 )
-		$height_style = sprintf(' style="max-height:%dpx;"', $height);
+	return apply_filters('themeblvd_sliders_max_height', $height, $slider, $slides, $settings, $slider_type );	
+}
 
-	return apply_filters('themeblvd_sliders_max_height', $height_style, $height, $slider, $slides, $settings, $slider_type );	
+/** 
+ * Get the max-height style string
+ *
+ * @since 1.1.0
+ *
+ * @param int $height Max height number
+ * @return string Style for height, style="max-height:XXpx"
+ */
+function themeblvd_sliders_get_max_height_style( $height ) {
+	
+	if( intval( $height ) > 0 )
+		$height_style = sprintf(' style="max-height:%dpx;"', $height);
+	else
+		return '';
+	
+	return apply_filters( 'themeblvd_sliders_max_height', $height_style, $height );
 }
 
 /** 
@@ -112,7 +140,7 @@ function themeblvd_sliders_get_media( $slider, $slide, $settings, $slider_type =
  *
  * @param string $slider ID of slider
  * @param array $slide All data for slide
- * @param string $max_height Max-height inline style string
+ * @param string $max_height Max-height value for entire slider
  * @return string $video Embed code for video
  */
 
@@ -136,9 +164,24 @@ function themeblvd_sliders_get_video( $slider, $slide, $max_height = '' ){
 	$video = wp_oembed_get( $slide['video'], $atts );
 	
 	// Append max height
-	if( $video && $max_height ) {
-		$find = '<div class="themeblvd-video-wrapper"';
-		$video = str_replace($find, $find.$max_height, $video);
+	if( $video ){
+
+		$video_max_height = 0;
+		$video_max_height_style = '';
+
+		if( isset( $slide['video_height'] ) && intval( $slide['video_height'] ) > 0 )
+			$video_max_height = intval( $slide['video_height'] );
+
+		if( $video_max_height == 0 )
+			$video_max_height_style = themeblvd_sliders_get_max_height_style( $max_height );
+		else if( ( $video_max_height <= $max_height ) || ( $max_height == 0 && $video_max_height > 0 ) )
+			$video_max_height_style = themeblvd_sliders_get_max_height_style( $video_max_height  );
+
+		if( $video_max_height_style ) {
+			$find = '<div class="themeblvd-video-wrapper"';
+			$video = str_replace($find, $find.$video_max_height_style, $video);
+		}
+
 	}
 
 	// Set error message

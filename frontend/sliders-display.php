@@ -63,7 +63,7 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 	
 	// Max height
 	$max_height = themeblvd_sliders_get_max_height( $slider, $slides, $settings );
-	// @todo -- Determine max height before loop of slides based on the largest full width image slide
+	$max_height_style = themeblvd_sliders_get_max_height_style( $max_height );
 
 	// Hide on mobile?
 	$hide = '';
@@ -85,7 +85,7 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 								<?php foreach( $slides as $slide ) : ?>					
 									<?php $media = themeblvd_sliders_get_media( $slider, $slide, $settings, 'standard', $max_height ); ?>
 									<?php $elements = themeblvd_sliders_get_elements( $slider, $slide ); ?>
-									<li class="slide tight <?php echo themeblvd_sliders_get_slide_classes( $slider, $slide, $media ); ?>"<?php echo $max_height; ?>>
+									<li class="slide tight <?php echo themeblvd_sliders_get_slide_classes( $slider, $slide, $media ); ?>"<?php echo $max_height_style; ?>>
 										<div class="slide-body">
 											<div class="grid-protection clearfix">
 												<?php // Custom Slides ?>

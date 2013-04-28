@@ -5,6 +5,7 @@
 #slider_blvd #optionsframework, #slider_blvd #optionsframework .full-width { max-width: none; }
 #slider_blvd #optionsframework .updated { max-width: none; }
 #slider_blvd #optionsframework .inner-sidebar .section .heading { font-size: 1em; }
+#slider_blvd .clearfix:after { content: "."; visibility: hidden; display: block; height: 0; clear: both; }
 
 /* =Manage Slides
 ----------------------------------------------- */
@@ -32,6 +33,10 @@
 #slider_blvd #edit_slider .slide-set-media h3 { margin: 0; padding: 5px; }
 #slider_blvd #edit_slider .slide-set-media .explain { color: #666; line-height: 150%; margin-top: 0; }
 #slider_blvd #edit_slider .slide-element-help .help-icon {margin-top:-3px;margin-right:-4px;}
+#slider_blvd #edit_slider .mini-control { margin-top: 5px; }
+#slider_blvd #edit_slider .mini-control input { float: left; margin: 0 0 0 2px; width: auto;}
+#slider_blvd #edit_slider .mini-control label { color: #999; float: left; font-style: italic; cursor: default; line-height: 26px; padding-left: 5px; }
+#slider_blvd #edit_slider .mini-control input.numeric { max-width: 50px; }
 #slider_blvd #edit_slider .slide-include-elements h4 { margin: 0 0 10px 0; }
 #slider_blvd #edit_slider .slide-include-elements h5 { font-size: 12px; margin: 0 0 7px 0; }
 #slider_blvd #edit_slider .slide-include-elements .slide-element-check { width: 15px; text-align: center; vertical-align: middle; }
