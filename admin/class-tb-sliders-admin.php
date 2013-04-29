@@ -913,15 +913,34 @@ class Theme_Blvd_Sliders_Admin {
 		
 		$standard_options = array(
 			array(
+		    	'type'		=> 'subgroup_start',
+		    	'class'		=> 'show-hide-toggle'
+		    ),
+			array(
 				'id'		=> 'fx',
 				'name'		=> __( 'How to transition between slides?', 'themeblvd' ),
 				'std'		=> 'fade',
 				'type'		=> 'select',
-				'options'		=> array(
+				'options'	=> array(
 		            'fade' 	=> 'Fade',
 					'slide'	=> 'Slide'
-				)
+				),
+				'class' 	=> 'trigger'
 			),
+			array(
+				'id'		=> 'smoothheight',
+				'name'		=> __( 'Allow height to adjust on each transition?', 'themeblvd' ),
+				'std'		=> 'false',
+				'type'		=> 'select',
+				'options'	=> array(
+		            'true' 	=> 'Yes, enable smoothHeight.',
+					'false'	=> 'No, display as height of tallest slide.'
+				),
+				'class'		=> 'hide receiver receiver-slide'
+			),
+			array(
+		    	'type'		=> 'subgroup_end'
+		    ),
 			array(
 				'id'		=> 'timeout',
 				'name' 		=> __( 'Seconds between each transition?', 'themeblvd' ),
@@ -933,7 +952,7 @@ class Theme_Blvd_Sliders_Admin {
 				'name'		=> __( 'Show standard slideshow navigation?', 'themeblvd' ),
 				'std'		=> '1',
 				'type'		=> 'select',
-				'options'		=> array(
+				'options'	=> array(
 		            '1'	=> __( 'Yes, show navigation.', 'themeblvd' ),
 		            '0'	=> __( 'No, don\'t show it.', 'themeblvd' )
 				)
@@ -943,7 +962,7 @@ class Theme_Blvd_Sliders_Admin {
 				'name'		=> __( 'Show next/prev arrows?', 'themeblvd' ),
 				'std'		=> '1',
 				'type'		=> 'select',
-				'options'		=> array(
+				'options'	=> array(
 		            '1'	=> __( 'Yes, show arrows.', 'themeblvd' ),
 		            '0'	=> __( 'No, don\'t show them.', 'themeblvd' )
 				)
@@ -953,7 +972,7 @@ class Theme_Blvd_Sliders_Admin {
 				'name'		=> __( 'Show pause/play button?', 'themeblvd' ),
 				'std'		=> '1',
 				'type'		=> 'select',
-				'options'		=> array(
+				'options'	=> array(
 		            '1'	=> __( 'Yes, show pause/play button.', 'themeblvd' ),
 		            '0'	=> __( 'No, don\'t show it.', 'themeblvd' )
 				)
@@ -963,7 +982,7 @@ class Theme_Blvd_Sliders_Admin {
 				'name'		=> __( 'Enable pause on hover?', 'themeblvd' ),
 				'std'		=> 'pause_on',
 				'type'		=> 'select',
-				'options'		=> array(
+				'options'	=> array(
 		            'pause_on'		=> __( 'Pause on hover only.', 'themeblvd' ),
 		            'pause_on_off'	=> __( 'Pause on hover and resume when hovering off.', 'themeblvd' ),
 		            'disable'		=> __( 'No, disable this all together.', 'themeblvd' )
@@ -974,7 +993,7 @@ class Theme_Blvd_Sliders_Admin {
 				'name'		=> __( 'How to display on mobile devices?', 'themeblvd' ),
 				'std'		=> 'full_list',
 				'type'		=> 'radio',
-				'options'		=> array(
+				'options'	=> array(
 		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd' ),
 		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'themeblvd' ),
 		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'themeblvd' )
@@ -987,7 +1006,7 @@ class Theme_Blvd_Sliders_Admin {
 				'name'		=> __( 'Show next/prev arrows?', 'themeblvd' ),
 				'std'		=> '1',
 				'type'		=> 'select',
-				'options'		=> array(
+				'options'	=> array(
 		            '1'	=> __( 'Yes, show arrows.', 'themeblvd' ),
 		            '0'	=> __( 'No, don\'t show them.', 'themeblvd' )
 				)
@@ -997,7 +1016,7 @@ class Theme_Blvd_Sliders_Admin {
 				'name'		=> __( 'How to display on mobile devices?', 'themeblvd' ),
 				'std'		=> 'full_list',
 				'type'		=> 'radio',
-				'options'		=> array(
+				'options'	=> array(
 		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd' ),
 		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'themeblvd' ),
 		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'themeblvd' )
