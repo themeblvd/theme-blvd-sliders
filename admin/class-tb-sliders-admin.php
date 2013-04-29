@@ -536,7 +536,7 @@ class Theme_Blvd_Sliders_Admin {
 									<div class="slide-video-height mini-control clearfix">
 										<input type="text" value="<?php echo $this->slide_value( $slide_options, 'video_height' ); ?>" name="slides[<?php echo $slide_id; ?>][video_height]" class="numeric" />
 										<label for="slides[<?php echo $slide_id; ?>][video_height]">
-											<?php _e( 'Maximum Video Height (use 0 for default)', 'themeblvd_sliders' ); ?>
+											<?php _e( 'Maximum Video Height (use 0 for no limit)', 'themeblvd_sliders' ); ?>
 										</label>
 									</div>
 

@@ -60,10 +60,6 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 	if( ! $settings['nav_standard'] && ! $settings['nav_arrows'] )
 		$classes .= ' hide-full_nav';
 	$classes = apply_filters( 'themeblvd_slider_wrapper_classes', $classes );
-	
-	// Max height
-	$max_height = themeblvd_sliders_get_max_height( $slider, $slides, $settings );
-	$max_height_style = themeblvd_sliders_get_max_height_style( $max_height );
 
 	// Hide on mobile?
 	$hide = '';
@@ -83,9 +79,9 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 						<ul class="slides">
 							<?php if( ! empty( $slides ) ) : ?>
 								<?php foreach( $slides as $slide ) : ?>					
-									<?php $media = themeblvd_sliders_get_media( $slider, $slide, $settings, 'standard', $max_height ); ?>
+									<?php $media = themeblvd_sliders_get_media( $slider, $slide, $settings ); ?>
 									<?php $elements = themeblvd_sliders_get_elements( $slider, $slide ); ?>
-									<li class="slide tight <?php echo themeblvd_sliders_get_slide_classes( $slider, $slide, $media ); ?>"<?php echo $max_height_style; ?>>
+									<li class="slide tight <?php echo themeblvd_sliders_get_slide_classes( $slider, $slide, $media ); ?>">
 										<div class="slide-body">
 											<div class="grid-protection clearfix">
 												<?php // Custom Slides ?>
