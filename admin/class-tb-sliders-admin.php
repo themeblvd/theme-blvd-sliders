@@ -54,6 +54,7 @@ class Theme_Blvd_Sliders_Admin {
 	public function load_scripts() {
 		wp_enqueue_script( 'jquery-ui-core');
 		wp_enqueue_script( 'jquery-ui-sortable' );
+		wp_enqueue_script( 'postbox' );
 		if( function_exists( 'wp_enqueue_media' ) && version_compare( TB_FRAMEWORK_VERSION, '2.2.2', '>=' ) ) 
 			wp_enqueue_media();
 		wp_enqueue_script( 'themeblvd_admin', TB_FRAMEWORK_URI . '/admin/assets/js/shared.min.js', array('jquery'), TB_FRAMEWORK_VERSION );
@@ -708,9 +709,9 @@ class Theme_Blvd_Sliders_Admin {
 			<input type="hidden" name="slider_id" value="<?php echo $post_id; ?>" />
 			<div id="poststuff" class="metabox-holder full-width has-right-sidebar">
 				<div class="inner-sidebar">
-					<div class="postbox postbox-publish">
-						<h3 class="hndle"><?php _e( 'Publish', 'themeblvd_sliders' ); ?> <?php echo stripslashes($slider->post_title); ?></h3>
-						<div class="submitbox">
+					<div id="slider-publish" class="postbox postbox-publish">
+						<h3 class="hndle" title="<?php echo __('Click to toggle', 'themeblvd_sliders'); ?>"><?php _e( 'Publish', 'themeblvd_sliders' ); ?> <?php echo stripslashes($slider->post_title); ?></h3>
+						<div class="tb-widget-content submitbox">
 							<div id="major-publishing-actions">
 								<div id="delete-action">
 									<a class="submitdelete delete_slider" href="#<?php echo $post_id; ?>"><?php _e( 'Delete', 'themeblvd_sliders' ); ?></a>
@@ -721,46 +722,52 @@ class Theme_Blvd_Sliders_Admin {
 								</div>
 								<div class="clear"></div>
 							</div>
-						</div><!-- .submitbox (end) -->
+						</div><!-- .tb-widget-content (end) -->
 					</div><!-- .post-box (end) -->
-					<div class="postbox postbox-slider-info">
+					<div id="slider-info" class="postbox postbox-slider-info closed">
+						<div class="handlediv" title="<?php echo __('Click to toggle', 'themeblvd_sliders'); ?>"><br></div>
 						<h3 class="hndle"><?php _e('Slider Information', 'themeblvd_sliders' ); ?></h3>
-						<?php
-						// Current settings
-						$info_settings = array(
-							'post_title' 	=> $slider->post_title,
-							'post_name'		=> $slider->post_name
-						);
-						
-						// Setup attribute options
-						$info_options = array( 
-							array( 
-								'name'		=> __('Slider Name', 'themeblvd_sliders' ),
-								'id' 		=> 'post_title',
-								'desc'		=> __('This title is just for you. It\'ll never be used outside of your WordPress admin panel.', 'themeblvd_sliders'),
-								'type' 		=> 'text'
-							),
-							array( 
-								'name' 		=> __('Slider ID', 'themeblvd_sliders' ),
-								'id' 		=> 'post_name',
-								'desc'		=> __( 'Sliders are assigned based on this ID. So if you change this at any point, make sure to also update any builder elements, pages, or other options in which you\'ve assigned this specific slider.', 'themeblvd_sliders' ),
-								'type' 		=> 'text'
-							)
-						);
-		
-						// Display form element
-						$form = themeblvd_option_fields( 'info', $info_options, $info_settings, false );
-						echo $form[0]; 
-						?>
+						<div class="tb-widget-content hide">
+							<?php
+							// Current settings
+							$info_settings = array(
+								'post_title' 	=> $slider->post_title,
+								'post_name'		=> $slider->post_name
+							);
+							
+							// Setup attribute options
+							$info_options = array( 
+								array( 
+									'name'		=> __('Slider Name', 'themeblvd_sliders' ),
+									'id' 		=> 'post_title',
+									'desc'		=> __('This title is just for you. It\'ll never be used outside of your WordPress admin panel.', 'themeblvd_sliders'),
+									'type' 		=> 'text'
+								),
+								array( 
+									'name' 		=> __('Slider ID', 'themeblvd_sliders' ),
+									'id' 		=> 'post_name',
+									'desc'		=> __( 'Sliders are assigned based on this ID. So if you change this at any point, make sure to also update any builder elements, pages, or other options in which you\'ve assigned this specific slider.', 'themeblvd_sliders' ),
+									'type' 		=> 'text'
+								)
+							);
+			
+							// Display form element
+							$form = themeblvd_option_fields( 'info', $info_options, $info_settings, false );
+							echo $form[0]; 
+							?>
+						</div><!-- .tb-widget-content (end) -->
 					</div><!-- .post-box (end) -->
 					<?php if( $options ) : ?>
-						<div class="postbox postbox-options">
+						<div id="slider-options" class="postbox postbox-options closed">
+							<div class="handlediv" title="<?php echo __('Click to toggle', 'themeblvd_sliders'); ?>"><br></div>
 							<h3 class="hndle"><?php echo $types[$type]['name'].' '.__( 'Options', 'themeblvd_sliders' ); ?></h3>
-							<?php 
-							// Slider Options
-							$form = themeblvd_option_fields( 'options', $options, $settings, false );
-							echo $form[0];
-							?>
+							<div class="tb-widget-content hide">
+								<?php 
+								// Slider Options
+								$form = themeblvd_option_fields( 'options', $options, $settings, false );
+								echo $form[0];
+								?>
+							</div><!-- .tb-widget-content (end) -->
 						</div><!-- .post-box (end) -->
 					<?php endif; ?>
 				</div><!-- .inner-sidebar (end) -->

@@ -141,6 +141,13 @@ jQuery(document).ready(function($) {
 			$('#sortable').sortable({
 				handle: '.widget-name'
 			});
+
+			// Enable WP's post box toggles
+			// requires: wp_enqueue_script('postbox');
+			postboxes.add_postbox_toggles(pagenow, { 
+				pbshow: slider_blvd.show_widget,
+				pbhide: slider_blvd.hide_widget 
+			});
 			
 			// Take us to the tab
 			$('#slider_blvd .nav-tab-wrapper a').removeClass('nav-tab-active');
@@ -149,6 +156,18 @@ jQuery(document).ready(function($) {
 			$('#slider_blvd .group:last').fadeIn();
     	},
     	
+    	// These methods are passed into WP's postboxes.add_postbox_toggles 
+    	// as the pbshow and bphide parameters. They allow the widgets to
+    	// be toggled open and close.
+    	hide_widget : function( id )
+    	{
+    		$('#'+id+' .tb-widget-content').hide();
+    	},
+    	show_widget : function( id )
+    	{
+    		$('#'+id+' .tb-widget-content').show();
+    	},
+
     	// Show setup for slide according to what type of slide we're working with. 
     	// Will always be image, video, or custom type of slide.
     	type : function( object )
