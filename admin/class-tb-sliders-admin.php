@@ -508,7 +508,7 @@ class Theme_Blvd_Sliders_Admin {
 											}
 
 											// Add option for raw image, with no crop.
-											echo '<option '.selected( $size, $image_size, false ).' value="no-crop">'.__('Do not crop image.', 'themeblvd_sliders').'</option>';
+											echo '<option '.selected( $size, $image_size, false ).' value="full">'.__('Do not crop image.', 'themeblvd_sliders').'</option>';
 											?>
 										</select>
 									<?php endif; ?>
@@ -897,12 +897,12 @@ class Theme_Blvd_Sliders_Admin {
 		 */
 		
 		$standard_positions = array(
-			'full' 			=> 'slider-large',
+			'full' 			=> 'slider-large', // Default
 			'align-left' 	=> 'slider-staged',
 			'align-right' 	=> 'slider-staged'
 		);
 		$carrousel_positions = array(
-			'full' 			=> 'grid_4'
+			'full' 			=> 'grid_4' // Default
 		);
 		
 		/**

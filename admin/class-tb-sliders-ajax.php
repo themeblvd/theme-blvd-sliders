@@ -115,67 +115,66 @@ class Theme_Blvd_Sliders_Ajax {
 						continue;
 					}
 					
-					// Image attributes - Alot of stuff here is pretty heavy, but 
-					// by saving all of this in the WP admin, we're saving a ton 
-					// of DB queries when the slider displays on the frontend.
-					if( isset( $slides[$key]['image']['id'] ) && $slide['slide_type'] == 'image' ) {
+					// Image attributes - The idea is to do all work here for getting 
+					// whatever attributes we need in displaying the image so we don't 
+					// need to query the DB on the frontend display at all.
+					if( isset( $slide['image']['id'] ) && $slide['slide_type'] == 'image' ) {
 						
 						global $_wp_additional_image_sizes;
 
 						// Image ID/URL for slider manager
-						$slides[$key]['image']['id'] = wp_kses( $slide['image']['id'], array() );
-						$preview = wp_get_attachment_image_src( $slide['image']['id'], 'full' );
-						$slides[$key]['image']['url'] = $preview[0];	
-					
-						// Image URL's ready to be be used in frontend slider
-						$registered_sizes = get_intermediate_image_sizes();
-						foreach( $registered_sizes as $size ) {
-							$image = wp_get_attachment_image_src( $slides[$key]['image']['id'], $size );
-							$slides[$key]['image'][$size ] = $image[0];
+						$attachment_id = wp_kses( $slide['image']['id'], array() );
+						$raw_image = wp_get_attachment_image_src( $attachment_id, 'full' );	
+
+						// Expand the saved image data
+						$slides[$key]['image'] = array(
+							'id'		=> $attachment_id,		// Attachment ID of image
+							'url'		=> $raw_image[0],		// Raw image URL, uncropped
+							'title'		=> '',					// Attachment title
+							'mime_type'	=> '',					// Post mime type, i.e. image/jpeg, image/png, etc
+							'display'	=> '',					// Cropped Image URL for slider display
+							'width'		=> '',					// Width of cropped image
+							'height'	=> '',					// Height of cropped image
+							'size'		=> 'full',				// Name of crop size, 'full' if not registered or selected by user
+							'crop'		=> 0,					// Crop mode, true for hard or false for soft
+							'cropped'	=> 0					// Whether the cropped image actually exists, or WP has returned original			
+						);
+
+						// Items from attachment post object - title and mime type
+						$attachment = get_post( $attachment_id );
+						$slides[$key]['image']['title'] = $attachment->post_title;
+						$slides[$key]['image']['mime_type'] = $attachment->post_mime_type;
+
+						// Store and verify correct crop name
+						if( $slide['position_image'] == 'full' ) {
+							if( isset( $slide['image_size'] ) && $slide['image_size'] != 'full' )
+								if( in_array( $slide['image_size'], get_intermediate_image_sizes() ) )
+									$slides[$key]['image']['size'] = $slide['image_size']; // $image_size var used below
+						} else {
+							$slides[$key]['image']['size'] = $slider['positions'][$slide['position_image']];
 						}
-					
-						// Image Size
-						if( isset( $slide['image_size'] ) ) {
-							
-							$slides[$key]['image_size'] = array(
-								'name'		=> '',
-								'width' 	=> '',
-								'height'	=> '',
-								'crop'		=> 1,
-								'valid'		=> 1
-							);
 
-							if( $slide['position_image'] != 'full' )
-								$name = 'slider-staged';
-							else
-								$name = wp_kses( $slide['image_size'], array() ); // Custom crop only allowed w/full size
-							
-							$slides[$key]['image_size']['name'] = $name;
-
-							if( in_array( $name, $registered_sizes ) ) {
-								
-								$slides[$key]['image_size']['name'] = $name;
-
-								if( isset( $_wp_additional_image_sizes[$name]['width'] ) )
-									$slides[$key]['image_size']['width'] = intval( $_wp_additional_image_sizes[$name]['width'] );
-								else
-									$slides[$key]['image_size']['width'] = get_option( "{$name}_size_w" );
-								
-								if( isset( $_wp_additional_image_sizes[$name]['height'] ) )
-									$slides[$key]['image_size']['height'] = intval( $_wp_additional_image_sizes[$name]['height'] );
-								else
-									$slides[$key]['image_size']['height'] = get_option( "{$name}_size_h" );
-								
-								if( isset( $_wp_additional_image_sizes[$name]['crop'] ) )
-									$slides[$key]['image_size']['crop'] = intval( $_wp_additional_image_sizes[$name]['crop'] );
-								else
-									$slides[$key]['image_size']['crop'] = get_option( "{$name}_crop" );
-							
-							} else {
-								// Invalid crop size that's not registered with WP.
-								$slides[$key]['image_size']['valid'] = 0;
-							}
+						// Store crop mode, true for hard crop
+						if( $slides[$key]['image']['size'] != 'full' ) {
+							$image_size = $slides[$key]['image']['size'];
+							if( isset( $_wp_additional_image_sizes[$image_size] ) )
+								$slides[$key]['image']['crop'] = $_wp_additional_image_sizes[$image_size]['crop'];
+							else if( in_array($image_size, array( 'thumbnail', 'medium', 'large' ) ) )
+								$slides[$key]['image']['crop'] = get_option( "{$image_size}_crop" );
 						}
+
+						// Image attributes - display URL, width and height
+						$display = wp_get_attachment_image_src( $attachment_id, $slides[$key]['image']['size'] );
+						$slides[$key]['image']['display'] = $display[0];
+						$slides[$key]['image']['width'] = $display[1];
+						$slides[$key]['image']['height'] = $display[2];
+
+						// Verify whether we retrieved an actual cropped image from the 
+						// selected image size. Will remain false if WP just returned the 
+						// same URL as the raw, uncropped image.
+						if( $raw_image[0] != $display[0] )
+							$slides[$key]['image']['cropped'] = 1;
+
 					}
 
 					// Media position
@@ -227,18 +226,18 @@ class Theme_Blvd_Sliders_Ajax {
 					}
 					
 					// Video Max Height
-					if( isset( $slide['video_height'] ) ) {
+					if( isset( $slide['video_height'] ) )
 						$slides[$key]['video_height'] = intval($slide['video_height']);
-					}
 
 					// Remove elements that aren't needed
 					unset( $slides[$key]['position_image'], $slides[$key]['position_video'] ); // Both replaced by single "position" key
-					
+					unset( $slides[$key]['image_size'] ); // Image size stored in $slide['image']
+
 					if( $slide['slide_type'] != 'custom' )
 						unset( $slides[$key]['custom'] );
 					
 					if( $slide['slide_type'] != 'image' )
-						unset( $slides[$key]['image'], $slides[$key]['image_size'] );
+						unset( $slides[$key]['image'] );
 					
 					if( $slide['slide_type'] != 'video' )
 						unset( $slides[$key]['video'], $slides[$key]['video_height'] );
@@ -292,8 +291,8 @@ class Theme_Blvd_Sliders_Ajax {
 		}
 		
 		// Update even they're empty
-		update_post_meta( $slider_id, 'slides', $slides );
-		update_post_meta( $slider_id, 'settings', $settings );
+		update_post_meta( $slider_id, 'slides', apply_filters('themeblvd_slider_save_slides', $slides, $slider_id, $slider_type, $slider) );
+		update_post_meta( $slider_id, 'settings', apply_filters('themeblvd_slider_save_settings', $settings, $slider_id, $slider_type, $slider) );
 		
 		// Slider Information
 		if( isset( $data['info'] ) ) {
