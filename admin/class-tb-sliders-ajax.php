@@ -121,7 +121,13 @@ class Theme_Blvd_Sliders_Ajax {
 					if( isset( $slide['image']['id'] ) && $slide['slide_type'] == 'image' ) {
 						
 						global $_wp_additional_image_sizes;
-
+						global $content_width;
+						
+						// We don't want the admin content_width screwing up how we're 
+						// retrieving these images that'll end up being used for the 
+						// frontend display.
+						$content_width = 0;
+						
 						// Image ID/URL for slider manager
 						$attachment_id = wp_kses( $slide['image']['id'], array() );
 						$raw_image = wp_get_attachment_image_src( $attachment_id, 'full' );	
