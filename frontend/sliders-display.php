@@ -79,9 +79,9 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 						<ul class="slides">
 							<?php if( ! empty( $slides ) ) : ?>
 								<?php foreach( $slides as $slide ) : ?>					
-									<?php $media = themeblvd_sliders_get_media( $slider, $slide, $settings ); ?>
+									<?php $media_atts = themeblvd_sliders_get_media_atts( $slider, $slide, $settings ); ?>
 									<?php $elements = themeblvd_sliders_get_elements( $slider, $slide ); ?>
-									<li class="slide tight <?php echo themeblvd_sliders_get_slide_classes( $slider, $slide, $media ); ?>">
+									<li class="slide tight <?php echo themeblvd_sliders_get_slide_classes( $slider, $slide, $media_atts ); ?>">
 										<div class="slide-body">
 											<div class="grid-protection clearfix">
 												<?php // Custom Slides ?>
@@ -131,18 +131,7 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 													<?php endif; ?>
 													<div class="media <?php echo $slide['slide_type']; if($slide['position'] != 'full') echo ' grid_fifth_3'; ?>">
 														<div class="media-inner">
-															<?php if( $slide['slide_type'] == 'image' ) : ?>
-																<?php if( in_array( 'image_link', $elements ) && $slide['elements']['image_link']['url'] ) : ?>
-																	<?php if( $slide['elements']['image_link']['target'] == 'lightbox' ) : ?>
-																		<a href="<?php echo $slide['elements']['image_link']['url']; ?>" class="image-link enlarge" rel="themeblvd_lightbox" title=""><span>Image Link</span></a>
-																	<?php else : ?>
-																		<a href="<?php echo $slide['elements']['image_link']['url']; ?>" target="<?php echo $slide['elements']['image_link']['target']; ?>" class="image-link external"><span>Image Link</span></a>
-																	<?php endif; ?>
-																<?php endif; ?>
-																<img src="<?php echo $media['url']; ?>" alt="<?php echo $media['alt']; ?>" />
-															<?php else : ?>
-																<?php echo $media['video']; ?>
-															<?php endif; ?>
+															<?php themeblvd_slide_media( $media_atts ); ?>
 														</div><!-- .media-inner (end) -->
 													</div><!-- .media (end) -->
 												<?php endif; ?>
@@ -208,23 +197,16 @@ function themeblvd_carrousel_slider_default( $slider, $settings, $slides ) {
 					<?php foreach( $slides as $slide ) : ?>
 						<?php
 						// Image
-						$image_atts = themeblvd_sliders_get_media( $slider, $slide, $settings, 'carrousel' );
+						$media_atts = themeblvd_sliders_get_media_atts( $slider, $slide, $settings, 'carrousel' );
 						// Elements
 						$elements = array();
 						if( isset( $slide['elements']['include'] ) && is_array( $slide['elements']['include'] ) )
 							$elements = $slide['elements']['include'];
 						?>
-						<li class="slide size-<?php echo $image_atts['size']; ?>">
+						<li class="slide <?php echo themeblvd_sliders_get_slide_classes( $slider, $slide, $media_atts ); ?>">
 							<div class="slide-body">
 								<div class="grid-protection">
-									<?php if( in_array( 'image_link', $elements ) ) : ?>
-										<?php if( $slide['elements']['image_link']['target'] == 'lightbox' ) : ?>
-											<a href="<?php echo $slide['elements']['image_link']['url']; ?>" class="image-link enlarge" rel="themeblvd_lightbox" title=""><span><i class="icon-plus"></i></span></a>
-										<?php else : ?>
-											<a href="<?php echo $slide['elements']['image_link']['url']; ?>" target="<?php echo $slide['elements']['image_link']['target']; ?>" class="image-link external"><span><i class="icon-external-link"></i></span></a>
-										<?php endif; ?>
-									<?php endif; ?>
-									<img src="<?php echo $image_atts['url']; ?>" alt="<?php echo $image_atts['alt']; ?>" />
+									<?php themeblvd_slide_media( $media_atts, 'carrousel' ); ?>
 								</div><!-- .grid-protection (end) -->
 							</div><!-- .slide-body (end) -->
 						</li>
