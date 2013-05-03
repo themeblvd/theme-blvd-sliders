@@ -152,7 +152,7 @@ class Theme_Blvd_Sliders_Ajax {
 						$slides[$key]['image']['mime_type'] = $attachment->post_mime_type;
 
 						// Store and verify correct crop name
-						if( $slide['position_image'] == 'full' ) {
+						if( $slide['position_image'] == 'full' && $slider['custom_size'] === true ) {
 							if( isset( $slide['image_size'] ) && $slide['image_size'] != 'full' )
 								if( in_array( $slide['image_size'], get_intermediate_image_sizes() ) )
 									$slides[$key]['image']['size'] = $slide['image_size']; // $image_size var used below

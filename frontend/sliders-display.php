@@ -15,11 +15,11 @@ function themeblvd_carrousel_slider_js_default( $id, $options ) {
 			$('#tb-slider-<?php echo $id; ?> .slider-inner').fadeIn('fast');
 			$('#tb-slider-<?php echo $id; ?> .carrousel-slider').roundabout({
 				// minOpacity: '1',
-				responsive: true,
 				<?php if( $options['nav_arrows'] ) : ?>
 				btnNext: '#tb-slider-<?php echo $id; ?> .next',
-     			btnPrev: '#tb-slider-<?php echo $id; ?> .prev'
+     			btnPrev: '#tb-slider-<?php echo $id; ?> .prev',
      			<?php endif; ?>
+				responsive: true
 			});
 		});
 	});
@@ -195,15 +195,9 @@ function themeblvd_carrousel_slider_default( $slider, $settings, $slides ) {
 			<ul class="carrousel-slider">
 				<?php if( $slides ) : ?>
 					<?php foreach( $slides as $slide ) : ?>
-						<?php
-						// Image
-						$media_atts = themeblvd_sliders_get_media_atts( $slider, $slide, $settings, 'carrousel' );
-						// Elements
-						$elements = array();
-						if( isset( $slide['elements']['include'] ) && is_array( $slide['elements']['include'] ) )
-							$elements = $slide['elements']['include'];
-						?>
+						<?php $media_atts = themeblvd_sliders_get_media_atts( $slider, $slide, $settings, 'carrousel' ); ?>
 						<li class="slide <?php echo themeblvd_sliders_get_slide_classes( $slider, $slide, $media_atts ); ?>">
+							<span class="tb-block-click"></span>
 							<div class="slide-body">
 								<div class="grid-protection">
 									<?php themeblvd_slide_media( $media_atts, 'carrousel' ); ?>

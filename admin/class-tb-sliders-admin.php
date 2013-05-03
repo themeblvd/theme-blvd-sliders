@@ -482,13 +482,13 @@ class Theme_Blvd_Sliders_Admin {
 						        					$name = __( 'Aligned Right', 'themeblvd_sliders' );
 						        					break;	
 					        				}
-					        				$exclude_dimensions = $key == 'full' ? true : false;
+					        				$exclude_dimensions = $key == 'full' && $slider_types[$slider_type]['custom_size'] ? true : false;
 					        				echo '<option '.selected( $key, $position, false ).' value="'.$key.'">'.$this->get_image_size_desc($value, $name, $exclude_dimensions).'</option>';
 					        			}
 					        			?>
 									</select>
 									
-									<?php if( isset( $slider_types[$slider_type]['positions']['full'] ) ) : ?>
+									<?php if( isset( $slider_types[$slider_type]['positions']['full'] ) && $slider_types[$slider_type]['custom_size'] ) : ?>
 										<select class="slide-crop" name="slides[<?php echo $slide_id; ?>][image_size]">
 											<?php
 											$full_size = $slider_types[$slider_type]['positions']['full'];
@@ -1034,20 +1034,22 @@ class Theme_Blvd_Sliders_Admin {
 		// Final array (which is filterable from outside)
 		$sliders = array(
 			'standard' => array(
-				'name' 		=> 'Standard',
-				'id'		=> 'standard',
-				'types'		=> $standard_types,
-				'positions'	=> $standard_positions,
-				'elements'	=> $standard_elements,
-				'options'	=> $standard_options
+				'name' 			=> 'Standard',
+				'id'			=> 'standard',
+				'types'			=> $standard_types,
+				'positions'		=> $standard_positions,
+				'elements'		=> $standard_elements,
+				'options'		=> $standard_options,
+				'custom_size' 	=> true // Custom size allowed for full size position 
 			),
 			'carrousel' => array(
-				'name' 		=> 'Carrousel 3D',
-				'id'		=> 'carrousel',
-				'types'		=> $carrousel_types,
-				'positions'	=> $carrousel_positions,
-				'elements'	=> $carrousel_elements,
-				'options'	=> $carrousel_options
+				'name' 			=> 'Carrousel 3D',
+				'id'			=> 'carrousel',
+				'types'			=> $carrousel_types,
+				'positions'		=> $carrousel_positions,
+				'elements'		=> $carrousel_elements,
+				'options'		=> $carrousel_options,
+				'custom_size' 	=> false // Custom size not allowed for full size position 
 			)
 		);
 		// Add in user-created sliders from API
