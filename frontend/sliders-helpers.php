@@ -91,7 +91,7 @@ function themeblvd_sliders_get_media_atts( $slider, $slide, $settings, $slider_t
 		}
 
 		// Image Link
-		if( themeblvd_sliders_include_element( 'image_link', $slider, $slide ) ) {
+		if( themeblvd_slide_has_element( 'image_link', $slide ) ) {
 			$atts['link'] = array(
 				'url'		=> $slide['elements']['image_link']['url'],
 				'target'	=> $slide['elements']['image_link']['target'],
@@ -111,10 +111,9 @@ function themeblvd_sliders_get_media_atts( $slider, $slide, $settings, $slider_t
  *
  * @param array $atts Media attributes from themeblvd_sliders_get_media_atts()
  * @param string $slider_type Type of slider, standard or carrousel
- * @return array $atts Attributes for media, size, url, alt title, video
  */
 
-function themeblvd_slide_media( $atts, $slider_type = 'standard' ) {
+function themeblvd_slide_media( $atts, $settings, $slider_type = 'standard' ) {
 	echo themeblvd_get_slide_media( $atts, $slider_type );
 }
 
@@ -128,7 +127,7 @@ function themeblvd_slide_media( $atts, $slider_type = 'standard' ) {
  * @return array $output HTML output for media
  */
 
-function themeblvd_get_slide_media( $atts, $slider_type = 'standard' ) {
+function themeblvd_get_slide_media( $atts, $settings, $slider_type = 'standard' ) {
 	
 	$output = '';
 	
@@ -137,7 +136,7 @@ function themeblvd_get_slide_media( $atts, $slider_type = 'standard' ) {
 	else if( substr( $atts['type'], 0, 5 ) == 'image' )
 		$output = themeblvd_sliders_get_image( $atts, $slider_type );
 	
-	return apply_filters( 'themeblvd_slide_media', $output, $atts, $slider_type );	
+	return apply_filters( 'themeblvd_slide_media', $output, $atts, $settings, $slider_type );	
 }
 
 /** 
@@ -189,7 +188,7 @@ function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
 
 	}
 
-	return apply_filters( 'themeblvd_sliders_image', $output, $atts, $image,$slider_type );
+	return apply_filters( 'themeblvd_sliders_image', $output, $atts, $image, $slider_type );
 }
 
 /** 
@@ -247,6 +246,113 @@ function themeblvd_sliders_get_video( $media_atts, $slider_type = 'standard' ){
 }
 
 /** 
+ * Display content for individual slide including 
+ * headline, description, and button.
+ *
+ * @since 1.1.0
+ *
+ * @param array $slider ID of slider
+ * @param array $slide Data for individual slide
+ * @param string $slider_type Type of slider, standard or carrousel
+ */
+
+function themeblvd_slide_content( $slider, $slide, $settings, $slider_type = 'standard' ){
+	echo themeblvd_get_slide_content( $slider, $slide, $slider_type );
+}
+
+/** 
+ * Get content for individual slide including 
+ * headline, description, and button.
+ *
+ * @since 1.1.0
+ *
+ * @param array $slide Data for individual slide
+ * @param string $slider_type Type of slider, standard or carrousel
+ * @return string $output Final HTML markup for content section
+ */
+
+function themeblvd_get_slide_content( $slider, $slide, $settings, $slider_type = 'standard' ){
+	
+	$output = '';
+
+	if( themeblvd_slide_has_element( 'headline', $slide ) || 
+		themeblvd_slide_has_element( 'description', $slide ) || 
+		themeblvd_slide_has_element( 'button', $slide ) ) {
+
+		// Setup markup to wrap content area.
+		$wrap_class = 'content';
+		if( $slide['position'] != 'full' )
+			$wrap_class .= ' grid_fifth_2';
+		$wrap_fmt = apply_filters( 'themeblvd_slide_content_wrap', '<div class="'.$wrap_class.'"><div class="content-inner">%s</div></div>' );
+
+		$content = '';
+		
+		// Headline
+		if( themeblvd_slide_has_element( 'headline', $slide ) )
+			$content .= sprintf( '<div class="slide-title"><span>%s</span></div>', stripslashes( $slide['elements']['headline'] ) );
+
+		// Description + Button
+		if( themeblvd_slide_has_element( 'description', $slide ) || themeblvd_slide_has_element( 'button', $slide ) ) {
+
+			$desc = '';
+
+			// Description text
+			if( themeblvd_slide_has_element( 'description', $slide ) ) {
+				$text = stripslashes( $slide['elements']['description'] );
+				if( apply_filters( 'themeblvd_'.$slider_type.'_slider_desc', true, $slide, $slider, $settings ) )
+					$text = apply_filters( 'themeblvd_the_content', $text );
+				$desc .= sprintf( '<div class="slide-description-text">%s</div>', $text );
+			}
+
+			// Button
+			if( themeblvd_slide_has_element( 'button', $slide ) ) {
+				$button_atts = apply_filters( 'themeblvd_'.$slider_type.'_slider_button', array(
+					'text' 		=> $slide['elements']['button']['text'],
+					'url'		=> $slide['elements']['button']['url'],
+					'color'		=> 'default',
+					'target'	=> $slide['elements']['button']['target'],
+					'size'		=> 'medium'
+
+				), $slide, $slider, $settings, $slider_type );
+				$desc .= sprintf( '<div class="slide-description-button">%s</div>', themeblvd_button( stripslashes( $button_atts['text'] ), $button_atts['url'], $button_atts['color'], $button_atts['target'], $button_atts['size'] ) );
+			}
+
+			$content .= sprintf( '<div class="slide-description"><div class="slide-description-inner">%s</div></div>', $desc );
+		}
+
+		// Wrap and finalize content
+		$output = sprintf( $wrap_fmt, $content );
+	}
+
+	return apply_filters( 'themeblvd_slide_content', $output, $slider, $slide, $slider_type );
+}
+
+/** 
+ * Whether an element is included in a slide.
+ *
+ * @since 1.1.0
+ *
+ * @param string $element Element to check, image_link, headline, description, or button
+ * @param string $slider ID of slider
+ * @param array $slide All data for slide
+ * @return array $elements Elements for displaying in the slide
+ */
+
+function themeblvd_slide_has_element( $element, $slide ) {
+	$include = false;
+	
+	if( isset( $slide['elements']['include'] ) && is_array( $slide['elements']['include'] ) )
+		if( in_array( $element, $slide['elements']['include'] ) )
+			if( ! empty( $slide['elements'][$element] ) )
+				$include = true;
+
+	if( $element == 'button' && $slide['position'] == 'full' ) 
+		$include = false; // Full-size media slides don't support buttons
+
+	return apply_filters( 'themeblvd_slide_has_element', $include, $element, $slide );
+}
+
+/** 
  * Get the CSS classes for invividual slides.
  *
  * @since 1.1.0
@@ -267,49 +373,6 @@ function themeblvd_sliders_get_slide_classes( $slider, $slide, $media ) {
 			$classes .= ' full-image';
 	}
 	return apply_filters( 'themeblvd_sliders_slide_classes', $classes );
-}
-
-/** 
- * Finalize elements for slide display.
- *
- * @since 1.1.0
- *
- * @param string $slider ID of slider
- * @param array $slide All data for slide
- * @return array $elements Elements for displaying in the slide
- */
-
-function themeblvd_sliders_get_elements( $slider, $slide ) {
-	
-	// @todo... remove this function???
-
-	$elements = array();
-	if( $slide['slide_type'] != 'custom' ) {
-		if( isset( $slide['elements']['include'] ) && is_array( $slide['elements']['include'] ) )
-			$elements = $slide['elements']['include'];
-		if( $slide['slide_type'] == 'video' && $slide['position'] == 'full' )
-			$elements = array(); // Full width video slide can't have elements.
-	}
-	return apply_filters( 'themeblvd_standard_slider_elements', $elements, $slider, $slide );
-}
-
-/** 
- * Whether an element is included in a slide.
- *
- * @since 1.1.0
- *
- * @param string $element Element to check, image_link, headline, description, or button
- * @param string $slider ID of slider
- * @param array $slide All data for slide
- * @return array $elements Elements for displaying in the slide
- */
-
-function themeblvd_sliders_include_element( $element, $slider, $slide ) {
-	$include = false;
-	if( isset( $slide['elements']['include'] ) && is_array( $slide['elements']['include'] ) )
-		if( in_array( $element, $slide['elements']['include'] ) )
-			$include = true;
-	return apply_filters( 'themeblvd_sliders_include_element', $include, $element, $slider, $slide );
 }
 
 /** 

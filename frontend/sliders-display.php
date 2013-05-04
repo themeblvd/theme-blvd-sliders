@@ -74,74 +74,32 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 		<div class="slider-inner<?php echo $classes; ?>">	
 			<div class="slides-wrapper slides-wrapper-<?php echo $slider; ?>">
 				<div class="slides-inner">
-					<div class="slider standard-slider flexslider">
-						<div class="tb-loader"></div>
-						<ul class="slides">
-							<?php if( ! empty( $slides ) ) : ?>
+					<?php if( ! empty( $slides ) ) : ?>
+						<div class="slider standard-slider flexslider">
+							<div class="tb-loader"></div>
+							<ul class="slides">
 								<?php foreach( $slides as $slide ) : ?>					
 									<?php $media_atts = themeblvd_sliders_get_media_atts( $slider, $slide, $settings ); ?>
-									<?php $elements = themeblvd_sliders_get_elements( $slider, $slide ); ?>
 									<li class="slide tight <?php echo themeblvd_sliders_get_slide_classes( $slider, $slide, $media_atts ); ?>">
 										<div class="slide-body">
 											<div class="grid-protection clearfix">
-												<?php // Custom Slides ?>
 												<?php if( isset( $slide['custom'] ) ) : ?>
-													<?php echo $slide['custom']; ?>
-												<?php // Video and Image Slides ?>
+													<?php echo stripslashes( $slide['custom'] ); ?>
 												<?php else : ?>
-													<?php if( in_array( 'headline', $elements ) || in_array( 'description', $elements ) || in_array( 'button', $elements ) ) : ?>
-														<div class="content<?php if($slide['position'] != 'full') echo ' grid_fifth_2'; ?>">
-															<div class="content-inner">	
-																<?php if( in_array( 'headline', $elements ) && $slide['elements']['headline'] ) : ?>
-																	<div class="slide-title"><span><?php echo stripslashes( $slide['elements']['headline'] ); ?></span></div>
-																<?php endif; ?>
-																<?php if( in_array( 'description', $elements ) || in_array( 'button', $elements ) ) : ?>
-																	<div class="slide-description">
-																		<div class="slide-description-inner">
-																			<?php if( in_array( 'description', $elements ) ) : ?>
-																				<?php
-																				$description = stripslashes( $slide['elements']['description'] );
-																				if( apply_filters( 'themeblvd_standard_slider_desc', true, $slide, $slider, $settings ) )
-																					$description = apply_filters('themeblvd_the_content', $description);
-																				?>
-																				<div class="slide-description-text">
-																					<?php echo $description; ?>
-																				</div>
-																			<?php endif; ?>
-																			<?php if( $slide['position'] != 'full' && in_array( 'button', $elements ) && $slide['elements']['button']['text'] ) : ?>
-																				<div class="slide-description-button">
-																					<?php
-																					$button_atts = apply_filters( 'themeblvd_standard_slider_button', array(
-																						'text' 		=> $slide['elements']['button']['text'],
-																						'url'		=> $slide['elements']['button']['url'],
-																						'color'		=> 'default',
-																						'target'	=> $slide['elements']['button']['target'],
-																						'size'		=> 'medium'
-
-																					), $slide, $slider, $settings );
-																					echo themeblvd_button( stripslashes( $button_atts['text'] ), $button_atts['url'], $button_atts['color'], $button_atts['target'], $button_atts['size'] ); 
-																					?>
-																				</div>
-																			<?php endif; ?>
-																		</div><!-- .slide-description-inner (end) -->
-																	</div><!-- .slide-description (end) -->
-																<?php endif; ?>
-															</div><!-- .content-inner (end) -->
-														</div><!-- .content (end) -->
-													<?php endif; ?>
+													<?php themeblvd_slide_content( $slider, $slide, $settings ); ?>
 													<div class="media <?php echo $slide['slide_type']; if($slide['position'] != 'full') echo ' grid_fifth_3'; ?>">
 														<div class="media-inner">
-															<?php themeblvd_slide_media( $media_atts ); ?>
+															<?php themeblvd_slide_media( $media_atts, $settings ); ?>
 														</div><!-- .media-inner (end) -->
 													</div><!-- .media (end) -->
 												<?php endif; ?>
 											</div><!-- .grid-protection (end) -->
 										</div><!-- .slide-body (end) -->
 									</li>
-								<?php endforeach; ?>
-							<?php endif; ?>								
-						</ul>
-					</div><!-- .slider (end) -->
+								<?php endforeach; ?>				
+							</ul>
+						</div><!-- .slider (end) -->
+					<?php endif; ?>	
 				</div><!-- .slides-inner (end) -->					
 			</div><!-- .slides-wrapper (end) -->
 		</div><!-- .slider-inner (end) -->
