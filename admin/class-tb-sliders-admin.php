@@ -873,21 +873,21 @@ class Theme_Blvd_Sliders_Admin {
 		$standard_types = array(
 			'image' => array(
 				'name' => __( 'Image Slide', 'themeblvd' ),
-				'main_title' => __( 'Setup Image', 'themeblvd' )
+				'main_title' => __( 'Setup Image', 'themeblvd_sliders' )
 			),
 			'video' => array(
-				'name' => __( 'Video Slide', 'themeblvd' ),
-				'main_title' => __( 'Video Link', 'themeblvd' )
+				'name' => __( 'Video Slide', 'themeblvd_sliders' ),
+				'main_title' => __( 'Video Link', 'themeblvd_sliders' )
 			),
 			'custom' => array(
-				'name' => __( 'Custom Slide', 'themeblvd' ),
-				'main_title' => __( 'Setup Custom Content', 'themeblvd' )
+				'name' => __( 'Custom Slide', 'themeblvd_sliders' ),
+				'main_title' => __( 'Setup Custom Content', 'themeblvd_sliders' )
 			)
 		);
 		$carrousel_types = array(
 			'image' => array(
-				'name' => __( 'Image Slide', 'themeblvd' ),
-				'main_title' => __( 'Setup Image', 'themeblvd' )
+				'name' => __( 'Image Slide', 'themeblvd_sliders' ),
+				'main_title' => __( 'Setup Image', 'themeblvd_sliders' )
 			)
 		);
 		
@@ -925,7 +925,7 @@ class Theme_Blvd_Sliders_Admin {
 		    ),
 			array(
 				'id'		=> 'fx',
-				'name'		=> __( 'How to transition between slides?', 'themeblvd' ),
+				'name'		=> __( 'How to transition between slides?', 'themeblvd_sliders' ),
 				'std'		=> 'fade',
 				'type'		=> 'select',
 				'options'	=> array(
@@ -936,7 +936,7 @@ class Theme_Blvd_Sliders_Admin {
 			),
 			array(
 				'id'		=> 'smoothheight',
-				'name'		=> __( 'Allow height to adjust on each transition?', 'themeblvd' ),
+				'name'		=> __( 'Allow height to adjust on each transition?', 'themeblvd_sliders' ),
 				'std'		=> 'false',
 				'type'		=> 'select',
 				'options'	=> array(
@@ -950,83 +950,83 @@ class Theme_Blvd_Sliders_Admin {
 		    ),
 			array(
 				'id'		=> 'timeout',
-				'name' 		=> __( 'Seconds between each transition?', 'themeblvd' ),
+				'name' 		=> __( 'Seconds between each transition?', 'themeblvd_sliders' ),
 				'std'		=> '5',
 				'type'		=> 'text'
 		    ),
 			array(
 				'id'		=> 'nav_standard',
-				'name'		=> __( 'Show standard slideshow navigation?', 'themeblvd' ),
+				'name'		=> __( 'Show standard slideshow navigation?', 'themeblvd_sliders' ),
 				'std'		=> '1',
 				'type'		=> 'select',
 				'options'	=> array(
-		            '1'	=> __( 'Yes, show navigation.', 'themeblvd' ),
-		            '0'	=> __( 'No, don\'t show it.', 'themeblvd' )
+		            '1'	=> __( 'Yes, show navigation.', 'themeblvd_sliders' ),
+		            '0'	=> __( 'No, don\'t show it.', 'themeblvd_sliders' )
 				)
 			),
 			array(
 				'id'		=> 'nav_arrows',
-				'name'		=> __( 'Show next/prev arrows?', 'themeblvd' ),
+				'name'		=> __( 'Show next/prev arrows?', 'themeblvd_sliders' ),
 				'std'		=> '1',
 				'type'		=> 'select',
 				'options'	=> array(
-		            '1'	=> __( 'Yes, show arrows.', 'themeblvd' ),
-		            '0'	=> __( 'No, don\'t show them.', 'themeblvd' )
+		            '1'	=> __( 'Yes, show arrows.', 'themeblvd_sliders' ),
+		            '0'	=> __( 'No, don\'t show them.', 'themeblvd_sliders' )
 				)
 			),
 			array(
 				'id'		=> 'pause_play',
-				'name'		=> __( 'Show pause/play button?', 'themeblvd' ),
+				'name'		=> __( 'Show pause/play button?', 'themeblvd_sliders' ),
 				'std'		=> '1',
 				'type'		=> 'select',
 				'options'	=> array(
-		            '1'	=> __( 'Yes, show pause/play button.', 'themeblvd' ),
-		            '0'	=> __( 'No, don\'t show it.', 'themeblvd' )
+		            '1'	=> __( 'Yes, show pause/play button.', 'themeblvd_sliders' ),
+		            '0'	=> __( 'No, don\'t show it.', 'themeblvd_sliders' )
 				)
 			),
 			array(
 				'id'		=> 'pause_on_hover',
-				'name'		=> __( 'Enable pause on hover?', 'themeblvd' ),
+				'name'		=> __( 'Enable pause on hover?', 'themeblvd_sliders' ),
 				'std'		=> 'pause_on',
 				'type'		=> 'select',
 				'options'	=> array(
-		            'pause_on'		=> __( 'Pause on hover only.', 'themeblvd' ),
-		            'pause_on_off'	=> __( 'Pause on hover and resume when hovering off.', 'themeblvd' ),
-		            'disable'		=> __( 'No, disable this all together.', 'themeblvd' )
+		            'pause_on'		=> __( 'Pause on hover only.', 'themeblvd_sliders' ),
+		            'pause_on_off'	=> __( 'Pause on hover and resume when hovering off.', 'themeblvd_sliders' ),
+		            'disable'		=> __( 'No, disable this all together.', 'themeblvd_sliders' )
 				)
 			),
 			array(
 				'id'		=> 'mobile_fallback',
-				'name'		=> __( 'How to display on mobile devices?', 'themeblvd' ),
+				'name'		=> __( 'How to display on mobile devices?', 'themeblvd_sliders' ),
 				'std'		=> 'full_list',
 				'type'		=> 'radio',
 				'options'	=> array(
-		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd' ),
-		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'themeblvd' ),
-		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'themeblvd' )
+		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd_sliders' ),
+		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'themeblvd_sliders' ),
+		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'themeblvd_sliders' )
 				)
 			)
 		);
 		$carrousel_options = array(
 			array(
 				'id'		=> 'nav_arrows',
-				'name'		=> __( 'Show next/prev arrows?', 'themeblvd' ),
+				'name'		=> __( 'Show next/prev arrows?', 'themeblvd_sliders' ),
 				'std'		=> '1',
 				'type'		=> 'select',
 				'options'	=> array(
-		            '1'	=> __( 'Yes, show arrows.', 'themeblvd' ),
-		            '0'	=> __( 'No, don\'t show them.', 'themeblvd' )
+		            '1'	=> __( 'Yes, show arrows.', 'themeblvd_sliders' ),
+		            '0'	=> __( 'No, don\'t show them.', 'themeblvd_sliders' )
 				)
 			),
 			array(
 				'id'		=> 'mobile_fallback',
-				'name'		=> __( 'How to display on mobile devices?', 'themeblvd' ),
+				'name'		=> __( 'How to display on mobile devices?', 'themeblvd_sliders' ),
 				'std'		=> 'full_list',
 				'type'		=> 'radio',
 				'options'	=> array(
-		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd' ),
-		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'themeblvd' ),
-		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'themeblvd' )
+		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd_sliders' ),
+		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'themeblvd_sliders' ),
+		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'themeblvd_sliders' )
 				)
 			)
 		);
