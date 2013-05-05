@@ -50,6 +50,7 @@ function themeblvd_sliders_init() {
 	// Check to make sure Theme Blvd Framework 2.2+ is running
 	if( ! defined( 'TB_FRAMEWORK_VERSION' ) || version_compare( TB_FRAMEWORK_VERSION, '2.2.0', '<' ) ) {
 		add_action( 'admin_notices', 'themeblvd_sliders_warning' );
+		add_action( 'admin_init', 'themeblvd_sliders_disable_nag' );
 		return;
 	}
 	
@@ -113,9 +114,39 @@ add_action( 'plugins_loaded', 'themeblvd_sliders_textdomain' );
  */
 
 function themeblvd_sliders_warning() {
-	echo '<div class="updated">';
-	echo '<p>'.__( 'You currently have the "Theme Blvd Sliders" plugin activated, however you are not using a theme with Theme Blvd Framework v2.2+, and so this plugin will not do anything.', 'themeblvd_sliders' ).'</p>';
-	echo '</div>';
+	global $current_user;
+	// DEBUG: delete_user_meta( $current_user->ID, 'tb_sliders_no_framework' );
+	if( ! get_user_meta( $current_user->ID, 'tb_sliders_no_framework' ) ){
+		echo '<div class="updated">';
+		echo '<p>'.__( 'You currently have the "Theme Blvd Sliders" plugin activated, however you are not using a theme with Theme Blvd Framework v2.2+, and so this plugin will not do anything.', 'themeblvd_sliders' ).'</p>';
+		echo '<p><a href="?tb_nag_ignore=tb_sliders_no_framework">'.__('Dismiss this notice', 'themeblvd_sliders').'</a> | <a href="http://www.themeblvd.com" target="_blank">'.__('Visit ThemeBlvd.com', 'themeblvd_sliders').'</a></p>';
+		echo '</div>';
+	}
+}
+
+/**
+ * Dismiss an admin notice.
+ *
+ * An admin notice could be setup something like this:
+ *
+ * function my_admin_notice(){
+ *		global $current_user;
+ * 		if( ! get_user_meta( $current_user->ID, 'example_message' ) ){
+ * 			echo '<div class="updated">';
+ *			echo '<p>Some message to the user.</p>';
+ * 			echo '<p><a href="?tb_nag_ignore=example_message">Dismiss this notice</a></p>';
+ *			echo '</div>';
+ * 		}
+ * }
+ * add_action( 'admin_notices', 'my_admin_notice' );
+ *
+ * @since 1.1.0
+ */
+
+function themeblvd_sliders_disable_nag() {
+	global $current_user;
+    if ( isset( $_GET['tb_nag_ignore'] ) )
+         add_user_meta( $current_user->ID, $_GET['tb_nag_ignore'], 'true', true );
 }
 
 /**
