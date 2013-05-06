@@ -136,6 +136,9 @@ jQuery(document).ready(function($) {
 			
 			// Setup widgets
 			$('#slider_blvd .widget').themeblvd('widgets');
+
+			// Setup media uploader
+			$('#slider_blvd .widget').themeblvd('options', 'media-uploader');
 			
 			// Setup sortables
 			$('#sortable').sortable({
@@ -468,9 +471,9 @@ jQuery(document).ready(function($) {
 				$('#slider_blvd #edit #sortable .no-item-yet').remove();
 				$('#slider_blvd #edit #sortable').append(response);
 				$('#'+slide_id+' .slide-set-type select').each(function(){
-					slider_blvd.type( $(this)  );
+					slider_blvd.type( $(this) );
 				});
-				$('#'+slide_id).themeblvd('widgets');
+				$('#'+slide_id).themeblvd('widgets').themeblvd('options', 'media-uploader');
 				$('#'+slide_id).fadeIn();											
 				load.fadeOut('fast');
 				overlay.fadeOut('fast');

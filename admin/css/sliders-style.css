@@ -13,7 +13,7 @@
 #slider_blvd #edit_slider #titlediv { margin: 10px 0 10px 0; }
 #slider_blvd #edit_slider #titlediv h2 { float: left; margin: 0 12px; }
 #slider_blvd #edit_slider #titlediv .ajax-loading { display: none; float: left; margin: 9px 0 0 5px; visibility: visible; }
-#slider_blvd #edit_slider #titlediv #add_new_slide { float: left; margin: 5px 0 0 0; }
+#slider_blvd #edit_slider #titlediv #add_new_slide { float: left; margin: 3px 0 0 0; }
 #slider_blvd #edit_slider #slidesort { min-height: 200px; }
 #slider_blvd #edit_slider .widget-content .pad { min-height: 250px; }
 #slider_blvd #edit_slider .slide-set-type { background: #f7f7f7; border-bottom: 1px solid #dddddd; height: 40px; }
@@ -22,8 +22,10 @@
 #slider_blvd #edit_slider .slide-set-media { float: left; margin: 0 3% 0 0; width: 37%; }
 #slider_blvd #edit_slider .widget { margin-bottom:10px; }
 #slider_blvd #optionsframework .widget-content .controls input.upload_button,
+#slider_blvd #optionsframework .widget-content .controls input.trigger, /* plugin v.1.1+ */
 #slider_blvd #optionsframework .widget-content .controls input.upload { float: none; width: 75px; }
 #slider_blvd #optionsframework .widget-content .controls input.upload { width: 100%; }
+#slider_blvd #edit_slider .section-upload .help-icon { position: absolute; top: 6px; right: 5px; z-index: 2; }
 #slider_blvd #optionsframework .widget-content .controls textarea { height: 200px; }
 #slider_blvd #optionsframework .widget-content .controls td textarea { height: 80px; }
 #slider_blvd #edit_slider .slide-include-elements { border-left: 1px solid #dddddd; float: left; width: 58%; }

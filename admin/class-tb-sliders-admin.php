@@ -29,7 +29,7 @@ class Theme_Blvd_Sliders_Admin {
 		$admin_page = add_object_page( 'Slider Manager', 'Sliders', themeblvd_admin_module_cap( 'sliders' ), 'themeblvd_sliders', array( $this, 'admin_page' ), 'div', 31 );
 		add_action( 'admin_print_styles-'.$admin_page, array( $this, 'load_styles' ) );
 		add_action( 'admin_print_scripts-'.$admin_page, array( $this, 'load_scripts' ) );
-		if( version_compare( TB_FRAMEWORK_VERSION, '2.2.2', '<' ) ) {
+		if( ! function_exists('wp_enqueue_media') || ! function_exists('themeblvd_media_uploader') ) {
 			add_action( 'admin_print_styles-'.$admin_page, 'optionsframework_mlu_css', 0 );
 			add_action( 'admin_print_scripts-'.$admin_page, 'optionsframework_mlu_js', 0 );
 		}
@@ -55,7 +55,7 @@ class Theme_Blvd_Sliders_Admin {
 		wp_enqueue_script( 'jquery-ui-core');
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'postbox' );
-		if( function_exists( 'wp_enqueue_media' ) && version_compare( TB_FRAMEWORK_VERSION, '2.2.2', '>=' ) ) 
+		if( function_exists('wp_enqueue_media') && function_exists('themeblvd_media_uploader') )
 			wp_enqueue_media();
 		wp_enqueue_script( 'themeblvd_admin', TB_FRAMEWORK_URI . '/admin/assets/js/shared.min.js', array('jquery'), TB_FRAMEWORK_VERSION );
 		wp_localize_script( 'themeblvd_admin', 'themeblvd', themeblvd_get_admin_locals( 'js' ) );
@@ -430,12 +430,12 @@ class Theme_Blvd_Sliders_Admin {
 											<h3><?php echo $config['main_title']; ?></h3>
 											<div class="field section-upload">
 												<?php
-												if( version_compare(TB_FRAMEWORK_VERSION, '2.2.2', '>=') ) {
-													// @todo ... Add new media uploader
-												} else {
-													$current_image = $this->slide_value( $slide_options, 'image' );
+												$current_image = $this->slide_value( $slide_options, 'image' );
+												if( function_exists('wp_enqueue_media') && function_exists('themeblvd_media_uploader') )
+													echo themeblvd_media_uploader( array( 'option_name' => 'slides['.$slide_id.']', 'type' => 'slider', 'id' => $slide_id.'image', 'value' => $current_image['url'], 'value_id' => $current_image['id'] ) );
+												else
+													// @deprecated
 													echo optionsframework_medialibrary_uploader( 'slides['.$slide_id.']', 'slider', $slide_id.'image', $current_image, null, null, $slider_id, null, __( 'Get Image', 'themeblvd_sliders' ) );
-												}
 												?>
 											</div><!-- .field (end) -->
 										</div><!-- .slide-set-image (end) -->
