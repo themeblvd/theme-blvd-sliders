@@ -94,7 +94,7 @@ function themeblvd_sliders_get_media_atts( $slider, $slide, $settings, $slider_t
 		if( themeblvd_slide_has_element( 'image_link', $slide ) ) {
 			$atts['link'] = array(
 				'url'		=> $slide['elements']['image_link']['url'],
-				'target'	=> $slide['elements']['image_link']['target'],
+				'target'	=> $slide['elements']['image_link']['target'], // _self, _blank, lightbox, lightbox_video
 				'title' 	=> $atts['alt']
 			);
 		}

@@ -325,7 +325,7 @@ function themeblvd_shortcode_slider_auto( $atts ) {
 		'pause_on_hover' 	=> 'disable',		// Pause on hover - pause_on, pause_on_off, disable
 		'image' 			=> 'full',			// How to display featured images - full, align-right, align-left
 		'image_size'		=> 'slider-large', 	// Crop size for full-size images
-		'image_link' 		=> 'permalink',		// Where image link goes - permalink, lightbox, none
+		'image_link' 		=> 'permalink',		// Where image link goes - option, permalink, lightbox, none
 		'button' 			=> '',				// Text for button to lead to permalink - leave empty to hide
 		'tag' 				=> '',				// Tag(s) to include/exclude
 		'category_name'		=> '',				// Category slug(s) to include/exclude
