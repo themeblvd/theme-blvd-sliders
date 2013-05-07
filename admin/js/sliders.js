@@ -232,6 +232,7 @@ jQuery(document).ready(function($) {
 					parent.find('.slide-video-height').show();
 					parent.find('.slide-crop').hide();
 					parent.find('.image-note').hide();
+					parent.find('.slide-element-header').show();
 					if(position == 'full')
 					{
 						parent.find('.slide-elements').hide();
