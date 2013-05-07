@@ -84,7 +84,7 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 										<div class="slide-body">
 											<div class="grid-protection clearfix">
 												<?php if( isset( $slide['custom'] ) ) : ?>
-													<?php echo stripslashes( $slide['custom'] ); ?>
+													<?php echo apply_filters( 'themeblvd_sliders_custom_content', $slide['custom'] ); ?>
 												<?php else : ?>
 													<?php themeblvd_slide_content( $slider, $slide, $settings ); ?>
 													<div class="media <?php echo $slide['slide_type']; if($slide['position'] != 'full') echo ' grid_fifth_3'; ?>">
