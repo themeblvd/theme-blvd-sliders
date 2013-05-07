@@ -151,21 +151,30 @@ function themeblvd_get_slide_media( $atts, $settings, $slider_type = 'standard' 
 
 function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
 
+	$output = '';
+
 	// Image
 	$image = sprintf( '<img src="%s" alt="%s" width="%s" height="%s" />', $atts['url'], $atts['alt'], $atts['width'], $atts['height'] );
-	$output = $image; // $image passed into filter at end of function
 
 	// Image Link
 	if( $atts['link'] ) {
 
 		// Link class and target
 		switch( $atts['link']['target'] ) {
-			case 'lightbox' :
-				$anchor_class = 'slide-thumbnail-link image';
-				$link_target = ' rel="featured_themeblvd_lightbox"';
-				break;
 			case 'lightbox_video' :
 				$anchor_class = 'slide-thumbnail-link video';
+				$link_target = ' rel="featured_themeblvd_lightbox"';
+				if( function_exists('themeblvd_prettyphoto_supported_file') ) {
+					if( ! themeblvd_prettyphoto_supported_file( $atts['link']['url'] ) ) {
+						// WP oEmbed for non YouTube and Vimeo videos
+						$id = uniqid('inline-video-');
+						$output .= sprintf( '<div id="%s" class="hide">%s</div>', $id, wp_oembed_get($atts['link']['url']) );
+						$atts['link']['url'] = "#{$id}";
+					}
+				}
+				break;
+			case 'lightbox' :
+				$anchor_class = 'slide-thumbnail-link image';
 				$link_target = ' rel="featured_themeblvd_lightbox"';
 				break;
 			case '_blank' : 
@@ -184,8 +193,13 @@ function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
 		$link_fmt = apply_filters( 'themeblvd_sliders_image_link_format', '<a href="'.$atts['link']['url'].'" title="'.$atts['link']['title'].'"'.$link_target.' class="'.$anchor_class.'">%s'.$overlay.'</a>', $atts, $link_target, $slider_type );
 		
 		// Wrap link around Image for final $output
-		$output = sprintf( $link_fmt, $image );
+		$output .= sprintf( $link_fmt, $image );
 
+	} else {
+
+		// Output set to the raw image when there's no link
+		$output .= $image;
+	
 	}
 
 	return apply_filters( 'themeblvd_sliders_image', $output, $atts, $image, $slider_type );
@@ -213,13 +227,21 @@ function themeblvd_sliders_get_video( $media_atts, $slider_type = 'standard' ){
 	if( $video )
 		return $video;
 
-	// Attributes
-	$atts = array();
-	if( $media_atts['position'] == 'full' )
-		$atts = array( 'height' => '350' );
-	
+	// Is this an oEmbed?
+	$type = wp_check_filetype( $media_atts['video'] );
+	$oembed = true;
+	if( in_array( $type['ext'], wp_get_video_extensions() ) )
+		$oembed = false;
+
 	// Get HTML
-	$video = wp_oembed_get( $media_atts['video'], $atts );
+	if( $oembed ) {
+		// oEmbed for external videos
+		$video = wp_oembed_get( $media_atts['video'] );
+	} else {
+		// Self-hosted videos, supported in WP 3.6+
+		// @todo Improve this. Could be better with params from slider -- width, height, poster
+		$video = do_shortcode( sprintf( '[video src="%s"]', $media_atts['video'] ) );
+	}
 
 	// Append max height
 	if( $video ){
@@ -227,13 +249,20 @@ function themeblvd_sliders_get_video( $media_atts, $slider_type = 'standard' ){
 		$video_max_height = '';
 
 		if( ! empty( $media_atts['height'] ) && intval( $media_atts['height'] ) > 0 )
-			$video_max_height = sprintf(' style="max-height:%dpx;"', $media_atts['height'] );
+			$video_max_height = sprintf('max-height: %dpx;', $media_atts['height'] );
 		
 		$video_max_height = apply_filters( 'themeblvd_sliders_max_height', $video_max_height , $media_atts['height'] );
 
 		if( $video_max_height ) {
-			$find = '<div class="themeblvd-video-wrapper"';
-			$video = str_replace($find, $find.$video_max_height , $video);
+			if( $oembed ) {
+				$find = '<div class="themeblvd-video-wrapper"';
+				$video = str_replace($find, $find.' style="'.$video_max_height.'"', $video);
+			} else {
+				$id = uniqid('tb_video_');
+				$output  = "<style>#{$id} .wp-video-shortcode { {$video_max_height} }</style>\n";
+				$output .= '<div id="'.$id.'">'.$video.'</div>';
+				$video = $output;
+			}
 		}
 
 	}

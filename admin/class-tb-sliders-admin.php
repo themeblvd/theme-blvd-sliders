@@ -51,13 +51,13 @@ class Theme_Blvd_Sliders_Admin {
 	 *
 	 * @since 1.0.0 
 	 */
-	public function load_scripts() {
+	public function load_scripts() { // @todo change shared.js back to min
 		wp_enqueue_script( 'jquery-ui-core');
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'postbox' );
 		if( function_exists('wp_enqueue_media') && function_exists('themeblvd_media_uploader') )
 			wp_enqueue_media();
-		wp_enqueue_script( 'themeblvd_admin', TB_FRAMEWORK_URI . '/admin/assets/js/shared.min.js', array('jquery'), TB_FRAMEWORK_VERSION );
+		wp_enqueue_script( 'themeblvd_admin', TB_FRAMEWORK_URI . '/admin/assets/js/shared.js', array('jquery'), TB_FRAMEWORK_VERSION );
 		wp_localize_script( 'themeblvd_admin', 'themeblvd', themeblvd_get_admin_locals( 'js' ) );
 		wp_enqueue_script( 'themeblvd_options', TB_FRAMEWORK_URI . '/admin/options/js/options.min.js', array('jquery'), TB_FRAMEWORK_VERSION );
 		wp_enqueue_script( 'themeblvd_sliders', TB_SLIDERS_PLUGIN_URI . '/admin/js/sliders.min.js', array('jquery'), TB_SLIDERS_PLUGIN_VERSION );
@@ -447,10 +447,28 @@ class Theme_Blvd_Sliders_Admin {
 											<h3><?php echo $config['main_title']; ?></h3>
 											<div class="field video-link">
 												<?php
+												echo '<input type="text" name="slides['.$slide_id.'][video]" placeholder="'.__('Video Link', 'themeblvd').'" value="'.$current_video.'" />';
+												/*
+												// @todo -- Incorporate "Get Video" button. Let's not bring this feature 
+												// to center-satge until we have a better handle on mp4's in WP 3.6.
 												$current_video = $this->slide_value( $slide_options, 'video' );
-												echo '<input type="text" name="slides['.$slide_id.'][video]" value="'.$current_video.'" />';
+												if( function_exists('wp_video_shortcode') && function_exists('themeblvd_media_uploader') ) {
+													echo '<div class="section-upload">';
+													echo themeblvd_media_uploader( array( 'option_name' => 'slides', 'type' => 'video', 'name' => 'video', 'id' => $slide_id, 'value' => $current_video ) );
+													echo '</div>';
+													//echo '<input type="text" name="slides['.$slide_id.'][video]" value="'.$current_video.'" />';
+												} else {
+													// @deprecated with release of WP 3.6
+													echo '<input type="text" name="slides['.$slide_id.'][video]" placeholder="'.__('Video Link', 'themeblvd').'" value="'.$current_video.'" />';
+												}
+												*/
 												?>
-												<p class="explain"><?php _e( 'Enter in a video URL compatible with <a href="http://codex.wordpress.org/Embeds">WordPress\'s oEmbed</a>.<br><br>Ex: http://youtube.com/watch?v=HPPj6viIBmU<br>Ex: http://vimeo.com/11178250<br>Ex: http://wordpress.tv/2011/08/14/name-of-video', 'themeblvd_sliders' ); ?>
+												<p class="explain">
+													<?php _e( 'Enter in a video URL compatible with <a href="http://codex.wordpress.org/Embeds">WordPress\'s oEmbed</a>.<br><br>Ex: http://youtube.com/watch?v=HPPj6viIBmU<br>Ex: http://vimeo.com/11178250', 'themeblvd_sliders' ); ?>
+													<?php /* @todo if( function_exists('wp_video_shortcode') ) : ?>
+														<br><?php _e('Ex: http://yoursite.com/uploads/video.mp4', 'themeblvd_sliders'); ?>
+													<?php endif; */ ?> 
+												</p>
 											</div><!-- .field (end) -->
 										</div><!-- .slide-set-video (end) -->
 										<?php
@@ -877,7 +895,7 @@ class Theme_Blvd_Sliders_Admin {
 			),
 			'video' => array(
 				'name' => __( 'Video Slide', 'themeblvd_sliders' ),
-				'main_title' => __( 'Video Link', 'themeblvd_sliders' )
+				'main_title' => __( 'Setup Video', 'themeblvd_sliders' )
 			),
 			'custom' => array(
 				'name' => __( 'Custom Slide', 'themeblvd_sliders' ),
