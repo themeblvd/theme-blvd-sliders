@@ -165,7 +165,7 @@ function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
 				$anchor_class = 'slide-thumbnail-link video';
 				$link_target = ' rel="featured_themeblvd_lightbox"';
 				if( function_exists('themeblvd_prettyphoto_supported_file') ) {
-					if( ! themeblvd_prettyphoto_supported_file( $atts['link']['url'] ) ) {
+					if( ! themeblvd_prettyphoto_supported_link( $atts['link']['url'] ) ) {
 						// WP oEmbed for non YouTube and Vimeo videos
 						$id = uniqid('inline-video-');
 						$output .= sprintf( '<div id="%s" class="hide">%s</div>', $id, wp_oembed_get($atts['link']['url']) );
