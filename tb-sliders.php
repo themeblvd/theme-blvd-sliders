@@ -68,16 +68,21 @@ function themeblvd_sliders_init() {
 		include_once( TB_SLIDERS_PLUGIN_DIR . '/frontend/sliders-helpers.php' );
 		include_once( TB_SLIDERS_PLUGIN_DIR . '/frontend/sliders-display.php' );
 		
+		// Standard slider
 		add_action( 'themeblvd_standard_slider_plugin_js', 'themeblvd_standard_slider_js', 10, 2 );
 		add_action( 'themeblvd_standard_slider', 'themeblvd_standard_slider_default', 9, 3 ); // JS located within the theme because also works with other elements
 		add_action( 'themeblvd_slider_auto', 'themeblvd_standard_slider_default', 9, 3 );
-		add_action( 'themeblvd_carrousel_slider', 'themeblvd_carrousel_slider_default', 9, 3 );
-		add_action( 'themeblvd_carrousel_slider_js', 'themeblvd_carrousel_slider_js_default', 10, 2 );
-		add_action( 'themeblvd_slider_fallback', 'themeblvd_slider_fallback_default', 10, 3 );
-		
 		add_filter( 'themeblvd_sliders_custom_content', 'stripslashes' );
 		add_filter( 'themeblvd_sliders_custom_content', 'do_shortcode' );
+
+		// Carrousel slider
+		add_action( 'themeblvd_carrousel_slider', 'themeblvd_carrousel_slider_default', 9, 3 );
+		add_action( 'themeblvd_carrousel_slider_js', 'themeblvd_carrousel_slider_js_default', 10, 2 );
 		
+		// General slider fallback
+		add_action( 'themeblvd_slider_fallback', 'themeblvd_slider_fallback_default', 10, 3 );
+		
+		// Slider shortcodes
 		add_shortcode( 'slider', 'themeblvd_shortcode_slider' );
 		add_shortcode( 'post_slider', 'themeblvd_shortcode_slider_auto' );
 	}
