@@ -79,6 +79,10 @@ function themeblvd_sliders_init() {
 		add_action( 'themeblvd_carrousel_slider', 'themeblvd_carrousel_slider_default', 9, 3 );
 		add_action( 'themeblvd_carrousel_slider_js', 'themeblvd_carrousel_slider_js_default', 10, 2 );
 		
+		// Nivo slider
+		add_action( 'themeblvd_nivo_slider', 'themeblvd_nivo_slider_default', 9, 3 );
+		add_action( 'themeblvd_nivo_slider_js', 'themeblvd_nivo_slider_js_default', 10, 2 );
+
 		// General slider fallback
 		add_action( 'themeblvd_slider_fallback', 'themeblvd_slider_fallback_default', 10, 3 );
 		

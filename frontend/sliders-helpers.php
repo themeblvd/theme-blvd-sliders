@@ -301,7 +301,7 @@ function themeblvd_slide_content( $slider, $slide, $settings, $slider_type = 'st
  */
 
 function themeblvd_get_slide_content( $slider, $slide, $settings, $slider_type = 'standard' ){
-	
+
 	$output = '';
 
 	if( themeblvd_slide_has_element( 'headline', $slide ) || 

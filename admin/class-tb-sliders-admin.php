@@ -902,6 +902,12 @@ class Theme_Blvd_Sliders_Admin {
 				'main_title' => __( 'Setup Custom Content', 'themeblvd_sliders' )
 			)
 		);
+		$nivo_types = array(
+			'image' => array(
+				'name' => __( 'Image Slide', 'themeblvd_sliders' ),
+				'main_title' => __( 'Setup Image', 'themeblvd_sliders' )
+			)
+		);
 		$carrousel_types = array(
 			'image' => array(
 				'name' => __( 'Image Slide', 'themeblvd_sliders' ),
@@ -919,6 +925,9 @@ class Theme_Blvd_Sliders_Admin {
 			'align-left' 	=> 'slider-staged',
 			'align-right' 	=> 'slider-staged'
 		);
+		$nivo_positions = array(
+			'full' 			=> 'slider-large' // Default
+		);
 		$carrousel_positions = array(
 			'full' 			=> 'grid_4' // Default
 		);
@@ -929,6 +938,7 @@ class Theme_Blvd_Sliders_Admin {
 		 */
 		
 		$standard_elements = array( 'image_link', 'headline', 'description', 'button', 'custom_content' );
+		$nivo_elements = array( 'image_link', 'headline', 'description' );
 		$carrousel_elements = array( 'image_link' );
 		
 		/**
@@ -1025,6 +1035,108 @@ class Theme_Blvd_Sliders_Admin {
 				)
 			)
 		);
+		$nivo_options = array(
+			array(
+		    	'type'		=> 'subgroup_start',
+		    	'class'		=> 'show-hide-toggle'
+		    ),
+		    array(
+				'id'		=> 'fx',
+				'name'		=> __( 'How to transition between slides?', 'themeblvd_sliders' ),
+				'std'		=> 'random',
+				'type'		=> 'select',
+				'options'	=> array(
+		            'boxRandom'				=> 'boxRandom',
+					'boxRain'				=> 'boxRain',
+					'boxRainReverse'		=> 'boxRainReverse',
+					'boxRainGrow'			=> 'boxRainGrow',
+					'boxRainGrowReverse'	=> 'boxRainGrowReverse',
+					'fold'					=> 'fold',
+					'fade'					=> 'fade',
+					'random'				=> 'random',
+					'sliceDown'				=> 'sliceDown',
+					'sliceDownLeft'			=> 'sliceDownLeft',
+					'sliceUp'				=> 'sliceUp',
+					'sliceUpLeft'			=> 'sliceUpLeft',
+					'sliceUpDown'			=> 'sliceUpDown',
+					'sliceUpDownLeft'		=> 'sliceUpDownLeft',
+					'slideInRight'			=> 'slideInRight',
+					'slideInLeft'			=> 'slideInLeft'
+				),
+				'class' 	=> 'trigger'
+			),
+		    array(
+				'id'		=> 'boxcols',
+				'name' 		=> __( 'Number of box columns for transition?', 'themeblvd_sliders' ),
+				'std'		=> '8',
+				'type'		=> 'text',
+				'class'		=> 'hide receiver receiver-boxRandom receiver-boxRain receiver-boxRainReverse receiver-boxRainGrow receiver-boxRainGrowReverse'
+		    ),
+		    array(
+				'id'		=> 'boxrows',
+				'name' 		=> __( 'Number of box rows for transition?', 'themeblvd_sliders' ),
+				'std'		=> '4',
+				'type'		=> 'text',
+				'class'		=> 'hide receiver receiver-boxRandom receiver-boxRain receiver-boxRainReverse receiver-boxRainGrow receiver-boxRainGrowReverse'
+		    ),
+			array(
+				'id'		=> 'slices',
+				'name' 		=> __( 'Number of slices for transition?', 'themeblvd_sliders' ),
+				'std'		=> '15',
+				'type'		=> 'text',
+				'class'		=> 'hide receiver receiver-sliceDown receiver-sliceDownLeft receiver-sliceUp receiver-sliceUpLeft receiver-sliceUpDown receiver-sliceUpDownLeft'
+		    ),
+		    array(
+		    	'type'		=> 'subgroup_end'
+		    ),
+			array(
+				'id'		=> 'timeout',
+				'name' 		=> __( 'Seconds between each transition?', 'themeblvd_sliders' ),
+				'std'		=> '5',
+				'type'		=> 'text'
+		    ),
+			array(
+				'id'		=> 'nav_standard',
+				'name'		=> __( 'Show standard slideshow navigation?', 'themeblvd_sliders' ),
+				'std'		=> 'true',
+				'type'		=> 'select',
+				'options'	=> array(
+		            'true'	=> __( 'Yes, show navigation.', 'themeblvd_sliders' ),
+		            'false'	=> __( 'No, don\'t show it.', 'themeblvd_sliders' )
+				)
+			),
+			array(
+				'id'		=> 'nav_arrows',
+				'name'		=> __( 'Show next/prev arrows?', 'themeblvd_sliders' ),
+				'std'		=> 'true',
+				'type'		=> 'select',
+				'options'	=> array(
+		            'true'	=> __( 'Yes, show arrows.', 'themeblvd_sliders' ),
+		            'false'	=> __( 'No, don\'t show them.', 'themeblvd_sliders' )
+				)
+			),
+			array(
+				'id'		=> 'pause_on_hover',
+				'name'		=> __( 'Enable pause on hover?', 'themeblvd_sliders' ),
+				'std'		=> 'true',
+				'type'		=> 'select',
+				'options'	=> array(
+		            'true'		=> __( 'Yes, pause slider on hover.', 'themeblvd_sliders' ),
+		            'false'		=> __( 'No, don\'t pause slider on hover.', 'themeblvd_sliders' )
+				)
+			),
+			array(
+				'id'		=> 'mobile_fallback',
+				'name'		=> __( 'How to display on mobile devices?', 'themeblvd_sliders' ),
+				'std'		=> 'full_list',
+				'type'		=> 'radio',
+				'options'	=> array(
+		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd_sliders' ),
+		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'themeblvd_sliders' ),
+		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'themeblvd_sliders' )
+				)
+			)
+		);
 		$carrousel_options = array(
 			array(
 				'id'		=> 'nav_arrows',
@@ -1059,6 +1171,15 @@ class Theme_Blvd_Sliders_Admin {
 				'elements'		=> $standard_elements,
 				'options'		=> $standard_options,
 				'custom_size' 	=> true // Custom size allowed for full size position 
+			),
+			'nivo' => array(
+				'name' 			=> 'Nivo',
+				'id'			=> 'nivo',
+				'types'			=> $nivo_types,
+				'positions'		=> $nivo_positions,
+				'elements'		=> $nivo_elements,
+				'options'		=> $nivo_options,
+				'custom_size' 	=> true // Custom size not allowed for full size position 
 			),
 			'carrousel' => array(
 				'name' 			=> 'Carrousel 3D',
