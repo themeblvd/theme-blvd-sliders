@@ -114,6 +114,9 @@ class Theme_Blvd_Sliders_Ajax {
 						unset( $slides[$key] );
 						continue;
 					}
+
+					// Attach ID of slide
+					$slides[$key]['slide_id'] = $key;
 					
 					// Image attributes - The idea is to do all work here for getting 
 					// whatever attributes we need in displaying the image so we don't 
