@@ -180,14 +180,18 @@ jQuery(document).ready(function($) {
     	type : function( object )
     	{
     		var opposite,
-				parent = object.closest('.widget-content'),
+    			helper_text,
+				parent = object.closest('.widget'),
 				value = object.val(),
 				position = object.closest('.widget-content').find('.slide-position-'+value).val();
 				name = object.find('option[value="'+value+'"]').text();	
 
 			parent.removeClass('type-image type-video type-custom');
 			parent.addClass('type-'+value);
-			object.parent().find('strong').text(name);
+			parent.find('.slide-set-type strong').text(name);
+			parent.find('.widget-name h3').removeClass('image video custom').addClass(value).text(name);
+
+			parent.find('.slide-summary').removeClass('image video').hide().text('');
 			
 			if(value == 'custom')
 			{
@@ -199,6 +203,12 @@ jQuery(document).ready(function($) {
 				if(value == 'image')
 				{
 					opposite = 'video';
+
+					helper_text = parent.find('.slide-set-image .image-title').val();
+					parent.find('.slide-summary').addClass('image');
+					if( helper_text )
+						parent.find('.slide-summary').text(helper_text).fadeIn(200);
+
 					parent.find('.slide-position-image').show();
 					parent.find('.slide-crop').show();
 					
@@ -230,6 +240,12 @@ jQuery(document).ready(function($) {
 				else if(value == 'video')
 				{
 					opposite = 'image';
+					
+					helper_text = parent.find('.slide-set-video .video-link input').val();
+					parent.find('.slide-summary').addClass('video');
+					if( helper_text )
+						parent.find('.slide-summary').text(helper_text).fadeIn(200);
+
 					parent.find('.slide-elements .element-image_link').hide();
 					parent.find('.slide-position-video').show();
 					parent.find('.slide-position-image').hide();
@@ -549,6 +565,15 @@ jQuery(document).ready(function($) {
 		var href = $(this).attr('href'), id = href.replace('#', ''), ids = 'posts%5B%5D='+id;
 		slider_blvd.delete_slider( ids, 'click', 'edit_page' );
 		return false;
+	});
+
+	// Update helper text in slide title
+	$('#slider_blvd #edit .video-link input').live( 'change', function(){
+		var widget = $(this).closest('.widget'), helper_text = $(this).val();
+		if( helper_text )
+			widget.find('.slide-summary').text(helper_text).fadeIn(200);
+		else
+			widget.find('.slide-summary').hide().text('');
 	});
 			 		
 });	

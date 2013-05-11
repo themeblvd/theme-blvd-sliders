@@ -47,6 +47,43 @@
 #slider_blvd #edit_slider .widget-content .pad {
 	min-height: 250px;
 }
+
+/* Widget Titles */
+#slider_blvd #edit_slider .widget-name {
+	position: relative;
+}
+#slider_blvd #edit_slider .widget-name h3 {
+	/* @todo ... Maybe add icon later on; JS is all in place to switch class ... */
+}
+#slider_blvd #edit_slider .widget-name h3.image {
+	/* @todo */
+}
+#slider_blvd #edit_slider .widget-name h3.video {
+	/* @todo */
+}
+#slider_blvd #edit_slider .widget-name h3.custom {
+	/* @todo */	
+}
+#slider_blvd #edit_slider .widget-name .slide-summary {
+	background: #f8f8f8;
+	border: 1px solid #cccccc;
+	-moz-border-radius: 3px; 
+	-webkit-border-radius: 3px; 
+	border-radius: 3px;
+	-moz-box-shadow: inset 0 1px 1px #ffffff;
+	-webkit-box-shadow: inset 0 1px 1px #ffffff;
+	box-shadow: inset 0 1px 1px #ffffff;
+	color: #888888;
+	display: block;
+	font-size: 10px;
+	line-height: 1em;
+	padding: 5px;
+	position: absolute;
+	top: 6px;
+	right: 34px;
+}
+
+/* Slider type header */
 #slider_blvd #edit_slider .slide-set-type {
 	background: #f7f7f7;
 	border-bottom: 1px solid #dddddd;
@@ -60,13 +97,15 @@
 	float: right;
 	margin: 8px 10px 0 0;
 }
+
+/* Media Setup */
 #slider_blvd #edit_slider .slide-set-media {
 	float: left;
 	margin: 0 3% 0 0;
 	width: 37%;
 }
 #slider_blvd #edit_slider .widget {
-	margin-bottom:10px;
+	margin-bottom: 10px;
 }
 #slider_blvd #optionsframework .widget-content .controls input.upload_button,
 #slider_blvd #optionsframework .widget-content .controls input.trigger, /* plugin v.1.1+ */
@@ -128,6 +167,8 @@
 	line-height: 26px;
 	padding-left: 5px;
 }
+
+/* Slide settings */
 #slider_blvd #edit_slider .mini-control input.numeric {
 	max-width: 50px;
 }
@@ -175,6 +216,8 @@
 #slider_blvd #optionsframework .inner-sidebar .section-radio .heading {
 	margin-bottom: 12px;
 }
+
+/* Sidebar */
 #slider_blvd .postbox.postbox-publish.closed h3 { /* Hack to preserve the publish box's open state when clicked */
 	border-bottom: 1px solid #dfdfdf;
 	-webkit-box-shadow: 0 1px 0 #ffffff;

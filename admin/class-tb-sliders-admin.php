@@ -400,20 +400,23 @@ class Theme_Blvd_Sliders_Admin {
 	public function edit_slide( $slider_id, $slider_type, $slide_id, $slide_options = null, $visibility = null ) {
 		global $_wp_additional_image_sizes;
 		$slider_types = $this->get_sliders();
+		$current_slide_type = $this->slide_value( $slide_options, 'slide_type' );
+		$current_image = $this->slide_value( $slide_options, 'image' );
+		$current_video = $this->slide_value( $slide_options, 'video' );
 		?>
 		<div id="<?php echo $slide_id; ?>" class="widget slide-options"<?php if( $visibility == 'hide' ) echo ' style="display:none"'; ?>>					
 			<div class="widget-name">
 				<a href="#" class="widget-name-arrow">Toggle</a>
-				<h3><?php _e( 'Slide', 'themeblvd_sliders' ); ?> (<?php echo $slider_type; ?>)</h3>
+				<h3 class="image"><?php echo $slider_types[$slider_type]['types'][$current_slide_type]['name']; ?></h3>
+				<span class="slide-summary"></span>
 			</div><!-- .element-name (end) -->
 			<div class="widget-content">
 				<div class="slide-set-type">
 					<strong><?php _e( 'Image Slide', 'themeblvd_sliders' ); ?></strong>
 					<select name="slides[<?php echo $slide_id; ?>][slide_type]">
 						<?php
-						$slide_type = $this->slide_value( $slide_options, 'slide_type' );
 						foreach( $slider_types[$slider_type]['types'] as $key => $value ) {						
-	        				echo '<option '.selected( $key, $slide_type, false ).' value="'.$key.'">'.$value['name'].'</option>';
+	        				echo '<option '.selected( $key, $current_slide_type, false ).' value="'.$key.'">'.$value['name'].'</option>';
 	        			}
 	        			?>
 					</select>
@@ -430,9 +433,8 @@ class Theme_Blvd_Sliders_Admin {
 											<h3><?php echo $config['main_title']; ?></h3>
 											<div class="field section-upload">
 												<?php
-												$current_image = $this->slide_value( $slide_options, 'image' );
 												if( function_exists('wp_enqueue_media') && function_exists('themeblvd_media_uploader') )
-													echo themeblvd_media_uploader( array( 'option_name' => 'slides['.$slide_id.']', 'type' => 'slider', 'id' => $slide_id.'image', 'value' => $current_image['url'], 'value_id' => $current_image['id'] ) );
+													echo themeblvd_media_uploader( array( 'option_name' => 'slides['.$slide_id.']', 'type' => 'slider', 'id' => $slide_id.'image', 'value' => $current_image['url'], 'value_title' => $current_image['title'], 'value_id' => $current_image['id'] ) );
 												else
 													// @deprecated
 													echo optionsframework_medialibrary_uploader( 'slides['.$slide_id.']', 'slider', $slide_id.'image', $current_image, null, null, $slider_id, null, __( 'Get Image', 'themeblvd_sliders' ) );
@@ -793,7 +795,7 @@ class Theme_Blvd_Sliders_Admin {
 					<div id="post-body-content">
 						<div id="titlediv">
 							<div class="ajax-overlay"></div>
-							<h2><?php _e( 'Manage Slides', 'themeblvd_sliders' ); ?></h2>
+							<h2><?php printf( __( 'Manage %s Slides', 'themeblvd_sliders' ), ucfirst($type) ); ?></h2>
 							<a href="#<?php echo $post_id; ?>=><?php echo $type; ?>" id="add_new_slide" class="button-secondary"><?php _e( 'Add New Slide', 'themeblvd_sliders' ); ?></a>
 							<img src="<?php echo esc_url( admin_url( 'images/wpspin_light.gif' ) ); ?>" class="ajax-loading" id="ajax-loading">
 							<div class="clear"></div>
