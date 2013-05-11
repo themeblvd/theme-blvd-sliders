@@ -385,10 +385,12 @@ function themeblvd_shortcode_slider( $atts ) {
         'id' => ''
     );
     extract( shortcode_atts( $default, $atts ) );
+	
 	// CSS classes for element
 	$slider_id = themeblvd_post_id_by_name( $id, 'tb_slider' );
 	$type = get_post_meta( $slider_id, 'type', true );
 	$classes = 'element element-slider element-slider-'.$type.themeblvd_get_classes( 'element_slider', true );
+	
 	// Output
 	ob_start();
 	echo '<div class="'.$classes.'">';
