@@ -7,7 +7,7 @@
  * @param string $slider ID of slider
  * @param array $slide All data for slide
  * @param array $settings Settings for slider 
- * @param string $slider_type Type of slider, standard or carrousel
+ * @param string $slider_type Type of slider, standard, nivo, carrousel, or fallback
  * @return array $atts Attributes for media, size, url, alt title, video
  */
 
@@ -110,11 +110,12 @@ function themeblvd_sliders_get_media_atts( $slider, $slide, $settings, $slider_t
  * @since 1.1.0
  *
  * @param array $atts Media attributes from themeblvd_sliders_get_media_atts()
- * @param string $slider_type Type of slider, standard or carrousel
+ * @param array $settings Current settings of slider
+ * @param string $slider_type Type of slider, standard, nivo, carrousel, or fallback
  */
 
 function themeblvd_slide_media( $atts, $settings, $slider_type = 'standard' ) {
-	echo themeblvd_get_slide_media( $atts, $slider_type );
+	echo themeblvd_get_slide_media( $atts, $settings, $slider_type );
 }
 
 /** 
@@ -123,7 +124,8 @@ function themeblvd_slide_media( $atts, $settings, $slider_type = 'standard' ) {
  * @since 1.1.0
  *
  * @param array $atts Media attributes from themeblvd_sliders_get_media_atts()
- * @param string $slider_type Type of slider, standard or carrousel
+ * @param array $settings Current settings of slider
+ * @param string $slider_type standard, nivo, carrousel, or fallback
  * @return array $output HTML output for media
  */
 
@@ -145,7 +147,7 @@ function themeblvd_get_slide_media( $atts, $settings, $slider_type = 'standard' 
  * @since 1.1.0
  *
  * @param array $atts Media attributes from themeblvd_sliders_get_media_atts()
- * @param string $slider_type Type of slider, standard or carrousel
+ * @param string $slider_type Type of slider, standard, nivo, carrousel, or fallback
  * @return string $output HTML output for image
  */
 
@@ -187,7 +189,11 @@ function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
 		}
 
 		// Markup used for image overlay in to work with framework javascript
-		$overlay = apply_filters( 'themeblvd_sliders_image_overlay', '<span class="image-overlay"><span class="image-overlay-bg"></span><span class="image-overlay-icon"></span></span>', $atts, $link_target, $slider_type );
+		$overlay = '';
+		if( $slider_type != 'fallback' )
+			$overlay = '<span class="image-overlay"><span class="image-overlay-bg"></span><span class="image-overlay-icon"></span></span>';
+
+		$overlay = apply_filters( 'themeblvd_sliders_image_overlay', $overlay, $atts, $link_target, $slider_type );
 
 		// Final link format
 		$link_fmt = apply_filters( 'themeblvd_sliders_image_link_format', '<a href="'.$atts['link']['url'].'" title="'.$atts['link']['title'].'"'.$link_target.' class="'.$anchor_class.'">%s'.$overlay.'</a>', $atts, $link_target, $slider_type );
@@ -211,7 +217,7 @@ function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
  * @since 1.1.0
  *
  * @param array $media_atts Media attributes from themeblvd_sliders_get_media_atts()
- * @param string $slider_type Type of slider, standard or carrousel
+ * @param string $slider_type Type of slider, standard, nivo, carrousel, or fallback
  * @return string $video Embed code for video
  */
 
@@ -282,7 +288,7 @@ function themeblvd_sliders_get_video( $media_atts, $slider_type = 'standard' ){
  *
  * @param array $slider ID of slider
  * @param array $slide Data for individual slide
- * @param string $slider_type Type of slider, standard or carrousel
+ * @param string $slider_type Type of slider, standard, nivo, carrousel, or fallback
  */
 
 function themeblvd_slide_content( $slider, $slide, $settings, $slider_type = 'standard' ){
@@ -296,7 +302,7 @@ function themeblvd_slide_content( $slider, $slide, $settings, $slider_type = 'st
  * @since 1.1.0
  *
  * @param array $slide Data for individual slide
- * @param string $slider_type Type of slider, standard or carrousel
+ * @param string $slider_type Type of slider, standard, nivo, carrousel, or fallback
  * @return string $output Final HTML markup for content section
  */
 

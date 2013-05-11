@@ -200,7 +200,7 @@ function themeblvd_carrousel_slider_default( $slider, $settings, $slides ) {
 							<span class="tb-block-click"></span>
 							<div class="slide-body">
 								<div class="grid-protection">
-									<?php themeblvd_slide_media( $media_atts, 'carrousel' ); ?>
+									<?php themeblvd_slide_media( $media_atts, $settings, 'carrousel' ); ?>
 								</div><!-- .grid-protection (end) -->
 							</div><!-- .slide-body (end) -->
 						</li>
@@ -267,7 +267,7 @@ function themeblvd_nivo_slider_default( $slider, $settings, $slides ) {
 						<div class="slider nivoSlider">
 							<?php 
 							foreach( $slides as $slide ) :
-					            $image = themeblvd_get_slide_media( themeblvd_sliders_get_media_atts( $slider, $slide, $settings, 'nivo' ), 'nivo' );
+					            $image = themeblvd_get_slide_media( themeblvd_sliders_get_media_atts( $slider, $slide, $settings, 'nivo' ), $settings, 'nivo' );
 			        			if( themeblvd_slide_has_element( 'headline', $slide ) || themeblvd_slide_has_element( 'description', $slide ) )
 			        				$image = str_replace( ' />', sprintf(' title="#%s" />', $slide['slide_id'].'_desc'), $image );
 			        			echo $image."\n";
@@ -308,88 +308,66 @@ function themeblvd_nivo_slider_default( $slider, $settings, $slides ) {
  */
 
 function themeblvd_slider_fallback_default( $slider, $slides, $fallback ) {
-	
-	// DEBUG
-	// echo '<pre>'; print_r($slides); echo '</pre>';
 
 	echo '<div class="slider-fallback">';
 	echo '<div class="slider-fallback-inner '.$fallback.'">';
-	echo '<ul class="slider-fallback-list">';
-	foreach( $slides as $slide ) {
-		if( ! isset( $slide['custom'] ) ) {
-			// Image Slides
-			if( $slide['slide_type'] == 'image' ) {
-				// Image URL
-				$image_size = '';
-				$slide['position'] == 'full' ? $image_size = 'slider-large' : $image_size = 'slider-staged'; // Use crop size to match standard slider display, depending on image position				
-				$image_size = apply_filters( 'themeblvd_slider_fallback_img_size', $image_size, $fallback, $slide['position'] ); // Apply optional filter and pass in fallback type & image position
-				$image_url = null;
-				$image_title = null;
-				if( isset( $slide['image'][$image_size] ) && $slide['image'][$image_size] )
-					$image_url = $slide['image'][$image_size]; // We do a strict check here so no errors will be thrown with old versions of the framework.
-				if( isset( $slide['image']['id'] ) ) {
-					$attachment = get_post( $slide['image']['id'], OBJECT );
-					$image_title = $attachment->post_title;
-				}
-				if( ! $image_url ) {
-					// This should only get used if user updates to v2.1.0 and 
-					// didn't re-save their slider. 
-					$attachment = wp_get_attachment_image_src( $slide['image']['id'], $image_size );
-					$image_url = $attachment[0];
-				}
-			}
-			// Video Slides
-			if( $slide['slide_type'] == 'video' ) {	
-				// Get HTML
-				$video = wp_oembed_get( $slide['video'] );
-				// Set error message
-				if( ! $video )
-					$video = '<p>'.themeblvd_get_local( 'no_video' ).'</p>';
-			}
-			// Elements
-			$elements = array();
-			if( isset( $slide['elements']['include'] ) && is_array( $slide['elements']['include'] ) )
-			$elements = $slide['elements']['include'];
-		}
-		echo '<li class="slider-fallback-slide">';
-		echo '<div class="slider-fallback-slide-body">';
-			if( isset( $slide['custom'] ) ) {
-				// Custom Slide
-				echo $slide['custom'];
-			} else {
-				// Slide Headline
-				if( in_array( 'headline', $elements ) && isset( $slide['elements']['headline'] ) && $slide['elements']['headline'] )
-					echo '<h2>'.stripslashes($slide['elements']['headline']).'</h2>';
-				// Image Slides
-				if( $slide['slide_type'] == 'image' ) {
-					if( in_array( 'image_link', $elements ) ) {
-						if( $slide['elements']['image_link']['target'] == 'lightbox' )
-							echo '<a href="'.$slide['elements']['image_link']['url'].'" class="image-link enlarge" rel="themeblvd_lightbox">';
-						else
-							echo '<a href="'.$slide['elements']['image_link']['url'].'" target="'.$slide['elements']['image_link']['target'].'" class="image-link external">';
-					}
-					echo '<img src="'.$image_url.'" alt="'.$image_title.'" />';	
-					if( in_array( 'image_link', $elements ) )
-						echo '</a>';
-				}
-				// Video Slides
-				if( $slide['slide_type'] == 'video' )
-					echo $video;
-				// Description
-				if( in_array( 'description', $elements ) && isset( $slide['elements']['description'] ) && $slide['elements']['description'] )
-					echo '<p class="slide-description-text">'.do_shortcode(stripslashes($slide['elements']['description'])).'</p>';
-				// Button
-				if( in_array( 'button', $elements ) && isset( $slide['elements']['button']['text'] ) && $slide['elements']['button']['text'] )
-					echo '<p class="slide-description-button">'.themeblvd_button( stripslashes( $slide['elements']['button']['text'] ), $slide['elements']['button']['url'], 'default', $slide['elements']['button']['target'], 'medium' ).'</p>';
-			}
-		echo '</div><!-- .slider-fallback-slide-body (end) -->';
-		echo '</li>';
+	
+	if( $slides ) {
 		
-		// End the loop after first slide if we're only showing the first slide.
-		if( $fallback == 'first_slide' )
-			break;
-	}
-	echo '</ul>';
+		echo '<ul class="slider-fallback-list">';
+		
+		foreach( $slides as $slide ) {
+			echo '<li class="slider-fallback-slide">';
+			echo '<div class="slider-fallback-slide-body">';
+				if( isset( $slide['custom'] ) ) {
+					
+					// Custom Slide
+					echo apply_filters( 'themeblvd_sliders_custom_content', $slide['custom'] );
+				
+				} else {
+					
+					// Headline
+					if( themeblvd_slide_has_element( 'headline', $slide ) )
+						printf( '<h2>%s</h2>', stripslashes($slide['elements']['headline']) );
+					
+					// Media (Image or Video)
+					themeblvd_slide_media( themeblvd_sliders_get_media_atts( $slider, $slide, $settings, 'fallback' ), array(), 'fallback' );
+
+					// Description
+					if( themeblvd_slide_has_element( 'description', $slide ) ) {
+						$text = stripslashes( $slide['elements']['description'] );
+						if( apply_filters( 'themeblvd_'.$slider_type.'_slider_desc', true, $slide, $slider, $settings ) )
+							$text = apply_filters( 'themeblvd_the_content', $text );
+						printf( '<div class="slide-description-text">%s</div>', $text );
+					}
+
+					// Button
+					if( themeblvd_slide_has_element( 'button', $slide ) ) {
+						$button_atts = apply_filters( 'themeblvd_'.$slider_type.'_slider_button', array(
+							'text' 		=> $slide['elements']['button']['text'],
+							'url'		=> $slide['elements']['button']['url'],
+							'color'		=> 'default',
+							'target'	=> $slide['elements']['button']['target'],
+							'size'		=> 'medium'
+
+						), $slide, $slider, $settings, $slider_type );
+						printf( '<div class="slide-description-button">%s</div>', themeblvd_button( stripslashes( $button_atts['text'] ), $button_atts['url'], $button_atts['color'], $button_atts['target'], $button_atts['size'] ) );
+					}
+				}
+			
+			echo '</div><!-- .slider-fallback-slide-body (end) -->';
+			echo '</li>';
+			
+			// End the loop after first slide if we're only showing the first slide.
+			if( $fallback == 'first_slide' )
+				break;
+
+		} // End foreach($slides)
+		
+		echo '</ul><!-- .slider-fallback-list (end) -->';
+	
+	} // End if($slides)
+	
 	echo '</div><!-- .slider-fallback-inner (end) -->';
 	echo '</div><!-- .slider-fallback(end) -->';
 }
