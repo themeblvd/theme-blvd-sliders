@@ -164,6 +164,10 @@ jQuery(document).ready(function($) {
     	// be toggled open and close.
     	hide_widget : function( id )
     	{
+    		// Don't apply to Publish box
+    		if( $('#'+id).hasClass('postbox-publish') )
+    			return;
+
     		$('#'+id+' .tb-widget-content').hide();
     	},
     	show_widget : function( id )
