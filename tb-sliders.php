@@ -31,14 +31,7 @@ define( 'TB_SLIDERS_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'TB_SLIDERS_PLUGIN_URI', plugins_url( '' , __FILE__ ) );
 
 /**
- * Run Widget Area Manager
- *
- * In order for everything to run, we need to make 
- * sure Theme Blvd framework v2.2+ is running. Also 
- * to run the admin panel portion, we will also check 
- * to make sure the user is allowed. -- This supports 
- * the framework's filters on changing admin page 
- * capabilities. 
+ * Run Sliders Plugin 
  *
  * @since 1.0.0
  */
@@ -95,19 +88,29 @@ function themeblvd_sliders_init() {
 add_action( 'after_setup_theme', 'themeblvd_sliders_init' );
 
 /**
- * Run anything that needs to be ready before we get 
- * to the theme framework's API system.
+ * Setup Sliders API and filter in registered "Sliders" 
+ * and "Post Slider" elements for Theme Blvd Layout 
+ * Builder plugin.
  *
- * @since 1.0.2
+ * @since 1.1.0
  */
- 
-function themeblvd_sliders_api(){
-	
-	// Register Builder elements
+
+function themeblvd_sliders_api_init(){
+
+	// Add filter for Layout Builder's API to register 
+	// "Sliders" and "Post Slider" elements
 	add_filter( 'themeblvd_registered_elements', 'themeblvd_sliders_registered_elements' );
 
+	// Include Theme_Blvd_Sliders_API class.
+	include_once( TB_SLIDERS_PLUGIN_DIR . '/api/class-tb-sliders-api.php' );
+
+	// Instantiate single object for Sliders API. 
+	// Helper functions are located within theme 
+	// framework. i.e. themeblvd_add_slider()
+	Theme_Blvd_Sliders_API::get_instance(); 
+
 }
-add_action( 'plugins_loaded', 'themeblvd_sliders_api' );
+add_action( 'themeblvd_api', 'themeblvd_sliders_api_init', 9 ); // Priority 9 to come before Builder API
 
 /**
  * Register text domain for localization.

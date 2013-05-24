@@ -67,7 +67,8 @@ class Theme_Blvd_Sliders_Ajax {
 			update_post_meta( $post_id, 'settings', $options );
 			
 			// Respond with edit page for the new slider and ID
-			$types = $this->admin_page->get_sliders();
+			$api = Theme_Blvd_Sliders_API::get_instance();
+			$types = $api->get_sliders();
 			echo $post_id.'[(=>)]';
 			$this->admin_page->edit_slider( $post_id, $types );
 			
@@ -94,8 +95,8 @@ class Theme_Blvd_Sliders_Ajax {
 			
 		// Start it
 		$slider_type = get_post_meta( $slider_id, 'type', true );
-		$tb_sliders = $this->admin_page->get_sliders();
-		$slider = $tb_sliders[$slider_type];
+		$api = Theme_Blvd_Sliders_API::get_instance();
+		$slider = $api->get_sliders( $slider_type );
 		$targets = array( '_self', '_blank', 'lighbox', 'lightbox_video' );
 		$options = array();
 		$slides = array();
@@ -410,10 +411,14 @@ class Theme_Blvd_Sliders_Ajax {
 	 * @since 1.0.0
 	 */
 	public function edit_slider() {
+		
 		$slider_id = $_POST['data'];
-		$types = $this->admin_page->get_sliders();
+		
+		$api = Theme_Blvd_Sliders_API::get_instance();
+		$types = $api->get_sliders();
+		
 		echo $slider_id.'[(=>)]';
-		$this->admin_page->edit_slider( $_POST['data'], $types );
+		$this->admin_page->edit_slider( $_POST['data'] );
 		die();
 	}
 	

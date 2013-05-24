@@ -69,7 +69,8 @@ class Theme_Blvd_Sliders_Admin {
 	 * @since 1.0.0
 	 */
 	function admin_page() {
-		$types = $this->get_sliders();
+		$api = Theme_Blvd_Sliders_API::get_instance();
+		$types = $api->get_sliders();
 		?>
 		<div id="slider_blvd">
 			<div id="optionsframework" class="wrap tb-options-js">
@@ -153,8 +154,10 @@ class Theme_Blvd_Sliders_Admin {
 	 */
 	public function slider_defaults( $type ) {
 		
+		$api = Theme_Blvd_Sliders_API::get_instance();
+		$sliders = $api->get_sliders();
+
 		$default_options = array();
-		$sliders = $this->get_sliders();
 		
 		// Set options or return error if type doesn't exist
 		if( isset( $sliders[$type]['options'] ) )
@@ -398,8 +401,12 @@ class Theme_Blvd_Sliders_Admin {
 	 * @param array $slide_options any current options for current slide
 	 */
 	public function edit_slide( $slider_id, $slider_type, $slide_id, $slide_options = null, $visibility = null ) {
+		
 		global $_wp_additional_image_sizes;
-		$slider_types = $this->get_sliders();
+
+		$api = Theme_Blvd_Sliders_API::get_instance();
+		$slider_types = $api->get_sliders();
+
 		$current_slide_type = $this->slide_value( $slide_options, 'slide_type' );
 		$current_image = $this->slide_value( $slide_options, 'image' );
 		$current_video = $this->slide_value( $slide_options, 'video' );
@@ -712,112 +719,126 @@ class Theme_Blvd_Sliders_Admin {
 	 * @since 1.0.0
 	 *
 	 * @param $id string ID of slider to edit
-	 * @param $types array all default slider info
 	 */
-	public function edit_slider( $id, $types ) {
+	public function edit_slider( $id ) {
 		
+		$api = Theme_Blvd_Sliders_API::get_instance();
+
 		// Get slider custom post
 		$slider = get_post($id);
+		
+		// Check for no post object returned from ID.
+		if( ! $slider ) {
+			echo '<div class="error"><p>'.__('The slider could not be found.', 'themeblvd_sliders').'</p></div>';
+			return;
+		}
+
+		// Post ID
 		$post_id = $slider->ID;
 		
-		if( $slider ) {
-			$current_slides = get_post_meta( $post_id, 'slides', true );
-			$type = get_post_meta( $post_id, 'type', true );
-			$options = $types[$type]['options'];
-			$settings = get_post_meta( $post_id, 'settings', true );
-			?>
-			<input type="hidden" name="slider_id" value="<?php echo $post_id; ?>" />
-			<div id="poststuff" class="metabox-holder full-width has-right-sidebar">
-				<div class="inner-sidebar">
-					<div id="slider-publish" class="postbox postbox-publish">
-						<h3 class="hndle" title="<?php echo __('Click to toggle', 'themeblvd_sliders'); ?>"><?php _e( 'Publish', 'themeblvd_sliders' ); ?> <?php echo stripslashes($slider->post_title); ?></h3>
-						<div class="tb-widget-content submitbox">
-							<div id="major-publishing-actions">
-								<div id="delete-action">
-									<a class="submitdelete delete_slider" href="#<?php echo $post_id; ?>"><?php _e( 'Delete', 'themeblvd_sliders' ); ?></a>
-								</div>
-								<div id="publishing-action">
-									<input class="button-primary" value="<?php _e( 'Update Slider', 'themeblvd_sliders' ); ?>" type="submit" />
-									<img src="<?php echo esc_url( admin_url( 'images/wpspin_light.gif' ) ); ?>" class="ajax-loading" />
-								</div>
-								<div class="clear"></div>
+		// Meta data for slider post
+		$current_slides = get_post_meta( $post_id, 'slides', true );
+		$type = get_post_meta( $post_id, 'type', true );
+		$settings = get_post_meta( $post_id, 'settings', true );
+
+		// Check if slider type is valid.
+		if( ! $api->is_slider( $type ) ) {
+			echo '<div class="error"><p>'.sprintf(__('The slider type "%s" is not valid.', 'themeblvd_sliders'), $type).'</p></div>';
+			return;
+		}
+
+		$type_info = $types = $api->get_sliders( $type );
+		$options = $type_info['options'];
+		?>
+		<input type="hidden" name="slider_id" value="<?php echo $post_id; ?>" />
+		<div id="poststuff" class="metabox-holder full-width has-right-sidebar">
+			<div class="inner-sidebar">
+				<div id="slider-publish" class="postbox postbox-publish">
+					<h3 class="hndle" title="<?php echo __('Click to toggle', 'themeblvd_sliders'); ?>"><?php _e( 'Publish', 'themeblvd_sliders' ); ?> <?php echo stripslashes($slider->post_title); ?></h3>
+					<div class="tb-widget-content submitbox">
+						<div id="major-publishing-actions">
+							<div id="delete-action">
+								<a class="submitdelete delete_slider" href="#<?php echo $post_id; ?>"><?php _e( 'Delete', 'themeblvd_sliders' ); ?></a>
 							</div>
-						</div><!-- .tb-widget-content (end) -->
-					</div><!-- .post-box (end) -->
-					<div id="slider-info" class="postbox postbox-slider-info closed">
+							<div id="publishing-action">
+								<input class="button-primary" value="<?php _e( 'Update Slider', 'themeblvd_sliders' ); ?>" type="submit" />
+								<img src="<?php echo esc_url( admin_url( 'images/wpspin_light.gif' ) ); ?>" class="ajax-loading" />
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div><!-- .tb-widget-content (end) -->
+				</div><!-- .post-box (end) -->
+				<div id="slider-info" class="postbox postbox-slider-info closed">
+					<div class="handlediv" title="<?php echo __('Click to toggle', 'themeblvd_sliders'); ?>"><br></div>
+					<h3 class="hndle"><?php _e('Slider Information', 'themeblvd_sliders' ); ?></h3>
+					<div class="tb-widget-content hide">
+						<?php
+						// Current settings
+						$info_settings = array(
+							'post_title' 	=> $slider->post_title,
+							'post_name'		=> $slider->post_name
+						);
+						
+						// Setup attribute options
+						$info_options = array( 
+							array( 
+								'name'		=> __('Slider Name', 'themeblvd_sliders' ),
+								'id' 		=> 'post_title',
+								'desc'		=> __('This title is just for you. It\'ll never be used outside of your WordPress admin panel.', 'themeblvd_sliders'),
+								'type' 		=> 'text'
+							),
+							array( 
+								'name' 		=> __('Slider ID', 'themeblvd_sliders' ),
+								'id' 		=> 'post_name',
+								'desc'		=> __( 'Sliders are assigned based on this ID. So if you change this at any point, make sure to also update any builder elements, pages, or other options in which you\'ve assigned this specific slider.', 'themeblvd_sliders' ),
+								'type' 		=> 'text'
+							)
+						);
+		
+						// Display form element
+						$form = themeblvd_option_fields( 'info', $info_options, $info_settings, false );
+						echo $form[0]; 
+						?>
+					</div><!-- .tb-widget-content (end) -->
+				</div><!-- .post-box (end) -->
+				<?php if( $options ) : ?>
+					<div id="slider-options" class="postbox postbox-options closed">
 						<div class="handlediv" title="<?php echo __('Click to toggle', 'themeblvd_sliders'); ?>"><br></div>
-						<h3 class="hndle"><?php _e('Slider Information', 'themeblvd_sliders' ); ?></h3>
+						<h3 class="hndle"><?php echo $type_info['name'].' '.__( 'Options', 'themeblvd_sliders' ); ?></h3>
 						<div class="tb-widget-content hide">
-							<?php
-							// Current settings
-							$info_settings = array(
-								'post_title' 	=> $slider->post_title,
-								'post_name'		=> $slider->post_name
-							);
-							
-							// Setup attribute options
-							$info_options = array( 
-								array( 
-									'name'		=> __('Slider Name', 'themeblvd_sliders' ),
-									'id' 		=> 'post_title',
-									'desc'		=> __('This title is just for you. It\'ll never be used outside of your WordPress admin panel.', 'themeblvd_sliders'),
-									'type' 		=> 'text'
-								),
-								array( 
-									'name' 		=> __('Slider ID', 'themeblvd_sliders' ),
-									'id' 		=> 'post_name',
-									'desc'		=> __( 'Sliders are assigned based on this ID. So if you change this at any point, make sure to also update any builder elements, pages, or other options in which you\'ve assigned this specific slider.', 'themeblvd_sliders' ),
-									'type' 		=> 'text'
-								)
-							);
-			
-							// Display form element
-							$form = themeblvd_option_fields( 'info', $info_options, $info_settings, false );
-							echo $form[0]; 
+							<?php 
+							// Slider Options
+							$form = themeblvd_option_fields( 'options', $options, $settings, false );
+							echo $form[0];
 							?>
 						</div><!-- .tb-widget-content (end) -->
 					</div><!-- .post-box (end) -->
-					<?php if( $options ) : ?>
-						<div id="slider-options" class="postbox postbox-options closed">
-							<div class="handlediv" title="<?php echo __('Click to toggle', 'themeblvd_sliders'); ?>"><br></div>
-							<h3 class="hndle"><?php echo $types[$type]['name'].' '.__( 'Options', 'themeblvd_sliders' ); ?></h3>
-							<div class="tb-widget-content hide">
-								<?php 
-								// Slider Options
-								$form = themeblvd_option_fields( 'options', $options, $settings, false );
-								echo $form[0];
-								?>
-							</div><!-- .tb-widget-content (end) -->
-						</div><!-- .post-box (end) -->
-					<?php endif; ?>
-				</div><!-- .inner-sidebar (end) -->
-				<div id="post-body">
-					<div id="post-body-content">
-						<div id="titlediv">
-							<div class="ajax-overlay"></div>
-							<h2><?php printf( __( 'Manage %s Slides', 'themeblvd_sliders' ), ucfirst($type) ); ?></h2>
-							<a href="#<?php echo $post_id; ?>=><?php echo $type; ?>" id="add_new_slide" class="button-secondary"><?php _e( 'Add New Slide', 'themeblvd_sliders' ); ?></a>
-							<img src="<?php echo esc_url( admin_url( 'images/wpspin_light.gif' ) ); ?>" class="ajax-loading" id="ajax-loading">
-							<div class="clear"></div>
-						</div><!-- #titlediv (end) -->
-						<div id="sortable">
-							<?php
-							if( ! empty( $current_slides ) ) {
-								foreach( $current_slides as $slide_id => $slide ) {
-									$this->edit_slide( $post_id, $type, $slide_id, $slide );
-								}
-							} else {
-								echo '<p class="warning no-item-yet">'.__( 'You haven\'t added any slides yet. Get started by clicking "Add New Slide" above.', 'themeblvd_sliders' ).'</p>';
+				<?php endif; ?>
+			</div><!-- .inner-sidebar (end) -->
+			<div id="post-body">
+				<div id="post-body-content">
+					<div id="titlediv">
+						<div class="ajax-overlay"></div>
+						<h2><?php printf( __( 'Manage %s Slides', 'themeblvd_sliders' ), ucfirst($type) ); ?></h2>
+						<a href="#<?php echo $post_id; ?>=><?php echo $type; ?>" id="add_new_slide" class="button-secondary"><?php _e( 'Add New Slide', 'themeblvd_sliders' ); ?></a>
+						<img src="<?php echo esc_url( admin_url( 'images/wpspin_light.gif' ) ); ?>" class="ajax-loading" id="ajax-loading">
+						<div class="clear"></div>
+					</div><!-- #titlediv (end) -->
+					<div id="sortable">
+						<?php
+						if( ! empty( $current_slides ) ) {
+							foreach( $current_slides as $slide_id => $slide ) {
+								$this->edit_slide( $post_id, $type, $slide_id, $slide );
 							}
-	    					?>
-						</div><!-- .sortable-slides (end) -->
-					</div><!-- #post-body-content (end) -->
-				</div><!-- #post-body (end) -->
-			</div><!-- .metabox-holder (end) -->
-			<?php
-		} else {
-			echo '<p>'.__( 'Error: The slider you\'re trying to edit doesn\'t exist.', 'themeblvd_sliders' ).'</p>';
-		}
+						} else {
+							echo '<p class="warning no-item-yet">'.__( 'You haven\'t added any slides yet. Get started by clicking "Add New Slide" above.', 'themeblvd_sliders' ).'</p>';
+						}
+    					?>
+					</div><!-- .sortable-slides (end) -->
+				</div><!-- #post-body-content (end) -->
+			</div><!-- #post-body (end) -->
+		</div><!-- .metabox-holder (end) -->
+		<?php
 	}
 	
 	/**
@@ -868,335 +889,5 @@ class Theme_Blvd_Sliders_Admin {
 			$desc .= ' -- '.__('WordPress size', 'themeblvd_sliders');
 
 		return apply_filters( 'themeblvd_sliders_image_size_desc', $desc, $id, $name );
-	}
-
-	/**
-	 * Get recognized sliders.
-	 *
-	 * Returns an array of all recognized sliders.
-	 * Sliders included with a particular theme can 
-	 * be edited by adding a filter through this array.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return array
-	 */
-	function get_sliders() {
-		
-		global $_themeblvd_user_sliders;
-		
-		/**
-		 * For each slider type, there are then types of 
-		 * individual slides it supports.
-		 */
-		
-		$standard_types = array(
-			'image' => array(
-				'name' => __( 'Image Slide', 'themeblvd' ),
-				'main_title' => __( 'Setup Image', 'themeblvd_sliders' )
-			),
-			'video' => array(
-				'name' => __( 'Video Slide', 'themeblvd_sliders' ),
-				'main_title' => __( 'Setup Video', 'themeblvd_sliders' )
-			),
-			'custom' => array(
-				'name' => __( 'Custom Slide', 'themeblvd_sliders' ),
-				'main_title' => __( 'Setup Custom Content', 'themeblvd_sliders' )
-			)
-		);
-		$nivo_types = array(
-			'image' => array(
-				'name' => __( 'Image Slide', 'themeblvd_sliders' ),
-				'main_title' => __( 'Setup Image', 'themeblvd_sliders' )
-			)
-		);
-		$carrousel_types = array(
-			'image' => array(
-				'name' => __( 'Image Slide', 'themeblvd_sliders' ),
-				'main_title' => __( 'Setup Image', 'themeblvd_sliders' )
-			)
-		);
-		
-		/**
-		 * For each slider type, there are positions its media
-		 * can be placed.
-		 */
-		
-		$standard_positions = array(
-			'full' 			=> 'slider-large', // Default
-			'align-left' 	=> 'slider-staged',
-			'align-right' 	=> 'slider-staged'
-		);
-		$nivo_positions = array(
-			'full' 			=> 'slider-large' // Default
-		);
-		$carrousel_positions = array(
-			'full' 			=> 'grid_4' // Default
-		);
-		
-		/**
-		 * For each slider type, these are the different elements
-		 * the user can choose to include in a slide.
-		 */
-		
-		$standard_elements = array( 'image_link', 'headline', 'description', 'button', 'custom_content' );
-		$nivo_elements = array( 'image_link', 'headline', 'description' );
-		$carrousel_elements = array( 'image_link' );
-		
-		/**
-		 * For each slider type, these are settings.
-		 * ALL options must have a default value 'std'.
-		 */
-		
-		$standard_options = array(
-			array(
-		    	'type'		=> 'subgroup_start',
-		    	'class'		=> 'show-hide-toggle'
-		    ),
-			array(
-				'id'		=> 'fx',
-				'name'		=> __( 'How to transition between slides?', 'themeblvd_sliders' ),
-				'std'		=> 'fade',
-				'type'		=> 'select',
-				'options'	=> array(
-		            'fade' 	=> 'Fade',
-					'slide'	=> 'Slide'
-				),
-				'class' 	=> 'trigger'
-			),
-			array(
-				'id'		=> 'smoothheight',
-				'name'		=> __( 'Allow height to adjust on each transition?', 'themeblvd_sliders' ),
-				'std'		=> 'false',
-				'type'		=> 'select',
-				'options'	=> array(
-		            'true' 	=> 'Yes, enable smoothHeight.',
-					'false'	=> 'No, display as height of tallest slide.'
-				),
-				'class'		=> 'hide receiver receiver-slide'
-			),
-			array(
-		    	'type'		=> 'subgroup_end'
-		    ),
-			array(
-				'id'		=> 'timeout',
-				'name' 		=> __( 'Seconds between each transition?', 'themeblvd_sliders' ),
-				'std'		=> '5',
-				'type'		=> 'text'
-		    ),
-			array(
-				'id'		=> 'nav_standard',
-				'name'		=> __( 'Show standard slideshow navigation?', 'themeblvd_sliders' ),
-				'std'		=> '1',
-				'type'		=> 'select',
-				'options'	=> array(
-		            '1'	=> __( 'Yes, show navigation.', 'themeblvd_sliders' ),
-		            '0'	=> __( 'No, don\'t show it.', 'themeblvd_sliders' )
-				)
-			),
-			array(
-				'id'		=> 'nav_arrows',
-				'name'		=> __( 'Show next/prev arrows?', 'themeblvd_sliders' ),
-				'std'		=> '1',
-				'type'		=> 'select',
-				'options'	=> array(
-		            '1'	=> __( 'Yes, show arrows.', 'themeblvd_sliders' ),
-		            '0'	=> __( 'No, don\'t show them.', 'themeblvd_sliders' )
-				)
-			),
-			array(
-				'id'		=> 'pause_play',
-				'name'		=> __( 'Show pause/play button?', 'themeblvd_sliders' ),
-				'std'		=> '1',
-				'type'		=> 'select',
-				'options'	=> array(
-		            '1'	=> __( 'Yes, show pause/play button.', 'themeblvd_sliders' ),
-		            '0'	=> __( 'No, don\'t show it.', 'themeblvd_sliders' )
-				)
-			),
-			array(
-				'id'		=> 'pause_on_hover',
-				'name'		=> __( 'Enable pause on hover?', 'themeblvd_sliders' ),
-				'std'		=> 'pause_on',
-				'type'		=> 'select',
-				'options'	=> array(
-		            'pause_on'		=> __( 'Pause on hover only.', 'themeblvd_sliders' ),
-		            'pause_on_off'	=> __( 'Pause on hover and resume when hovering off.', 'themeblvd_sliders' ),
-		            'disable'		=> __( 'No, disable this all together.', 'themeblvd_sliders' )
-				)
-			),
-			array(
-				'id'		=> 'mobile_fallback',
-				'name'		=> __( 'How to display on mobile devices?', 'themeblvd_sliders' ),
-				'std'		=> 'full_list',
-				'type'		=> 'radio',
-				'options'	=> array(
-		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd_sliders' ),
-		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'themeblvd_sliders' ),
-		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'themeblvd_sliders' )
-				)
-			)
-		);
-		$nivo_options = array(
-			array(
-		    	'type'		=> 'subgroup_start',
-		    	'class'		=> 'show-hide-toggle'
-		    ),
-		    array(
-				'id'		=> 'fx',
-				'name'		=> __( 'How to transition between slides?', 'themeblvd_sliders' ),
-				'std'		=> 'random',
-				'type'		=> 'select',
-				'options'	=> array(
-		            'boxRandom'				=> 'boxRandom',
-					'boxRain'				=> 'boxRain',
-					'boxRainReverse'		=> 'boxRainReverse',
-					'boxRainGrow'			=> 'boxRainGrow',
-					'boxRainGrowReverse'	=> 'boxRainGrowReverse',
-					'fold'					=> 'fold',
-					'fade'					=> 'fade',
-					'random'				=> 'random',
-					'sliceDown'				=> 'sliceDown',
-					'sliceDownLeft'			=> 'sliceDownLeft',
-					'sliceUp'				=> 'sliceUp',
-					'sliceUpLeft'			=> 'sliceUpLeft',
-					'sliceUpDown'			=> 'sliceUpDown',
-					'sliceUpDownLeft'		=> 'sliceUpDownLeft',
-					'slideInRight'			=> 'slideInRight',
-					'slideInLeft'			=> 'slideInLeft'
-				),
-				'class' 	=> 'trigger'
-			),
-		    array(
-				'id'		=> 'boxcols',
-				'name' 		=> __( 'Number of box columns for transition?', 'themeblvd_sliders' ),
-				'std'		=> '8',
-				'type'		=> 'text',
-				'class'		=> 'hide receiver receiver-boxRandom receiver-boxRain receiver-boxRainReverse receiver-boxRainGrow receiver-boxRainGrowReverse'
-		    ),
-		    array(
-				'id'		=> 'boxrows',
-				'name' 		=> __( 'Number of box rows for transition?', 'themeblvd_sliders' ),
-				'std'		=> '4',
-				'type'		=> 'text',
-				'class'		=> 'hide receiver receiver-boxRandom receiver-boxRain receiver-boxRainReverse receiver-boxRainGrow receiver-boxRainGrowReverse'
-		    ),
-			array(
-				'id'		=> 'slices',
-				'name' 		=> __( 'Number of slices for transition?', 'themeblvd_sliders' ),
-				'std'		=> '15',
-				'type'		=> 'text',
-				'class'		=> 'hide receiver receiver-sliceDown receiver-sliceDownLeft receiver-sliceUp receiver-sliceUpLeft receiver-sliceUpDown receiver-sliceUpDownLeft'
-		    ),
-		    array(
-		    	'type'		=> 'subgroup_end'
-		    ),
-			array(
-				'id'		=> 'timeout',
-				'name' 		=> __( 'Seconds between each transition?', 'themeblvd_sliders' ),
-				'std'		=> '5',
-				'type'		=> 'text'
-		    ),
-			array(
-				'id'		=> 'nav_standard',
-				'name'		=> __( 'Show standard slideshow navigation?', 'themeblvd_sliders' ),
-				'std'		=> 'true',
-				'type'		=> 'select',
-				'options'	=> array(
-		            'true'	=> __( 'Yes, show navigation.', 'themeblvd_sliders' ),
-		            'false'	=> __( 'No, don\'t show it.', 'themeblvd_sliders' )
-				)
-			),
-			array(
-				'id'		=> 'nav_arrows',
-				'name'		=> __( 'Show next/prev arrows?', 'themeblvd_sliders' ),
-				'std'		=> 'true',
-				'type'		=> 'select',
-				'options'	=> array(
-		            'true'	=> __( 'Yes, show arrows.', 'themeblvd_sliders' ),
-		            'false'	=> __( 'No, don\'t show them.', 'themeblvd_sliders' )
-				)
-			),
-			array(
-				'id'		=> 'pause_on_hover',
-				'name'		=> __( 'Enable pause on hover?', 'themeblvd_sliders' ),
-				'std'		=> 'true',
-				'type'		=> 'select',
-				'options'	=> array(
-		            'true'		=> __( 'Yes, pause slider on hover.', 'themeblvd_sliders' ),
-		            'false'		=> __( 'No, don\'t pause slider on hover.', 'themeblvd_sliders' )
-				)
-			),
-			array(
-				'id'		=> 'mobile_fallback',
-				'name'		=> __( 'How to display on mobile devices?', 'themeblvd_sliders' ),
-				'std'		=> 'full_list',
-				'type'		=> 'radio',
-				'options'	=> array(
-		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd_sliders' ),
-		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'themeblvd_sliders' ),
-		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'themeblvd_sliders' )
-				)
-			)
-		);
-		$carrousel_options = array(
-			array(
-				'id'		=> 'nav_arrows',
-				'name'		=> __( 'Show next/prev arrows?', 'themeblvd_sliders' ),
-				'std'		=> '1',
-				'type'		=> 'select',
-				'options'	=> array(
-		            '1'	=> __( 'Yes, show arrows.', 'themeblvd_sliders' ),
-		            '0'	=> __( 'No, don\'t show them.', 'themeblvd_sliders' )
-				)
-			),
-			array(
-				'id'		=> 'mobile_fallback',
-				'name'		=> __( 'How to display on mobile devices?', 'themeblvd_sliders' ),
-				'std'		=> 'full_list',
-				'type'		=> 'radio',
-				'options'	=> array(
-		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd_sliders' ),
-		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'themeblvd_sliders' ),
-		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'themeblvd_sliders' )
-				)
-			)
-		);
-		
-		// Final array (which is filterable from outside)
-		$sliders = array(
-			'standard' => array(
-				'name' 			=> 'Standard',
-				'id'			=> 'standard',
-				'types'			=> $standard_types,
-				'positions'		=> $standard_positions,
-				'elements'		=> $standard_elements,
-				'options'		=> $standard_options,
-				'custom_size' 	=> true // Custom size allowed for full size position 
-			),
-			'nivo' => array(
-				'name' 			=> 'Nivo',
-				'id'			=> 'nivo',
-				'types'			=> $nivo_types,
-				'positions'		=> $nivo_positions,
-				'elements'		=> $nivo_elements,
-				'options'		=> $nivo_options,
-				'custom_size' 	=> true // Custom size not allowed for full size position 
-			),
-			'carrousel' => array(
-				'name' 			=> 'Carrousel 3D',
-				'id'			=> 'carrousel',
-				'types'			=> $carrousel_types,
-				'positions'		=> $carrousel_positions,
-				'elements'		=> $carrousel_elements,
-				'options'		=> $carrousel_options,
-				'custom_size' 	=> false // Custom size not allowed for full size position 
-			)
-		);
-		// Add in user-created sliders from API
-		$sliders = array_merge( $sliders, $_themeblvd_user_sliders );
-		
-		// Return filtered
-		return apply_filters( 'themeblvd_recognized_sliders', $sliders );
 	}
 }

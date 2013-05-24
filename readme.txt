@@ -46,6 +46,8 @@ Sliders you create can be utilized within your website in two ways.
 
 = 1.1.0 =
 
+* Improved and moved Sliders API functionality to plugin.
+
 = 1.0.4 =
 
 * Fixed non-working `nav_standard`, `nav_arrows`, and `pause_play` options of `[post_slider]` shortcode.
