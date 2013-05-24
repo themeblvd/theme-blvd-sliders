@@ -14,6 +14,10 @@ class Theme_Blvd_Sliders_Admin {
 		// Add slider admin page
 		add_action( 'admin_menu', array( $this, 'add_page' ) );
 		
+		// Filter on javascript locals specifically for slider Manager 
+		// onto Theme Blvd framework locals.
+		add_filter( 'themeblvd_locals_js', array( $this, 'add_js_locals' ) );
+
 		// Add ajax functionality to slider admin page
 		include_once( TB_SLIDERS_PLUGIN_DIR . '/admin/class-tb-sliders-ajax.php' );
 		$ajax = new Theme_Blvd_Sliders_Ajax( $this );
@@ -26,9 +30,15 @@ class Theme_Blvd_Sliders_Admin {
 	 * @since 1.0.0
 	 */
 	public function add_page() {
+		
+		// Create new admin page
 		$admin_page = add_object_page( 'Slider Manager', 'Sliders', themeblvd_admin_module_cap( 'sliders' ), 'themeblvd_sliders', array( $this, 'admin_page' ), 'div', 31 );
+		
+		// Attach assets to new admin page
 		add_action( 'admin_print_styles-'.$admin_page, array( $this, 'load_styles' ) );
 		add_action( 'admin_print_scripts-'.$admin_page, array( $this, 'load_scripts' ) );
+		
+		// Media Uploader fallback
 		if( ! function_exists('wp_enqueue_media') || ! function_exists('themeblvd_media_uploader') ) {
 			add_action( 'admin_print_styles-'.$admin_page, 'optionsframework_mlu_css', 0 );
 			add_action( 'admin_print_scripts-'.$admin_page, 'optionsframework_mlu_js', 0 );
@@ -52,15 +62,37 @@ class Theme_Blvd_Sliders_Admin {
 	 * @since 1.0.0 
 	 */
 	public function load_scripts() {
+		
+		// WP-packaged scripts
 		wp_enqueue_script( 'jquery-ui-core');
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'postbox' );
 		if( function_exists('wp_enqueue_media') && function_exists('themeblvd_media_uploader') )
 			wp_enqueue_media();
+		
+		// Theme Blvd scripts
 		wp_enqueue_script( 'themeblvd_admin', TB_FRAMEWORK_URI . '/admin/assets/js/shared.min.js', array('jquery'), TB_FRAMEWORK_VERSION );
-		wp_localize_script( 'themeblvd_admin', 'themeblvd', themeblvd_get_admin_locals( 'js' ) );
 		wp_enqueue_script( 'themeblvd_options', TB_FRAMEWORK_URI . '/admin/options/js/options.min.js', array('jquery'), TB_FRAMEWORK_VERSION );
 		wp_enqueue_script( 'themeblvd_sliders', TB_SLIDERS_PLUGIN_URI . '/admin/js/sliders.min.js', array('jquery'), TB_SLIDERS_PLUGIN_VERSION );
+		
+		// Localize scripts
+		wp_localize_script( 'themeblvd_sliders', 'themeblvd', themeblvd_get_admin_locals( 'js' ) );
+	}
+
+	/**
+	 * Add javascript locals for Sliders manager onto 
+	 * framework js locals that are already established.
+	 *
+	 * @since 1.1.0
+	 */
+	public function add_js_locals( $current ) {
+		$new = array(
+			'edit_slider'		=> __( 'Edit Slider', 'themeblvd_sliders' ),
+			'delete_slider'		=> __( 'Are you sure you want to delete the slider(s)?', 'themeblvd_sliders' ),
+			'invalid_slider'	=> __( 'Oops! Somehow, you\'ve entered an invalid slider type.', 'themeblvd_sliders' ),
+			'slider_created'	=> __( 'Slider created!', 'themeblvd_sliders' )
+		);
+		return array_merge($current, $new);
 	}
 	
 	/**
