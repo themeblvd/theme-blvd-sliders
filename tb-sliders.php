@@ -175,7 +175,7 @@ function themeblvd_sliders_disable_nag() {
  */
 
 function themeblvd_sliders_register_post_type(){
-	$args = array(
+	$args = apply_filters( 'themeblvd_sliders_post_type_args', array(
 		'labels' 			=> array( 'name' => 'Sliders', 'singular_name' => 'Slider' ),
 		'public'			=> false,
 		//'show_ui' 		=> true,	// Can uncomment for debugging
@@ -185,7 +185,7 @@ function themeblvd_sliders_register_post_type(){
 		'rewrite' 			=> false,
 		'supports' 			=> array( 'title', 'custom-fields', 'editor' ), // needs to support 'editor' for image to be inserted properly
 		'can_export'		=> true
-	);
+	));
 	register_post_type( 'tb_slider', $args );
 }
 
