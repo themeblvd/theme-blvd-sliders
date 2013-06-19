@@ -1,12 +1,12 @@
 <?php
-/** 
+/**
  * Get the media attributes
  *
  * @since 1.1.0
  *
  * @param string $slider ID of slider
  * @param array $slide All data for slide
- * @param array $settings Settings for slider 
+ * @param array $settings Settings for slider
  * @param string $slider_type Type of slider, standard, nivo, carrousel, or fallback
  * @return array $atts Attributes for media, size, url, alt title, video
  */
@@ -30,8 +30,8 @@ function themeblvd_sliders_get_media_atts( $slider, $slide, $settings, $slider_t
 		'link'			=> array()
 	);
 
-	if( $slide['slide_type'] == 'video' ) { 
-		
+	if( $slide['slide_type'] == 'video' ) {
+
 		// Media type
 		$atts['type'] = 'video';
 
@@ -46,7 +46,7 @@ function themeblvd_sliders_get_media_atts( $slider, $slide, $settings, $slider_t
 
 		// Image Atts
 		if( ! empty( $slide['image']['display'] ) ) {
-			
+
 			// Current slider was saved with plugin v1.1+
 			// No database queries involved here!
 			$atts['url'] = $slide['image']['display'];
@@ -69,7 +69,7 @@ function themeblvd_sliders_get_media_atts( $slider, $slide, $settings, $slider_t
 				$atts['size'] = 'slider-staged';
 			}
 		}
-		
+
 		// Manually retrieve image from DB. Possible reasons:
 		// (1) Current slider was saved prior to plugin v1.1
 		// (2) Developer has filtered to force retrieval of image URL.
@@ -104,7 +104,7 @@ function themeblvd_sliders_get_media_atts( $slider, $slide, $settings, $slider_t
 	return apply_filters( 'themeblvd_sliders_media_atts', $atts, $slider, $slide, $settings, $slider_type );
 }
 
-/** 
+/**
  * Display slide's media.
  *
  * @since 1.1.0
@@ -118,7 +118,7 @@ function themeblvd_slide_media( $atts, $settings, $slider_type = 'standard' ) {
 	echo themeblvd_get_slide_media( $atts, $settings, $slider_type );
 }
 
-/** 
+/**
  * Get slide's media.
  *
  * @since 1.1.0
@@ -130,18 +130,18 @@ function themeblvd_slide_media( $atts, $settings, $slider_type = 'standard' ) {
  */
 
 function themeblvd_get_slide_media( $atts, $settings, $slider_type = 'standard' ) {
-	
+
 	$output = '';
-	
+
 	if( $atts['type'] == 'video' )
 		$output = themeblvd_sliders_get_video( $atts, $slider_type );
 	else if( substr( $atts['type'], 0, 5 ) == 'image' )
 		$output = themeblvd_sliders_get_image( $atts, $slider_type );
-	
-	return apply_filters( 'themeblvd_slide_media', $output, $atts, $settings, $slider_type );	
+
+	return apply_filters( 'themeblvd_slide_media', $output, $atts, $settings, $slider_type );
 }
 
-/** 
+/**
  * Get the final image output for an image slide
  *
  * @since 1.1.0
@@ -179,7 +179,7 @@ function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
 				$anchor_class = 'slide-thumbnail-link image';
 				$link_target = ' rel="featured_themeblvd_lightbox"';
 				break;
-			case '_blank' : 
+			case '_blank' :
 				$anchor_class = 'slide-thumbnail-link external';
 				$link_target = ' target="_blank"';
 				break;
@@ -197,7 +197,7 @@ function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
 
 		// Final link format
 		$link_fmt = apply_filters( 'themeblvd_sliders_image_link_format', '<a href="'.$atts['link']['url'].'" title="'.$atts['link']['title'].'"'.$link_target.' class="'.$anchor_class.'">%s'.$overlay.'</a>', $atts, $link_target, $slider_type );
-		
+
 		// Wrap link around Image for final $output
 		$output .= sprintf( $link_fmt, $image );
 
@@ -205,13 +205,13 @@ function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
 
 		// Output set to the raw image when there's no link
 		$output .= $image;
-	
+
 	}
 
 	return apply_filters( 'themeblvd_sliders_image', $output, $atts, $image, $slider_type );
 }
 
-/** 
+/**
  * Get the final video output for a video slide
  *
  * @since 1.1.0
@@ -227,7 +227,7 @@ function themeblvd_sliders_get_video( $media_atts, $slider_type = 'standard' ){
 	if( $media_atts['type'] != 'video' )
 		return;
 
-	// Give a chance to override with custom video solution before 
+	// Give a chance to override with custom video solution before
 	// doing work of wp_oembed_get()
 	$video = apply_filters( 'themeblvd_sliders_video_intervene', '', $media_atts );
 	if( $video )
@@ -236,7 +236,8 @@ function themeblvd_sliders_get_video( $media_atts, $slider_type = 'standard' ){
 	// Is this an oEmbed?
 	$type = wp_check_filetype( $media_atts['video'] );
 	$oembed = true;
-	if( in_array( $type['ext'], wp_get_video_extensions() ) )
+	$video_extensions = array( 'mp4', 'm4v', 'webm', 'ogv', 'wmv', 'flv' ); // @todo With WP 3.6+, can use wp_get_video_extensions()
+	if( in_array( $type['ext'], $video_extensions ) )
 		$oembed = false;
 
 	// Get HTML
@@ -256,7 +257,7 @@ function themeblvd_sliders_get_video( $media_atts, $slider_type = 'standard' ){
 
 		if( ! empty( $media_atts['height'] ) && intval( $media_atts['height'] ) > 0 )
 			$video_max_height = sprintf('max-height: %dpx;', $media_atts['height'] );
-		
+
 		$video_max_height = apply_filters( 'themeblvd_sliders_max_height', $video_max_height , $media_atts['height'] );
 
 		if( $video_max_height ) {
@@ -280,8 +281,8 @@ function themeblvd_sliders_get_video( $media_atts, $slider_type = 'standard' ){
 	return $video;
 }
 
-/** 
- * Display content for individual slide including 
+/**
+ * Display content for individual slide including
  * headline, description, and button.
  *
  * @since 1.1.0
@@ -295,8 +296,8 @@ function themeblvd_slide_content( $slider, $slide, $settings, $slider_type = 'st
 	echo themeblvd_get_slide_content( $slider, $slide, $slider_type );
 }
 
-/** 
- * Get content for individual slide including 
+/**
+ * Get content for individual slide including
  * headline, description, and button.
  *
  * @since 1.1.0
@@ -310,8 +311,8 @@ function themeblvd_get_slide_content( $slider, $slide, $settings, $slider_type =
 
 	$output = '';
 
-	if( themeblvd_slide_has_element( 'headline', $slide ) || 
-		themeblvd_slide_has_element( 'description', $slide ) || 
+	if( themeblvd_slide_has_element( 'headline', $slide ) ||
+		themeblvd_slide_has_element( 'description', $slide ) ||
 		themeblvd_slide_has_element( 'button', $slide ) ) {
 
 		// Setup markup to wrap content area.
@@ -321,7 +322,7 @@ function themeblvd_get_slide_content( $slider, $slide, $settings, $slider_type =
 		$wrap_fmt = apply_filters( 'themeblvd_slide_content_wrap', '<div class="'.$wrap_class.'"><div class="content-inner">%s</div></div>' );
 
 		$content = '';
-		
+
 		// Headline
 		if( themeblvd_slide_has_element( 'headline', $slide ) )
 			$content .= sprintf( '<div class="slide-title"><span>%s</span></div>', stripslashes( $slide['elements']['headline'] ) );
@@ -362,7 +363,7 @@ function themeblvd_get_slide_content( $slider, $slide, $settings, $slider_type =
 	return apply_filters( 'themeblvd_slide_content', $output, $slider, $slide, $slider_type );
 }
 
-/** 
+/**
  * Whether an element is included in a slide.
  *
  * @since 1.1.0
@@ -375,19 +376,19 @@ function themeblvd_get_slide_content( $slider, $slide, $settings, $slider_type =
 
 function themeblvd_slide_has_element( $element, $slide ) {
 	$include = false;
-	
+
 	if( isset( $slide['elements']['include'] ) && is_array( $slide['elements']['include'] ) )
 		if( in_array( $element, $slide['elements']['include'] ) )
 			if( ! empty( $slide['elements'][$element] ) )
 				$include = true;
 
-	if( $element == 'button' && $slide['position'] == 'full' ) 
+	if( $element == 'button' && $slide['position'] == 'full' )
 		$include = false; // Full-size media slides don't support buttons
 
 	return apply_filters( 'themeblvd_slide_has_element', $include, $element, $slide );
 }
 
-/** 
+/**
  * Get the CSS classes for invividual slides.
  *
  * @since 1.1.0
@@ -401,7 +402,7 @@ function themeblvd_sliders_get_slide_classes( $slider, $slide, $media ) {
 	if( $slide['slide_type'] == 'custom' ) {
 		$classes = 'custom';
 	} else {
-		$classes = 'media-'.$slide['position'].' '.$slide['slide_type'].'-slide';									
+		$classes = 'media-'.$slide['position'].' '.$slide['slide_type'].'-slide';
 		if( ! empty( $media['size'] ) )
 			$classes .= ' size-'.$media['size'];
 		if( $slide['position'] == 'full' && $slide['slide_type'] == 'image' )
@@ -410,11 +411,11 @@ function themeblvd_sliders_get_slide_classes( $slider, $slide, $media ) {
 	return apply_filters( 'themeblvd_sliders_slide_classes', $classes );
 }
 
-/** 
+/**
  * Check if a URL's SSL matches the SSL of the site.
  *
- * This is a pluggable function because it's also 
- * located within the Theme Blvd framework starting 
+ * This is a pluggable function because it's also
+ * located within the Theme Blvd framework starting
  * with v2.2.2.
  *
  * @since 1.1.0
