@@ -31,7 +31,7 @@ When using a Theme Blvd theme, this plugin gives you slick interface to build cu
 
 = Displaying your custom sliders =
 
-Sliders you create can be utilized within your website in two ways. 
+Sliders you create can be utilized within your website in two ways.
 
 1. You can insert them with the slider shortcode like this: `[slider id="your-slider"]`
 2. If you have the [Layout Builder](http://wordpress.org/extend/plugins/theme-blvd-layout-builder/) running, you can insert the sliders you've created into your custom layout via the "Slider" element.
@@ -49,6 +49,7 @@ Sliders you create can be utilized within your website in two ways.
 * Improved and moved Sliders API functionality to plugin.
 * Minor improvements to admin javascript.
 * Added `themeblvd_sliders_post_type_args` filter on registered `tb_sliders` post type's `$args`.
+* Fixed any conflicts when activated with [Theme Blvd Bundle](http://wordpress.org/extend/plugins/theme-blvd-bundle).
 
 = 1.0.4 =
 

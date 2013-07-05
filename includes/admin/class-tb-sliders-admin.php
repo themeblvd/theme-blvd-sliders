@@ -3,49 +3,49 @@
  * Sliders Admin
  */
 class Theme_Blvd_Sliders_Admin {
-	
+
 	/**
 	 * Constructor.
 	 *
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		
+
 		// Add slider admin page
 		add_action( 'admin_menu', array( $this, 'add_page' ) );
-		
-		// Filter on javascript locals specifically for slider Manager 
+
+		// Filter on javascript locals specifically for slider Manager
 		// onto Theme Blvd framework locals.
 		add_filter( 'themeblvd_locals_js', array( $this, 'add_js_locals' ) );
 
 		// Add ajax functionality to slider admin page
-		include_once( TB_SLIDERS_PLUGIN_DIR . '/admin/class-tb-sliders-ajax.php' );
+		include_once( TB_SLIDERS_PLUGIN_DIR . '/includes/admin/class-tb-sliders-ajax.php' );
 		$ajax = new Theme_Blvd_Sliders_Ajax( $this );
-	
+
 	}
-	
+
 	/**
 	 * Add admin page
 	 *
 	 * @since 1.0.0
 	 */
 	public function add_page() {
-		
+
 		// Create new admin page
 		$admin_page = add_object_page( 'Slider Manager', 'Sliders', themeblvd_admin_module_cap( 'sliders' ), 'themeblvd_sliders', array( $this, 'admin_page' ), 'div', 31 );
-		
+
 		// Attach assets to new admin page
 		add_action( 'admin_print_styles-'.$admin_page, array( $this, 'load_styles' ) );
 		add_action( 'admin_print_scripts-'.$admin_page, array( $this, 'load_scripts' ) );
-		
+
 		// Media Uploader fallback
 		if( ! function_exists('wp_enqueue_media') || ! function_exists('themeblvd_media_uploader') ) {
 			add_action( 'admin_print_styles-'.$admin_page, 'optionsframework_mlu_css', 0 );
 			add_action( 'admin_print_scripts-'.$admin_page, 'optionsframework_mlu_js', 0 );
 		}
 	}
-	
-	/** 
+
+	/**
 	 * Loads the CSS
 	 *
 	 * @since 1.0.0
@@ -53,34 +53,34 @@ class Theme_Blvd_Sliders_Admin {
 	public function load_styles() {
 		wp_enqueue_style( 'themeblvd_admin', TB_FRAMEWORK_URI . '/admin/assets/css/admin-style.min.css', null, TB_FRAMEWORK_VERSION );
 		wp_enqueue_style( 'themeblvd_options', TB_FRAMEWORK_URI . '/admin/options/css/admin-style.min.css', null, TB_FRAMEWORK_VERSION );
-		wp_enqueue_style( 'themeblvd_sliders', TB_SLIDERS_PLUGIN_URI . '/admin/css/sliders-style.min.css', null, TB_SLIDERS_PLUGIN_VERSION );
+		wp_enqueue_style( 'themeblvd_sliders', TB_SLIDERS_PLUGIN_URI . '/includes/admin/css/sliders-style.min.css', null, TB_SLIDERS_PLUGIN_VERSION );
 	}
-	
+
 	/**
 	 * Loads the javascript
 	 *
-	 * @since 1.0.0 
+	 * @since 1.0.0
 	 */
 	public function load_scripts() {
-		
+
 		// WP-packaged scripts
 		wp_enqueue_script( 'jquery-ui-core');
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'postbox' );
 		if( function_exists('wp_enqueue_media') && function_exists('themeblvd_media_uploader') )
 			wp_enqueue_media();
-		
+
 		// Theme Blvd scripts
 		wp_enqueue_script( 'themeblvd_admin', TB_FRAMEWORK_URI . '/admin/assets/js/shared.min.js', array('jquery'), TB_FRAMEWORK_VERSION );
 		wp_enqueue_script( 'themeblvd_options', TB_FRAMEWORK_URI . '/admin/options/js/options.min.js', array('jquery'), TB_FRAMEWORK_VERSION );
-		wp_enqueue_script( 'themeblvd_sliders', TB_SLIDERS_PLUGIN_URI . '/admin/js/sliders.min.js', array('jquery'), TB_SLIDERS_PLUGIN_VERSION );
-		
+		wp_enqueue_script( 'themeblvd_sliders', TB_SLIDERS_PLUGIN_URI . '/includes/admin/js/sliders.min.js', array('jquery'), TB_SLIDERS_PLUGIN_VERSION );
+
 		// Localize scripts
 		wp_localize_script( 'themeblvd_sliders', 'themeblvd', themeblvd_get_admin_locals( 'js' ) );
 	}
 
 	/**
-	 * Add javascript locals for Sliders manager onto 
+	 * Add javascript locals for Sliders manager onto
 	 * framework js locals that are already established.
 	 *
 	 * @since 1.1.0
@@ -94,9 +94,9 @@ class Theme_Blvd_Sliders_Admin {
 		);
 		return array_merge($current, $new);
 	}
-	
+
 	/**
-	 * Builds out the full admin page. 
+	 * Builds out the full admin page.
 	 *
 	 * @since 1.0.0
 	 */
@@ -106,7 +106,7 @@ class Theme_Blvd_Sliders_Admin {
 		?>
 		<div id="slider_blvd">
 			<div id="optionsframework" class="wrap tb-options-js">
-			    
+
 			    <div class="admin-module-header">
 			    	<?php do_action( 'themeblvd_admin_module_header', 'sliders' ); ?>
 			    </div>
@@ -116,12 +116,12 @@ class Theme_Blvd_Sliders_Admin {
 			        <a href="#add" id="add-tab" class="nav-tab" title="<?php _e( 'Add New Slider', 'themeblvd_sliders' ); ?>"><?php _e( 'Add Slider', 'themeblvd_sliders' ); ?></a>
 			        <a href="#edit" id="edit-tab" class="nav-tab nav-edit-slider" title="<?php _e( 'Edit Slider', 'themeblvd_sliders' ); ?>"><?php _e( 'Edit Slider', 'themeblvd_sliders' ); ?></a>
 			    </h2>
-		
+
 				<!-- MANAGE SLIDER (start) -->
-			
+
 				<div id="manage" class="group">
-			    	<form id="manage_sliders">	
-			    		<?php 
+			    	<form id="manage_sliders">
+			    		<?php
 			    		$manage_nonce = wp_create_nonce( 'optionsframework_manage_sliders' );
 						echo '<input type="hidden" name="option_page" value="optionsframework_manage_sliders" />';
 						echo '<input type="hidden" name="_wpnonce" value="'.$manage_nonce.'" />';
@@ -129,11 +129,11 @@ class Theme_Blvd_Sliders_Admin {
 						<div class="ajax-mitt"><?php $this->manage_sliders(); ?></div>
 					</form><!-- #manage_sliders (end) -->
 				</div><!-- #manage (end) -->
-				
+
 				<!-- MANAGE SLIDER (end) -->
-				
+
 				<!-- ADD SLIDER (start) -->
-				
+
 				<div id="add" class="group">
 					<form id="add_new_slider">
 						<?php
@@ -144,11 +144,11 @@ class Theme_Blvd_Sliders_Admin {
 						?>
 					</form><!-- #add_new_slider (end) -->
 				</div><!-- #manage (end) -->
-				
+
 				<!-- ADD SLIDER (end) -->
-				
+
 				<!-- EDIT SLIDER (start) -->
-				
+
 				<div id="edit" class="group">
 					<form id="edit_slider" method="post">
 						<?php
@@ -160,57 +160,57 @@ class Theme_Blvd_Sliders_Admin {
 						<div class="ajax-mitt"><!-- AJAX inserts edit slider page here. --></div>
 					</form>
 				</div><!-- #manage (end) -->
-			
+
 				<!-- EDIT SLIDER (end) -->
-				
+
 				<div class="admin-module-footer">
 					<?php do_action( 'themeblvd_admin_module_footer', 'sliders' ); ?>
 				</div>
-					
+
 			</div><!-- #optionsframework (end) -->
 		</div><!-- #slider_blvd (end) -->
 		<?php
 	}
-	
+
 	/**
-	 * Get default slider options when adding a new slider. 
-	 * This is run from the AJAX action called when saving 
-	 * a new slider so that when the user edits the slider 
-	 * for the first time, the default settings will already 
+	 * Get default slider options when adding a new slider.
+	 * This is run from the AJAX action called when saving
+	 * a new slider so that when the user edits the slider
+	 * for the first time, the default settings will already
 	 * be saved.
 	 *
 	 * @since 1.0.0
-	 * 
+	 *
 	 * @param $type string type of slider
-	 * @return $default_options array all default options 
+	 * @return $default_options array all default options
 	 */
 	public function slider_defaults( $type ) {
-		
+
 		$api = Theme_Blvd_Sliders_API::get_instance();
 		$sliders = $api->get_sliders();
 
 		$default_options = array();
-		
+
 		// Set options or return error if type doesn't exist
 		if( isset( $sliders[$type]['options'] ) )
 			$options = $sliders[$type]['options'];
 		else
 			return 'error_type';
-		
+
 		// Set the options
 		foreach( $options as $option ) {
 			if( isset( $option['std'] ) )
 				$default_options[$option['id']] = $option['std'];
 			else
-				$default_options[$option['id']] = null;	
+				$default_options[$option['id']] = null;
 		}
-		
+
 		// Return an error if options weren't found
 		if( empty( $default_options ) )
 			$default_options = 'error';
-			
+
 		return $default_options;
-		
+
 	}
 
 	/**
@@ -225,47 +225,47 @@ class Theme_Blvd_Sliders_Admin {
 	 * @return string $value Value for slide's specific option
 	 */
 	public function slide_value( $slide_options, $type, $sub_type = null ) {
-		
+
 		$value = null;
-		
+
 		switch( $type ) {
-			
+
 			// Slide Type
 			case 'slide_type' :
 	    		if( isset( $slide_options['slide_type'] ) )
 	    			$value = $slide_options['slide_type'];
 				break;
-			
-	    	// Image position	
+
+	    	// Image position
 	    	case 'position' :
 	    		if( isset( $slide_options['position'] ) )
 	    			$value = $slide_options['position'];
 	    		break;
 
-	    	// Image position	
+	    	// Image position
 	    	case 'image_size' :
 	    		if( isset( $slide_options['image_size'] ) )
 	    			$value = $slide_options['image_size'];
 	    		break;
-	    	
-	    	// Included elements	
+
+	    	// Included elements
 	    	case 'include' :
 	    		if( isset( $slide_options['elements']['include'] ) && in_array( $sub_type, $slide_options['elements']['include'] ) )
 	    			$value = ' checked="checked"';
 	    		break;
-	    		
+
 	    	// Image
 	    	case 'image' :
 	    		if( isset( $slide_options['image'] ) )
 	    			$value = $slide_options['image'];
 	    		break;
-	    	
+
 	    	// Video
 	    	case 'video' :
 	    		if( isset( $slide_options['video'] ) )
 	    			$value = $slide_options['video'];
 	    		break;
-			
+
 			// Video Height
 			case 'video_height' :
 				if( isset( $slide_options['video_height'] ) )
@@ -284,8 +284,8 @@ class Theme_Blvd_Sliders_Admin {
 	    				$value = $slide_options['elements']['image_link']['url'];
 				}
 				break;
-	
-			// Button	
+
+			// Button
 			case 'button' :
 				if( $sub_type == 'text' ) {
 					if( isset( $slide_options['elements']['button']['text'] ) )
@@ -298,38 +298,38 @@ class Theme_Blvd_Sliders_Admin {
 	    				$value = $slide_options['elements']['button']['url'];
 				}
 				break;
-			
+
 			// Headline
 	    	case 'headline' :
 				if( isset( $slide_options['elements']['headline'] ) )
 					$value = stripslashes( $slide_options['elements']['headline'] );
 				break;
-				
-			// Description	
+
+			// Description
 			case 'description' :
 				if( isset( $slide_options['elements']['description'] ) )
 					$value = stripslashes( $slide_options['elements']['description'] );
 				break;
-				
-			// Custom Content	
+
+			// Custom Content
 			case 'custom' :
 				if( isset( $slide_options['custom'] ) )
 					$value = stripslashes( $slide_options['custom'] );
 				break;
-		
+
 		} // End switch $type
-		
+
 		return $value;
-	
+
 	}
-	
+
 	/**
 	 * Generates the the interface to manage sliders.
 	 *
 	 * @since 1.0.0
 	 */
 	public function manage_sliders() {
-		
+
 		// Setup columns for management table
 		$columns = array(
 			array(
@@ -358,13 +358,13 @@ class Theme_Blvd_Sliders_Admin {
 			),
 		);
 		$columns = apply_filters( 'themeblvd_manage_sliders', $columns );
-		
+
 		// Display it all
 		echo '<div class="metabox-holder">';
 		echo themeblvd_post_table( 'tb_slider', $columns );
 		echo '</div><!-- .metabox-holder (end) -->';
 	}
-	
+
 	/**
 	 * Generates the the interface to add a new slider.
 	 *
@@ -373,22 +373,22 @@ class Theme_Blvd_Sliders_Admin {
 	 * @param $types array All default sliders
 	 */
 	public function new_slider( $types ) {
-		
+
 		// Setup slider types for options array
 		$slider_types = array();
 		foreach( $types as $type ) {
 			$slider_types[$type['id']] = $type['name'];
 		}
-		
+
 		// Setup options array to display form
 		$options = array(
-			array( 
+			array(
 				'name' 		=> __( 'Slider Name', 'themeblvd_sliders' ),
 				'desc' 		=> __( 'Enter a user-friendly name for your slider.<br>Example: My Slider', 'themeblvd_sliders' ),
 				'id' 		=> 'slider_name',
 				'type' 		=> 'text'
 			),
-			array( 
+			array(
 				'name' 		=> __( 'Slider Type', 'themeblvd_sliders' ),
 				'desc' 		=> __( 'Select which type of slider among the currently supported slider types.', 'themeblvd_sliders' ),
 				'id' 		=> 'slider_type',
@@ -397,7 +397,7 @@ class Theme_Blvd_Sliders_Admin {
 			)
 		);
 		$options = apply_filters( 'themeblvd_add_slider_options', $options );
-		
+
 		// Build form
 		$form = themeblvd_option_fields( 'options', $options, null, false );
 		?>
@@ -418,12 +418,12 @@ class Theme_Blvd_Sliders_Admin {
 		</div><!-- .metabox-holder (end) -->
 		<?php
 	}
-	
+
 	/**
-	 * Generates the an indivdual panel to edit a slide. 
-	 * This has been broken into a separate public function because 
-	 * not only does it show each slide when loading the 
-	 * Edit Slider screen, but it's used to insert a new 
+	 * Generates the an indivdual panel to edit a slide.
+	 * This has been broken into a separate public function because
+	 * not only does it show each slide when loading the
+	 * Edit Slider screen, but it's used to insert a new
 	 * slide when called with AJAX.
 	 *
 	 * @since 1.0.0
@@ -433,7 +433,7 @@ class Theme_Blvd_Sliders_Admin {
 	 * @param array $slide_options any current options for current slide
 	 */
 	public function edit_slide( $slider_id, $slider_type, $slide_id, $slide_options = null, $visibility = null ) {
-		
+
 		global $_wp_additional_image_sizes;
 
 		$api = Theme_Blvd_Sliders_API::get_instance();
@@ -443,7 +443,7 @@ class Theme_Blvd_Sliders_Admin {
 		$current_image = $this->slide_value( $slide_options, 'image' );
 		$current_video = $this->slide_value( $slide_options, 'video' );
 		?>
-		<div id="<?php echo $slide_id; ?>" class="widget slide-options"<?php if( $visibility == 'hide' ) echo ' style="display:none"'; ?>>					
+		<div id="<?php echo $slide_id; ?>" class="widget slide-options"<?php if( $visibility == 'hide' ) echo ' style="display:none"'; ?>>
 			<div class="widget-name">
 				<a href="#" class="widget-name-arrow">Toggle</a>
 				<h3 class="image"><?php echo $slider_types[$slider_type]['types'][$current_slide_type]['name']; ?></h3>
@@ -454,7 +454,7 @@ class Theme_Blvd_Sliders_Admin {
 					<strong><?php _e( 'Image Slide', 'themeblvd_sliders' ); ?></strong>
 					<select name="slides[<?php echo $slide_id; ?>][slide_type]">
 						<?php
-						foreach( $slider_types[$slider_type]['types'] as $key => $value ) {						
+						foreach( $slider_types[$slider_type]['types'] as $key => $value ) {
 	        				echo '<option '.selected( $key, $current_slide_type, false ).' value="'.$key.'">'.$value['name'].'</option>';
 	        			}
 	        			?>
@@ -463,7 +463,7 @@ class Theme_Blvd_Sliders_Admin {
 				<div class="pad">
 					<div class="slide-media controls grid-wrap">
 						<div class="slide-set-media">
-							<?php 
+							<?php
 							foreach( $slider_types[$slider_type]['types'] as $type => $config ) {
 								switch ( $type ) {
 									case 'image' :
@@ -490,7 +490,7 @@ class Theme_Blvd_Sliders_Admin {
 												<?php
 												echo '<input type="text" name="slides['.$slide_id.'][video]" placeholder="'.__('Video Link', 'themeblvd').'" value="'.$current_video.'" />';
 												/*
-												// @todo -- Incorporate "Get Video" button. Let's not bring this feature 
+												// @todo -- Incorporate "Get Video" button. Let's not bring this feature
 												// to center-satge until we have a better handle on mp4's in WP 3.6.
 												$current_video = $this->slide_value( $slide_options, 'video' );
 												if( function_exists('wp_video_shortcode') && function_exists('themeblvd_media_uploader') ) {
@@ -508,7 +508,7 @@ class Theme_Blvd_Sliders_Admin {
 													<?php _e( 'Enter in a video URL compatible with <a href="http://codex.wordpress.org/Embeds">WordPress\'s oEmbed</a>.<br><br>Ex: http://youtube.com/watch?v=HPPj6viIBmU<br>Ex: http://vimeo.com/11178250', 'themeblvd_sliders' ); ?>
 													<?php /* @todo if( function_exists('wp_video_shortcode') ) : ?>
 														<br><?php _e('Ex: http://yoursite.com/uploads/video.mp4', 'themeblvd_sliders'); ?>
-													<?php endif; */ ?> 
+													<?php endif; */ ?>
 												</p>
 											</div><!-- .field (end) -->
 										</div><!-- .slide-set-video (end) -->
@@ -519,12 +519,12 @@ class Theme_Blvd_Sliders_Admin {
 							?>
 						</div><!-- .slide-set-media (end) -->
 						<div class="slide-include-elements">
-							
+
 							<div class="slide-section">
 								<?php if( $slider_types[$slider_type]['positions'] ) : ?>
 									<h4 class="header_has_icon"><?php _e( 'Media Display', 'themeblvd_sliders' ); ?></h4>
 									<?php $position = $this->slide_value( $slide_options, 'position' ); ?>
-									
+
 									<select class="slide-position slide-position-image" name="slides[<?php echo $slide_id; ?>][position_image]">
 										<?php
 										foreach( $slider_types[$slider_type]['positions'] as $key => $value ) {
@@ -539,20 +539,20 @@ class Theme_Blvd_Sliders_Admin {
 						        					break;
 						        				case 'align-right' :
 						        					$name = __( 'Aligned Right', 'themeblvd_sliders' );
-						        					break;	
+						        					break;
 					        				}
 					        				$exclude_dimensions = $key == 'full' && $slider_types[$slider_type]['custom_size'] ? true : false;
 					        				echo '<option '.selected( $key, $position, false ).' value="'.$key.'">'.$this->get_image_size_desc($value, $name, $exclude_dimensions).'</option>';
 					        			}
 					        			?>
 									</select>
-									
+
 									<?php if( isset( $slider_types[$slider_type]['positions']['full'] ) && $slider_types[$slider_type]['custom_size'] ) : ?>
 										<select class="slide-crop" name="slides[<?php echo $slide_id; ?>][image_size]">
 											<?php
 											$full_size = $slider_types[$slider_type]['positions']['full'];
 											$image_size = $this->slide_value( $slide_options, 'image_size' );
-											
+
 											// First option is the default framework "slider-large" image size
 											echo '<option '.selected( 'slider-large', $image_size, false ).' value="'.$full_size.'">'.$this->get_image_size_desc($full_size, __('Default', 'themeblvd_sliders')).'</option>';
 
@@ -571,7 +571,7 @@ class Theme_Blvd_Sliders_Admin {
 											?>
 										</select>
 									<?php endif; ?>
-									
+
 									<select class="slide-position slide-position-video" name="slides[<?php echo $slide_id; ?>][position_video]">
 										<?php
 										foreach( $slider_types[$slider_type]['positions'] as $key => $value ) {
@@ -586,13 +586,13 @@ class Theme_Blvd_Sliders_Admin {
 						        					break;
 						        				case 'align-right' :
 						        					$name = __( 'Aligned Right', 'themeblvd_sliders' );
-						        					break;	
+						        					break;
 					        				}
 					        				echo '<option '.selected( $key, $position, false ).' value="'.$key.'">'.$name.'</option>';
 					        			}
 					        			?>
 									</select>
-									
+
 									<div class="slide-video-height mini-control clearfix">
 										<input type="text" value="<?php echo $this->slide_value( $slide_options, 'video_height' ); ?>" name="slides[<?php echo $slide_id; ?>][video_height]" class="numeric" />
 										<label for="slides[<?php echo $slide_id; ?>][video_height]">
@@ -613,8 +613,8 @@ class Theme_Blvd_Sliders_Admin {
 										<?php
 										foreach( $slider_types[$slider_type]['elements'] as $element ) {
 											switch( $element ) {
-												
-												case 'image_link' : 
+
+												case 'image_link' :
 													if( $key != 'video' ) {	// A video would never be wrapped in a link
 														?>
 														<tr class="element-image_link slide-element-header">
@@ -644,9 +644,9 @@ class Theme_Blvd_Sliders_Admin {
 														<?php
 													}
 													break;
-													
-												case 'headline' : 
-													
+
+												case 'headline' :
+
 													?>
 													<tr class="element-headline slide-element-header">
 														<td class="slide-element-check"><input value="headline" type="checkbox" name="slides[<?php echo $slide_id; ?>][elements][include][]"<?php echo $this->slide_value($slide_options, 'include', 'headline'); ?> /></td>
@@ -662,11 +662,11 @@ class Theme_Blvd_Sliders_Admin {
 														</td>
 													</tr>
 													<?php
-													
+
 													break;
-													
-												case 'description' : 
-													
+
+												case 'description' :
+
 													?>
 													<tr class="element-description slide-element-header">
 														<td class="slide-element-check"><input value="description" type="checkbox" name="slides[<?php echo $slide_id; ?>][elements][include][]"<?php echo $this->slide_value($slide_options, 'include', 'description'); ?> /></td>
@@ -682,11 +682,11 @@ class Theme_Blvd_Sliders_Admin {
 														</td>
 													</tr>
 													<?php
-													
+
 													break;
-													
-												case 'button' : 
-													
+
+												case 'button' :
+
 													?>
 													<tr class="element-button slide-element-header">
 														<td class="slide-element-check"><input value="button" type="checkbox" name="slides[<?php echo $slide_id; ?>][elements][include][]"<?php echo $this->slide_value( $slide_options, 'include', 'button'); ?> /></td>
@@ -744,7 +744,7 @@ class Theme_Blvd_Sliders_Admin {
 		</div><!-- .slide-options(end) -->
 		<?php
 	}
-	
+
 	/**
 	 * Generates the the interface to edit slider.
 	 *
@@ -753,12 +753,12 @@ class Theme_Blvd_Sliders_Admin {
 	 * @param $id string ID of slider to edit
 	 */
 	public function edit_slider( $id ) {
-		
+
 		$api = Theme_Blvd_Sliders_API::get_instance();
 
 		// Get slider custom post
 		$slider = get_post($id);
-		
+
 		// Check for no post object returned from ID.
 		if( ! $slider ) {
 			echo '<div class="error"><p>'.__('The slider could not be found.', 'themeblvd_sliders').'</p></div>';
@@ -767,7 +767,7 @@ class Theme_Blvd_Sliders_Admin {
 
 		// Post ID
 		$post_id = $slider->ID;
-		
+
 		// Meta data for slider post
 		$current_slides = get_post_meta( $post_id, 'slides', true );
 		$type = get_post_meta( $post_id, 'type', true );
@@ -810,26 +810,26 @@ class Theme_Blvd_Sliders_Admin {
 							'post_title' 	=> $slider->post_title,
 							'post_name'		=> $slider->post_name
 						);
-						
+
 						// Setup attribute options
-						$info_options = array( 
-							array( 
+						$info_options = array(
+							array(
 								'name'		=> __('Slider Name', 'themeblvd_sliders' ),
 								'id' 		=> 'post_title',
 								'desc'		=> __('This title is just for you. It\'ll never be used outside of your WordPress admin panel.', 'themeblvd_sliders'),
 								'type' 		=> 'text'
 							),
-							array( 
+							array(
 								'name' 		=> __('Slider ID', 'themeblvd_sliders' ),
 								'id' 		=> 'post_name',
 								'desc'		=> __( 'Sliders are assigned based on this ID. So if you change this at any point, make sure to also update any builder elements, pages, or other options in which you\'ve assigned this specific slider.', 'themeblvd_sliders' ),
 								'type' 		=> 'text'
 							)
 						);
-		
+
 						// Display form element
 						$form = themeblvd_option_fields( 'info', $info_options, $info_settings, false );
-						echo $form[0]; 
+						echo $form[0];
 						?>
 					</div><!-- .tb-widget-content (end) -->
 				</div><!-- .post-box (end) -->
@@ -838,7 +838,7 @@ class Theme_Blvd_Sliders_Admin {
 						<div class="handlediv" title="<?php echo __('Click to toggle', 'themeblvd_sliders'); ?>"><br></div>
 						<h3 class="hndle"><?php echo $type_info['name'].' '.__( 'Options', 'themeblvd_sliders' ); ?></h3>
 						<div class="tb-widget-content hide">
-							<?php 
+							<?php
 							// Slider Options
 							$form = themeblvd_option_fields( 'options', $options, $settings, false );
 							echo $form[0];
@@ -872,7 +872,7 @@ class Theme_Blvd_Sliders_Admin {
 		</div><!-- .metabox-holder (end) -->
 		<?php
 	}
-	
+
 	/**
 	 * Get a user-friendly description of a crop size.
 	 *
@@ -895,12 +895,12 @@ class Theme_Blvd_Sliders_Admin {
 			$width = intval( $_wp_additional_image_sizes[$id]['width'] ); // For theme-added sizes
 		else
 			$width = get_option( "{$id}_size_w" ); // For default sizes set in options
-		
+
 		if( isset( $_wp_additional_image_sizes[$id]['height'] ) )
 			$height = intval( $_wp_additional_image_sizes[$id]['height'] ); // For theme-added sizes
 		else
 			$height = get_option( "{$id}_size_h" ); // For default sizes set in options
-		
+
 		if( isset( $_wp_additional_image_sizes[$id]['crop'] ) )
 			$crop = intval( $_wp_additional_image_sizes[$id]['crop'] ); // For theme-added sizes
 		else
