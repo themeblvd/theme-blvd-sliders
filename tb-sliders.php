@@ -25,15 +25,10 @@ License: GPL2
 
 */
 
-// Avoid potential conflicts on activation when Bundle exists.
-if ( !defined( 'TB_SLIDERS_PLUGIN_VERSION' ) ) {
+define( 'TB_SLIDERS_PLUGIN_VERSION', '1.1.0' );
+define( 'TB_SLIDERS_PLUGIN_DIR', dirname( __FILE__ ) );
+define( 'TB_SLIDERS_PLUGIN_URI', plugins_url( '' , __FILE__ ) );
 
-	define( 'TB_SLIDERS_PLUGIN_VERSION', '1.1.0' );
-	define( 'TB_SLIDERS_PLUGIN_DIR', dirname( __FILE__ ) );
-	define( 'TB_SLIDERS_PLUGIN_URI', plugins_url( '' , __FILE__ ) );
-}
-
-if ( !function_exists( 'themeblvd_sliders_init' ) ) : // Avoid activation errors with Bundle
 /**
  * Run Sliders Plugin
  *
@@ -94,9 +89,7 @@ function themeblvd_sliders_init() {
 
 }
 add_action( 'after_setup_theme', 'themeblvd_sliders_init' );
-endif;
 
-if ( !function_exists( 'themeblvd_sliders_api_init' ) ) : // Avoid activation errors with Bundle
 /**
  * Setup Sliders API and filter in registered "Sliders"
  * and "Post Slider" elements for Theme Blvd Layout
@@ -120,9 +113,7 @@ function themeblvd_sliders_api_init(){
 
 }
 add_action( 'themeblvd_api', 'themeblvd_sliders_api_init', 9 ); // Priority 9 to come before Builder API
-endif;
 
-if ( !function_exists( 'themeblvd_sliders_registered_elements' ) ) : // Avoid activation errors with Bundle
 /**
  * Add plugin's builder elements to current registered
  * framework elements.
@@ -135,9 +126,7 @@ function themeblvd_sliders_registered_elements( $elements ) {
 	// @todo -- Add quick slider element
 	return $elements;
 }
-endif;
 
-if ( !function_exists( 'themeblvd_sliders_textdomain' ) ) : // Avoid activation errors with Bundle
 /**
  * Register text domain for localization.
  *
@@ -147,4 +136,3 @@ function themeblvd_sliders_textdomain() {
 	load_plugin_textdomain( 'themeblvd_sliders', false, TB_SLIDERS_PLUGIN_DIR . '/lang' );
 }
 add_action( 'plugins_loaded', 'themeblvd_sliders_textdomain' );
-endif;
