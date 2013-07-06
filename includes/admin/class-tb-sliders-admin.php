@@ -472,11 +472,13 @@ class Theme_Blvd_Sliders_Admin {
 											<h3><?php echo $config['main_title']; ?></h3>
 											<div class="field section-upload">
 												<?php
-												if( function_exists('wp_enqueue_media') && function_exists('themeblvd_media_uploader') )
-													echo themeblvd_media_uploader( array( 'option_name' => 'slides['.$slide_id.']', 'type' => 'slider', 'id' => $slide_id.'image', 'value' => $current_image['url'], 'value_title' => $current_image['title'], 'value_id' => $current_image['id'] ) );
-												else
+												if( function_exists('wp_enqueue_media') && function_exists('themeblvd_media_uploader') ) {
+													$title = isset( $current_image['title'] ) ? $current_image['title']: ''; // If updating from v1.0, this check prevents PHP warning.
+													echo themeblvd_media_uploader( array( 'option_name' => 'slides['.$slide_id.']', 'type' => 'slider', 'id' => $slide_id.'image', 'value' => $current_image['url'], 'value_title' => $title, 'value_id' => $current_image['id'] ) );
+												} else {
 													// @deprecated
 													echo optionsframework_medialibrary_uploader( 'slides['.$slide_id.']', 'slider', $slide_id.'image', $current_image, null, null, $slider_id, null, __( 'Get Image', 'themeblvd_sliders' ) );
+												}
 												?>
 											</div><!-- .field (end) -->
 										</div><!-- .slide-set-image (end) -->
