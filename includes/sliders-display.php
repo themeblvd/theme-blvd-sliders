@@ -434,6 +434,8 @@ function themeblvd_shortcode_slider_auto( $atts ) {
 		'tag' 				=> '',				// Tag(s) to include/exclude
 		'category_name'		=> '',				// Category slug(s) to include/exclude
 		'cat'				=> '',				// Category ID(s) to include/exclude
+		'portfolio'     	=> '',				// Portfolio(s) slugs to include, requires Portfolios plugin
+        'portfolio_tag' 	=> '',				// Portfolio Tag(s) to include, requires Portfolios plugin
 		'numberposts' 		=> '5',				// Number of posts/slides
 		'orderby' 			=> 'date',			// Orderby param for posts query
 		'order'				=> 'DESC',			// Order param for posts query

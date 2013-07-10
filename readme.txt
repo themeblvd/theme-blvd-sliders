@@ -50,6 +50,7 @@ Sliders you create can be utilized within your website in two ways.
 * Minor improvements to admin javascript.
 * Added `themeblvd_sliders_post_type_args` filter on registered `tb_sliders` post type's `$args`.
 * Fixed any conflicts when activated with [Theme Blvd Bundle](http://wordpress.org/extend/plugins/theme-blvd-bundle).
+* Added compatibility for [Portfolios](http://wordpress.org/plugins/portfolios/) plugin with Post Slider. With this plugin activated you can use "portfolio" and "portfolio_tag" parameters with `[post_slider]`.
 
 = 1.0.4 =
 
