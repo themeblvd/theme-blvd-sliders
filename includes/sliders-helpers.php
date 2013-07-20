@@ -14,8 +14,9 @@
 function themeblvd_sliders_get_media_atts( $slider, $slide, $settings, $slider_type = 'standard' ) {
 
 	// This only should be used with image/video slides.
-	if( $slide['slide_type'] != 'image' && $slide['slide_type'] != 'video' )
+	if ( $slide['slide_type'] != 'image' && $slide['slide_type'] != 'video' ) {
 		return;
+	}
 
 	// Setup $atts array
 	$atts = array(
@@ -30,7 +31,7 @@ function themeblvd_sliders_get_media_atts( $slider, $slide, $settings, $slider_t
 		'link'			=> array()
 	);
 
-	if( $slide['slide_type'] == 'video' ) {
+	if ( $slide['slide_type'] == 'video' ) {
 
 		// Media type
 		$atts['type'] = 'video';
@@ -39,13 +40,14 @@ function themeblvd_sliders_get_media_atts( $slider, $slide, $settings, $slider_t
 		$atts['video'] = $slide['video'];
 
 		// Video height (available in plugin v1.1+)
-		if( ! empty( $slide['video_height'] ) )
+		if ( ! empty( $slide['video_height'] ) ) {
 			$atts['height'] = $slide['video_height'];
+		}
 
 	} else if ( $slide['slide_type'] == 'image' ) {
 
 		// Image Atts
-		if( ! empty( $slide['image']['display'] ) ) {
+		if ( ! empty( $slide['image']['display'] ) ) {
 
 			// Current slider was saved with plugin v1.1+
 			// No database queries involved here!
@@ -59,12 +61,13 @@ function themeblvd_sliders_get_media_atts( $slider, $slide, $settings, $slider_t
 		}
 
 		// Image Size fallback (current slider was saved prior to plugin v1.1)
-		if( ! $atts['size'] ) {
-			if( $slide['position'] == 'full' ) {
-				if( $slider_type == 'carrousel' )
+		if ( ! $atts['size'] ) {
+			if ( $slide['position'] == 'full' ) {
+				if ( $slider_type == 'carrousel' ) {
 					$atts['size'] = 'grid_4';
-				else
+				} else {
 					$atts['size'] = 'slider-large';
+				}
 			} else {
 				$atts['size'] = 'slider-staged';
 			}
@@ -74,7 +77,7 @@ function themeblvd_sliders_get_media_atts( $slider, $slide, $settings, $slider_t
 		// (1) Current slider was saved prior to plugin v1.1
 		// (2) Developer has filtered to force retrieval of image URL.
 		// (3) SSL of stored image URL doesn't match SSL of frontend of site.
-		if( ! $atts['url'] || apply_filters('themeblvd_'.$slider_type.'_slider_force_url', false) || themeblvd_ssl_conflict( $atts['url'] ) ) {
+		if ( ! $atts['url'] || apply_filters('themeblvd_'.$slider_type.'_slider_force_url', false) || themeblvd_ssl_conflict( $atts['url'] ) ) {
 			$attachment = wp_get_attachment_image_src( $slide['image']['id'], $atts['size'] );
 			$atts['url'] = $attachment[0];
 			$atts['width'] = $attachment[1];
@@ -82,16 +85,16 @@ function themeblvd_sliders_get_media_atts( $slider, $slide, $settings, $slider_t
 		}
 
 		// Image ALT
-		if( isset( $slide['image']['title'] ) ) {
+		if ( isset( $slide['image']['title'] ) ) {
 			$atts['alt'] = $slide['image']['title']; // current slider was saved w/plugin v1.1+
-		} else if( ! empty( $slide['image']['id'] ) ) {
+		} else if ( ! empty( $slide['image']['id'] ) ) {
 			$attachment = get_post( $slide['image']['id'] );
 			$atts['alt'] = $attachment->post_title;
 			$atts['type'] = $attachment->post_mime_type;
 		}
 
 		// Image Link
-		if( themeblvd_slide_has_element( 'image_link', $slide ) ) {
+		if ( themeblvd_slide_has_element( 'image_link', $slide ) ) {
 			$atts['link'] = array(
 				'url'		=> $slide['elements']['image_link']['url'],
 				'target'	=> $slide['elements']['image_link']['target'], // _self, _blank, lightbox, lightbox_video
@@ -133,10 +136,15 @@ function themeblvd_get_slide_media( $atts, $settings, $slider_type = 'standard' 
 
 	$output = '';
 
-	if( $atts['type'] == 'video' )
+	if ( $atts['type'] == 'video' ) {
+
 		$output = themeblvd_sliders_get_video( $atts, $slider_type );
-	else if( substr( $atts['type'], 0, 5 ) == 'image' )
+
+	} else if ( substr( $atts['type'], 0, 5 ) == 'image' ) {
+
 		$output = themeblvd_sliders_get_image( $atts, $slider_type );
+
+	}
 
 	return apply_filters( 'themeblvd_slide_media', $output, $atts, $settings, $slider_type );
 }
@@ -161,10 +169,10 @@ function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
 	$image = sprintf( '<img src="%s" alt="%s" width="%s" height="%s" />', $atts['url'], $atts['alt'], $atts['width'], $atts['height'] );
 
 	// Image Link
-	if( $atts['link'] ) {
+	if ( $atts['link'] ) {
 
 		// Link class and target
-		switch( $atts['link']['target'] ) {
+		switch ( $atts['link']['target'] ) {
 
 			case 'lightbox_video' :
 				$lightbox = true;
@@ -189,7 +197,7 @@ function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
 
 		// Markup used for image overlay in to work with framework javascript
 		$overlay = '';
-		if( $slider_type != 'fallback' ) {
+		if ( $slider_type != 'fallback' ) {
 			if ( function_exists( 'themeblvd_get_image_overlay' ) ) {
 				$overlay = themeblvd_get_image_overlay();
 			} else {
@@ -240,24 +248,26 @@ function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
 function themeblvd_sliders_get_video( $media_atts, $slider_type = 'standard' ){
 
 	// This only should be used with videos.
-	if( $media_atts['type'] != 'video' )
+	if ( $media_atts['type'] != 'video' )
 		return;
 
 	// Give a chance to override with custom video solution before
 	// doing work of wp_oembed_get()
 	$video = apply_filters( 'themeblvd_sliders_video_intervene', '', $media_atts );
-	if( $video )
+	if ( $video ) {
 		return $video;
+	}
 
 	// Is this an oEmbed?
 	$type = wp_check_filetype( $media_atts['video'] );
 	$oembed = true;
 	$video_extensions = array( 'mp4', 'm4v', 'webm', 'ogv', 'wmv', 'flv' ); // @todo With WP 3.6+, can use wp_get_video_extensions()
-	if( in_array( $type['ext'], $video_extensions ) )
+	if ( in_array( $type['ext'], $video_extensions ) ) {
 		$oembed = false;
+	}
 
 	// Get HTML
-	if( $oembed ) {
+	if ( $oembed ) {
 		// oEmbed for external videos
 		$video = wp_oembed_get( $media_atts['video'] );
 	} else {
@@ -267,17 +277,18 @@ function themeblvd_sliders_get_video( $media_atts, $slider_type = 'standard' ){
 	}
 
 	// Append max height
-	if( $video ){
+	if ( $video ){
 
 		$video_max_height = '';
 
-		if( ! empty( $media_atts['height'] ) && intval( $media_atts['height'] ) > 0 )
+		if ( ! empty( $media_atts['height'] ) && intval( $media_atts['height'] ) > 0 ) {
 			$video_max_height = sprintf('max-height: %dpx;', $media_atts['height'] );
+		}
 
 		$video_max_height = apply_filters( 'themeblvd_sliders_max_height', $video_max_height , $media_atts['height'] );
 
-		if( $video_max_height ) {
-			if( $oembed ) {
+		if ( $video_max_height ) {
+			if ( $oembed ) {
 				$find = '<div class="themeblvd-video-wrapper"';
 				$video = str_replace($find, $find.' style="'.$video_max_height.'"', $video);
 			} else {
@@ -291,8 +302,9 @@ function themeblvd_sliders_get_video( $media_atts, $slider_type = 'standard' ){
 	}
 
 	// Set error message
-	if( ! $video )
+	if ( ! $video ) {
 		$video = '<p>'.themeblvd_get_local( 'no_video' ).'</p>';
+	}
 
 	return $video;
 }
@@ -327,37 +339,46 @@ function themeblvd_get_slide_content( $slider, $slide, $settings, $slider_type =
 
 	$output = '';
 
-	if( themeblvd_slide_has_element( 'headline', $slide ) ||
+	if ( themeblvd_slide_has_element( 'headline', $slide ) ||
 		themeblvd_slide_has_element( 'description', $slide ) ||
 		themeblvd_slide_has_element( 'button', $slide ) ) {
 
 		// Setup markup to wrap content area.
 		$wrap_class = 'content';
-		if( $slide['position'] != 'full' )
+		if ( $slide['position'] != 'full' ) {
 			$wrap_class .= ' grid_fifth_2';
+		}
+
 		$wrap_fmt = apply_filters( 'themeblvd_slide_content_wrap', '<div class="'.$wrap_class.'"><div class="content-inner">%s</div></div>' );
 
 		$content = '';
 
 		// Headline
-		if( themeblvd_slide_has_element( 'headline', $slide ) )
+		if ( themeblvd_slide_has_element( 'headline', $slide ) ) {
 			$content .= sprintf( '<div class="slide-title"><span>%s</span></div>', stripslashes( $slide['elements']['headline'] ) );
+		}
 
 		// Description + Button
-		if( themeblvd_slide_has_element( 'description', $slide ) || themeblvd_slide_has_element( 'button', $slide ) ) {
+		if ( themeblvd_slide_has_element( 'description', $slide ) || themeblvd_slide_has_element( 'button', $slide ) ) {
 
 			$desc = '';
 
 			// Description text
-			if( themeblvd_slide_has_element( 'description', $slide ) ) {
+			if ( themeblvd_slide_has_element( 'description', $slide ) ) {
+
 				$text = stripslashes( $slide['elements']['description'] );
-				if( apply_filters( 'themeblvd_'.$slider_type.'_slider_desc', true, $slide, $slider, $settings ) )
+
+				if ( apply_filters( 'themeblvd_'.$slider_type.'_slider_desc', true, $slide, $slider, $settings ) ) {
 					$text = apply_filters( 'themeblvd_the_content', $text );
+				}
+
 				$desc .= sprintf( '<div class="slide-description-text">%s</div>', $text );
+
 			}
 
 			// Button
-			if( themeblvd_slide_has_element( 'button', $slide ) ) {
+			if ( themeblvd_slide_has_element( 'button', $slide ) ) {
+
 				$button_atts = apply_filters( 'themeblvd_'.$slider_type.'_slider_button', array(
 					'text' 		=> $slide['elements']['button']['text'],
 					'url'		=> $slide['elements']['button']['url'],
@@ -366,7 +387,9 @@ function themeblvd_get_slide_content( $slider, $slide, $settings, $slider_type =
 					'size'		=> 'medium'
 
 				), $slide, $slider, $settings, $slider_type );
+
 				$desc .= sprintf( '<div class="slide-description-button">%s</div>', themeblvd_button( stripslashes( $button_atts['text'] ), $button_atts['url'], $button_atts['color'], $button_atts['target'], $button_atts['size'] ) );
+
 			}
 
 			$content .= sprintf( '<div class="slide-description"><div class="slide-description-inner">%s</div></div>', $desc );
@@ -391,15 +414,21 @@ function themeblvd_get_slide_content( $slider, $slide, $settings, $slider_type =
  */
 
 function themeblvd_slide_has_element( $element, $slide ) {
+
 	$include = false;
 
-	if( isset( $slide['elements']['include'] ) && is_array( $slide['elements']['include'] ) )
-		if( in_array( $element, $slide['elements']['include'] ) )
-			if( ! empty( $slide['elements'][$element] ) )
+	if ( isset( $slide['elements']['include'] ) && is_array( $slide['elements']['include'] ) ) {
+		if ( in_array( $element, $slide['elements']['include'] ) ) {
+			if ( ! empty( $slide['elements'][$element] ) ) {
 				$include = true;
+			}
+		}
+	}
 
-	if( $element == 'button' && $slide['position'] == 'full' )
-		$include = false; // Full-size media slides don't support buttons
+	if ( $element == 'button' && $slide['position'] == 'full' ) {
+		// Full-size media slides don't support buttons
+		$include = false;
+	}
 
 	return apply_filters( 'themeblvd_slide_has_element', $include, $element, $slide );
 }
@@ -415,15 +444,25 @@ function themeblvd_slide_has_element( $element, $slide ) {
  */
 
 function themeblvd_sliders_get_slide_classes( $slider, $slide, $media ) {
-	if( $slide['slide_type'] == 'custom' ) {
+
+	if ( $slide['slide_type'] == 'custom' ) {
+
 		$classes = 'custom';
+
 	} else {
+
 		$classes = 'media-'.$slide['position'].' '.$slide['slide_type'].'-slide';
-		if( ! empty( $media['size'] ) )
+
+		if ( ! empty( $media['size'] ) ) {
 			$classes .= ' size-'.$media['size'];
-		if( $slide['position'] == 'full' && $slide['slide_type'] == 'image' )
+		}
+
+		if ( $slide['position'] == 'full' && $slide['slide_type'] == 'image' ) {
 			$classes .= ' full-image';
+		}
+
 	}
+
 	return apply_filters( 'themeblvd_sliders_slide_classes', $classes );
 }
 
@@ -440,11 +479,12 @@ function themeblvd_sliders_get_slide_classes( $slider, $slide, $media ) {
  * @return boolean True if there's a conflict
  */
 
-if( ! function_exists( 'themeblvd_ssl_conflict' ) ) {
+if ( ! function_exists( 'themeblvd_ssl_conflict' ) ) {
 	function themeblvd_ssl_conflict( $url ) {
-		if( ( ! is_ssl() && strpos( $url, 'https://' ) !== false ) || ( is_ssl() && strpos( $url, 'http://' ) !== false ) )
+		if ( ( ! is_ssl() && strpos( $url, 'https://' ) !== false ) || ( is_ssl() && strpos( $url, 'http://' ) !== false ) ) {
 			return true;
-		else
+		} else {
 			return false;
+		}
 	}
 }

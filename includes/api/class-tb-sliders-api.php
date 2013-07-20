@@ -2,9 +2,9 @@
 /**
  * Theme Blvd Sliders API
  *
- * This sets up the default slider types and provides 
+ * This sets up the default slider types and provides
  * an API to add custom slider types.
- * 
+ *
  * @author		Jason Bobich
  * @copyright	Copyright (c) Jason Bobich
  * @link		http://jasonbobich.com
@@ -12,7 +12,7 @@
  * @package 	Theme Blvd WordPress Framework
  */
 class Theme_Blvd_Sliders_API {
-	
+
 	/*--------------------------------------------*/
 	/* Properties, private
 	/*--------------------------------------------*/
@@ -32,7 +32,7 @@ class Theme_Blvd_Sliders_API {
 	private $core_sliders = array();
 
 	/**
-	 * Slider types added through client API 
+	 * Slider types added through client API
 	 * mutators.
 	 *
 	 * @since 1.1.0
@@ -47,7 +47,7 @@ class Theme_Blvd_Sliders_API {
 	private $remove_sliders = array();
 
 	/**
-	 * Final slider types, core combined 
+	 * Final slider types, core combined
 	 * with client API-added slider types.
 	 *
 	 * @since 1.1.0
@@ -66,10 +66,11 @@ class Theme_Blvd_Sliders_API {
      * @return Theme_Blvd_Frontend_Init A single instance of this class.
      */
 	public static function get_instance() {
-		
-		if( self::$instance == null )
+
+		if ( self::$instance == null ) {
             self::$instance = new self;
-        
+        }
+
         return self::$instance;
 	}
 
@@ -79,8 +80,8 @@ class Theme_Blvd_Sliders_API {
 	 * @since 1.1.0
 	 */
 	private function __construct() {
-		
-		if( is_admin() ) {
+
+		if ( is_admin() ) {
 
 			// Setup plugin default slider types.
 			$this->set_core_sliders();
@@ -90,7 +91,7 @@ class Theme_Blvd_Sliders_API {
 			add_action( 'after_setup_theme', array( $this, 'set_sliders' ), 1000 );
 
 		}
-		
+
 	}
 
 	/*--------------------------------------------*/
@@ -103,22 +104,22 @@ class Theme_Blvd_Sliders_API {
 	 * @since 1.1.0
 	 */
 	public function set_core_sliders() {
-		
+
 		$this->core_sliders = array(
 			'standard' => array(
 				'name' 			=> 'Standard',
 				'id'			=> 'standard',
-				'custom_size' 	=> true 		// Custom size allowed for full size position 
+				'custom_size' 	=> true 		// Custom size allowed for full size position
 			),
 			'nivo' => array(
 				'name' 			=> 'Nivo',
 				'id'			=> 'nivo',
-				'custom_size' 	=> true 		// Custom size not allowed for full size position 
+				'custom_size' 	=> true 		// Custom size not allowed for full size position
 			),
 			'carrousel' => array(
 				'name' 			=> 'Carrousel 3D',
 				'id'			=> 'carrousel',
-				'custom_size' 	=> false 		// Custom size not allowed for full size position 
+				'custom_size' 	=> false 		// Custom size not allowed for full size position
 			)
 		);
 
@@ -151,11 +152,11 @@ class Theme_Blvd_Sliders_API {
 
 		// Slide Elements
 		$this->core_sliders['standard']['elements'] = array(
-			'image_link', 
-			'headline', 
-			'description', 
-			'button', 
-			'custom_content' 
+			'image_link',
+			'headline',
+			'description',
+			'button',
+			'custom_content'
 		);
 
 		// Slider Options
@@ -268,8 +269,8 @@ class Theme_Blvd_Sliders_API {
 
 		// Slide Elements
 		$this->core_sliders['nivo']['elements'] = array(
-			'image_link', 
-			'headline', 
+			'image_link',
+			'headline',
 			'description'
 		);
 
@@ -433,9 +434,9 @@ class Theme_Blvd_Sliders_API {
 	}
 
 	/**
-	 * Set slider types by combining core elements and client-added 
-	 * slider types. Then remove any types that have been set to 
-	 * be removed. This happens at the "after_setup_theme" hook 
+	 * Set slider types by combining core elements and client-added
+	 * slider types. Then remove any types that have been set to
+	 * be removed. This happens at the "after_setup_theme" hook
 	 * with a priority of 1000.
 	 *
 	 * @since 1.1.0
@@ -443,12 +444,12 @@ class Theme_Blvd_Sliders_API {
 	public function set_sliders() {
 
 		// Combine core elements with client elements
-		$this->sliders = array_merge( $this->core_sliders, $this->client_sliders );	
+		$this->sliders = array_merge( $this->core_sliders, $this->client_sliders );
 
 		// Remove elements
-		if( $this->remove_sliders ) {
-			foreach( $this->remove_sliders as $type ) {
-				if( isset( $this->sliders[$type] ) ) {
+		if ( $this->remove_sliders ) {
+			foreach ( $this->remove_sliders as $type ) {
+				if ( isset( $this->sliders[$type] ) ) {
 					unset( $this->sliders[$type] );
 				}
 			}
@@ -470,16 +471,16 @@ class Theme_Blvd_Sliders_API {
 	 *
 	 * @param string $slider_id ID for new slider type
 	 * @param string $slider_name Name for new slider type
-	 * @param array $slide_types Slides types - image, video, custom 
+	 * @param array $slide_types Slides types - image, video, custom
 	 * @param array $media_positions Positions for media - full, align-left, align-right
 	 * @param array $slide_elements Elements to include in slides - image_link, headline, description, button
 	 * @param array $options Options formatted for Options Framework
 	 * @param string $callback Function to display slider on frontend
 	 */
 	public function add( $slider_id, $slider_name, $slide_types, $media_positions, $slide_elements, $options, $callback ) {
-		
-		if( is_admin() ) {  
-			
+
+		if ( is_admin() ) {
+
 			// Start new slider
 			$new_slider = array(
 				'name' 		=> $slider_name,
@@ -491,25 +492,25 @@ class Theme_Blvd_Sliders_API {
 			// Slide Types
 			// $slide_types should look something like: array( 'image', 'video', 'custom' )
 			$new_slider['types'] = array();
-			
-			if( $slide_types ) {
-				foreach( $slide_types as $type ) {
-					switch( $type ) {
-						
+
+			if ( $slide_types ) {
+				foreach ( $slide_types as $type ) {
+					switch ( $type ) {
+
 						case 'image' :
 							$new_slider['types']['image'] = array(
 								'name' 			=> __( 'Image Slide', 'themeblvd_sliders' ),
 								'main_title' 	=> __( 'Setup Image', 'themeblvd_sliders' )
 							);
 							break;
-						
+
 						case 'video' :
 							$new_slider['types']['video'] = array(
 								'name' 			=> __( 'Video Slide', 'themeblvd_sliders' ),
 								'main_title' 	=> __( 'Video Link', 'themeblvd_sliders' )
 							);
 							break;
-						
+
 						case 'custom' :
 							$new_slider['types']['custom'] = array(
 								'name' 			=> __( 'Custom Slide', 'themeblvd_sliders' ),
@@ -524,12 +525,12 @@ class Theme_Blvd_Sliders_API {
 			// Slide Media Positions
 			// $media_positions should look something like: array( 'full' => 'crop_size', 'align-left' => 'crop_size', 'align-right' => 'crop_size' )
 			$new_slider['positions'] = array();
-			
+
 			$positions = apply_filters( 'themeblvd_slider_image_positions', array( 'full', 'align-left', 'align-right' ) );
-			
-			if( $media_positions ) {
-				foreach( $media_positions as $position => $crop_size ) {
-					if( in_array( $position, $positions ) ) {
+
+			if ( $media_positions ) {
+				foreach ( $media_positions as $position => $crop_size ) {
+					if ( in_array( $position, $positions ) ) {
 						$new_slider['positions'][$position] = $crop_size;
 					}
 				}
@@ -541,7 +542,7 @@ class Theme_Blvd_Sliders_API {
 		}
 
 		// Add frontend display
-		add_action( 'themeblvd_'.$slider_id.'_slider', $callback, 10, 3 );	
+		add_action( 'themeblvd_'.$slider_id.'_slider', $callback, 10, 3 );
 	}
 
 	/**
@@ -560,18 +561,18 @@ class Theme_Blvd_Sliders_API {
 	/*--------------------------------------------*/
 
 	/**
-	 * Get default slider types. 
+	 * Get default slider types.
 	 *
 	 * @since 1.1.0
 	 *
 	 * @return array $core_sliders
 	 */
 	public function get_core_sliders() {
-		return $this->core_sliders;	
+		return $this->core_sliders;
 	}
 
 	/**
-	 * Get slider types added through client 
+	 * Get slider types added through client
 	 * API mutators.
 	 *
 	 * @since 1.1.0
@@ -579,22 +580,22 @@ class Theme_Blvd_Sliders_API {
 	 * @return array $client_sliders
 	 */
 	public function get_client_sliders() {
-		return $this->client_sliders;	
+		return $this->client_sliders;
 	}
 
 	/**
-	 * Get slider types to be removed. 
+	 * Get slider types to be removed.
 	 *
 	 * @since 1.1.0
 	 *
 	 * @return array $remove_sliders
 	 */
 	public function get_remove_sliders() {
-		return $this->remove_sliders;	
+		return $this->remove_sliders;
 	}
 
 	/**
-	 * Get finalized slider types. 
+	 * Get finalized slider types.
 	 *
 	 * @since 1.1.0
 	 *
@@ -602,12 +603,14 @@ class Theme_Blvd_Sliders_API {
 	 * @return array $sliders
 	 */
 	public function get_sliders( $type = '' ) {
-		
-		if( ! $type )
-			return $this->sliders;
 
-		if( isset( $this->sliders[$type] ) )
+		if ( ! $type ) {
+			return $this->sliders;
+		}
+
+		if ( isset( $this->sliders[$type] ) ) {
 			return $this->sliders[$type];
+		}
 
 		return array();
 
@@ -627,11 +630,11 @@ class Theme_Blvd_Sliders_API {
 	 */
 	public function is_slider( $type ) {
 
-		if( isset( $this->sliders[$type] ) )
+		if ( isset( $this->sliders[$type] ) ) {
 			return true;
+		}
 
 		return false;
 	}
-
 
 } // End class Theme_Blvd_Sliders_API

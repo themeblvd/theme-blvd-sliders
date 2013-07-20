@@ -39,7 +39,7 @@ class Theme_Blvd_Sliders_Admin {
 		add_action( 'admin_print_scripts-'.$admin_page, array( $this, 'load_scripts' ) );
 
 		// Media Uploader fallback
-		if( ! function_exists('wp_enqueue_media') || ! function_exists('themeblvd_media_uploader') ) {
+		if ( ! function_exists('wp_enqueue_media') || ! function_exists('themeblvd_media_uploader') ) {
 			add_action( 'admin_print_styles-'.$admin_page, 'optionsframework_mlu_css', 0 );
 			add_action( 'admin_print_scripts-'.$admin_page, 'optionsframework_mlu_js', 0 );
 		}
@@ -67,7 +67,7 @@ class Theme_Blvd_Sliders_Admin {
 		wp_enqueue_script( 'jquery-ui-core');
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'postbox' );
-		if( function_exists('wp_enqueue_media') && function_exists('themeblvd_media_uploader') )
+		if ( function_exists('wp_enqueue_media') && function_exists('themeblvd_media_uploader') )
 			wp_enqueue_media();
 
 		// Theme Blvd scripts
@@ -192,22 +192,25 @@ class Theme_Blvd_Sliders_Admin {
 		$default_options = array();
 
 		// Set options or return error if type doesn't exist
-		if( isset( $sliders[$type]['options'] ) )
+		if ( isset( $sliders[$type]['options'] ) ) {
 			$options = $sliders[$type]['options'];
-		else
+		} else {
 			return 'error_type';
+		}
 
 		// Set the options
-		foreach( $options as $option ) {
-			if( isset( $option['std'] ) )
+		foreach ( $options as $option ) {
+			if ( isset( $option['std'] ) ) {
 				$default_options[$option['id']] = $option['std'];
-			else
+			} else {
 				$default_options[$option['id']] = null;
+			}
 		}
 
 		// Return an error if options weren't found
-		if( empty( $default_options ) )
+		if ( empty( $default_options ) ) {
 			$default_options = 'error';
+		}
 
 		return $default_options;
 
@@ -232,89 +235,114 @@ class Theme_Blvd_Sliders_Admin {
 
 			// Slide Type
 			case 'slide_type' :
-	    		if( isset( $slide_options['slide_type'] ) )
+	    		if ( isset( $slide_options['slide_type'] ) ) {
 	    			$value = $slide_options['slide_type'];
+	    		}
 				break;
 
 	    	// Image position
 	    	case 'position' :
-	    		if( isset( $slide_options['position'] ) )
+	    		if ( isset( $slide_options['position'] ) ) {
 	    			$value = $slide_options['position'];
+	    		}
 	    		break;
 
 	    	// Image position
 	    	case 'image_size' :
-	    		if( isset( $slide_options['image_size'] ) )
+	    		if ( isset( $slide_options['image_size'] ) ) {
 	    			$value = $slide_options['image_size'];
+	    		}
 	    		break;
 
 	    	// Included elements
 	    	case 'include' :
-	    		if( isset( $slide_options['elements']['include'] ) && in_array( $sub_type, $slide_options['elements']['include'] ) )
+	    		if ( isset( $slide_options['elements']['include'] ) && in_array( $sub_type, $slide_options['elements']['include'] ) ) {
 	    			$value = ' checked="checked"';
+	    		}
 	    		break;
 
 	    	// Image
 	    	case 'image' :
-	    		if( isset( $slide_options['image'] ) )
+	    		if ( isset( $slide_options['image'] ) ) {
 	    			$value = $slide_options['image'];
+	    		}
 	    		break;
 
 	    	// Video
 	    	case 'video' :
-	    		if( isset( $slide_options['video'] ) )
+	    		if ( isset( $slide_options['video'] ) ) {
 	    			$value = $slide_options['video'];
+	    		}
 	    		break;
 
 			// Video Height
 			case 'video_height' :
-				if( isset( $slide_options['video_height'] ) )
+				if ( isset( $slide_options['video_height'] ) ) {
 					$value = $slide_options['video_height'];
-				else
+				} else {
 					$value = 0;
+				}
 				break;
 
 			// Image link
 	    	case 'image_link' :
-				if( $sub_type == 'target' ) {
-					if( isset( $slide_options['elements']['image_link']['target'] ) )
+				if ( $sub_type == 'target' ) {
+
+					if ( isset( $slide_options['elements']['image_link']['target'] ) ) {
 	    				$value = $slide_options['elements']['image_link']['target'];
-				} else if( $sub_type == 'url' ) {
-					if( isset( $slide_options['elements']['image_link']['url'] ) )
+	    			}
+
+				} else if ( $sub_type == 'url' ) {
+
+					if ( isset( $slide_options['elements']['image_link']['url'] ) ) {
 	    				$value = $slide_options['elements']['image_link']['url'];
+	    			}
+
 				}
 				break;
 
 			// Button
 			case 'button' :
-				if( $sub_type == 'text' ) {
-					if( isset( $slide_options['elements']['button']['text'] ) )
+				if ( $sub_type == 'text' ) {
+
+					if ( isset( $slide_options['elements']['button']['text'] ) ) {
 	    				$value = stripslashes( $slide_options['elements']['button']['text'] );
-				} else if( $sub_type == 'target' ) {
-					if( isset( $slide_options['elements']['button']['target']) )
+	    			}
+
+				} else if ( $sub_type == 'target' ) {
+
+					if ( isset( $slide_options['elements']['button']['target']) ) {
 	    				$value = $slide_options['elements']['button']['target'];
-				} else if( $sub_type == 'url' ) {
-					if( isset( $slide_options['elements']['button']['url'] ) )
+	    			}
+
+				} else if ( $sub_type == 'url' ) {
+
+					if ( isset( $slide_options['elements']['button']['url'] ) ) {
 	    				$value = $slide_options['elements']['button']['url'];
+	    			}
+
 				}
 				break;
 
 			// Headline
 	    	case 'headline' :
-				if( isset( $slide_options['elements']['headline'] ) )
+				if ( isset( $slide_options['elements']['headline'] ) ) {
 					$value = stripslashes( $slide_options['elements']['headline'] );
+				}
 				break;
 
 			// Description
 			case 'description' :
-				if( isset( $slide_options['elements']['description'] ) )
+				if ( isset( $slide_options['elements']['description'] ) ) {
 					$value = stripslashes( $slide_options['elements']['description'] );
+				}
 				break;
 
 			// Custom Content
 			case 'custom' :
-				if( isset( $slide_options['custom'] ) )
+				if ( isset( $slide_options['custom'] ) ) {
 					$value = stripslashes( $slide_options['custom'] );
+				}
 				break;
 
 		} // End switch $type
@@ -376,7 +404,7 @@ class Theme_Blvd_Sliders_Admin {
 
 		// Setup slider types for options array
 		$slider_types = array();
-		foreach( $types as $type ) {
+		foreach ( $types as $type ) {
 			$slider_types[$type['id']] = $type['name'];
 		}
 
@@ -443,7 +471,7 @@ class Theme_Blvd_Sliders_Admin {
 		$current_image = $this->slide_value( $slide_options, 'image' );
 		$current_video = $this->slide_value( $slide_options, 'video' );
 		?>
-		<div id="<?php echo $slide_id; ?>" class="widget slide-options"<?php if( $visibility == 'hide' ) echo ' style="display:none"'; ?>>
+		<div id="<?php echo $slide_id; ?>" class="widget slide-options"<?php if ( $visibility == 'hide' ) echo ' style="display:none"'; ?>>
 			<div class="widget-name">
 				<a href="#" class="widget-name-arrow">Toggle</a>
 				<h3 class="image"><?php echo $slider_types[$slider_type]['types'][$current_slide_type]['name']; ?></h3>
@@ -454,7 +482,7 @@ class Theme_Blvd_Sliders_Admin {
 					<strong><?php _e( 'Image Slide', 'themeblvd_sliders' ); ?></strong>
 					<select name="slides[<?php echo $slide_id; ?>][slide_type]">
 						<?php
-						foreach( $slider_types[$slider_type]['types'] as $key => $value ) {
+						foreach ( $slider_types[$slider_type]['types'] as $key => $value ) {
 	        				echo '<option '.selected( $key, $current_slide_type, false ).' value="'.$key.'">'.$value['name'].'</option>';
 	        			}
 	        			?>
@@ -464,7 +492,7 @@ class Theme_Blvd_Sliders_Admin {
 					<div class="slide-media controls grid-wrap">
 						<div class="slide-set-media">
 							<?php
-							foreach( $slider_types[$slider_type]['types'] as $type => $config ) {
+							foreach ( $slider_types[$slider_type]['types'] as $type => $config ) {
 								switch ( $type ) {
 									case 'image' :
 										?>
@@ -472,7 +500,7 @@ class Theme_Blvd_Sliders_Admin {
 											<h3><?php echo $config['main_title']; ?></h3>
 											<div class="field section-upload">
 												<?php
-												if( function_exists('wp_enqueue_media') && function_exists('themeblvd_media_uploader') ) {
+												if ( function_exists('wp_enqueue_media') && function_exists('themeblvd_media_uploader') ) {
 													$title = isset( $current_image['title'] ) ? $current_image['title']: ''; // If updating from v1.0, this check prevents PHP warning.
 													echo themeblvd_media_uploader( array( 'option_name' => 'slides['.$slide_id.']', 'type' => 'slider', 'id' => $slide_id.'image', 'value' => $current_image['url'], 'value_title' => $title, 'value_id' => $current_image['id'] ) );
 												} else {
@@ -495,7 +523,7 @@ class Theme_Blvd_Sliders_Admin {
 												// @todo -- Incorporate "Get Video" button. Let's not bring this feature
 												// to center-satge until we have a better handle on mp4's in WP 3.6.
 												$current_video = $this->slide_value( $slide_options, 'video' );
-												if( function_exists('wp_video_shortcode') && function_exists('themeblvd_media_uploader') ) {
+												if ( function_exists('wp_video_shortcode') && function_exists('themeblvd_media_uploader') ) {
 													echo '<div class="section-upload">';
 													echo themeblvd_media_uploader( array( 'option_name' => 'slides', 'type' => 'video', 'name' => 'video', 'id' => $slide_id, 'value' => $current_video ) );
 													echo '</div>';
@@ -508,7 +536,7 @@ class Theme_Blvd_Sliders_Admin {
 												?>
 												<p class="explain">
 													<?php _e( 'Enter in a video URL compatible with <a href="http://codex.wordpress.org/Embeds">WordPress\'s oEmbed</a>.<br><br>Ex: http://youtube.com/watch?v=HPPj6viIBmU<br>Ex: http://vimeo.com/11178250', 'themeblvd_sliders' ); ?>
-													<?php /* @todo if( function_exists('wp_video_shortcode') ) : ?>
+													<?php /* @todo if ( function_exists('wp_video_shortcode') ) : ?>
 														<br><?php _e('Ex: http://yoursite.com/uploads/video.mp4', 'themeblvd_sliders'); ?>
 													<?php endif; */ ?>
 												</p>
@@ -523,13 +551,13 @@ class Theme_Blvd_Sliders_Admin {
 						<div class="slide-include-elements">
 
 							<div class="slide-section">
-								<?php if( $slider_types[$slider_type]['positions'] ) : ?>
+								<?php if ( $slider_types[$slider_type]['positions'] ) : ?>
 									<h4 class="header_has_icon"><?php _e( 'Media Display', 'themeblvd_sliders' ); ?></h4>
 									<?php $position = $this->slide_value( $slide_options, 'position' ); ?>
 
 									<select class="slide-position slide-position-image" name="slides[<?php echo $slide_id; ?>][position_image]">
 										<?php
-										foreach( $slider_types[$slider_type]['positions'] as $key => $value ) {
+										foreach ( $slider_types[$slider_type]['positions'] as $key => $value ) {
 					        				// Set name for option
 					        				$name = '';
 					        				switch( $key ) {
@@ -549,7 +577,7 @@ class Theme_Blvd_Sliders_Admin {
 					        			?>
 									</select>
 
-									<?php if( isset( $slider_types[$slider_type]['positions']['full'] ) && $slider_types[$slider_type]['custom_size'] ) : ?>
+									<?php if ( isset( $slider_types[$slider_type]['positions']['full'] ) && $slider_types[$slider_type]['custom_size'] ) : ?>
 										<select class="slide-crop" name="slides[<?php echo $slide_id; ?>][image_size]">
 											<?php
 											$full_size = $slider_types[$slider_type]['positions']['full'];
@@ -560,10 +588,11 @@ class Theme_Blvd_Sliders_Admin {
 
 											// Now get all WP-registered image sizes and make them available for selection.
 											$wp_image_sizes = get_intermediate_image_sizes();
-											if( $wp_image_sizes ) {
-												foreach( $wp_image_sizes as $size ) {
-													if( $size == $full_size )
+											if ( $wp_image_sizes ) {
+												foreach ( $wp_image_sizes as $size ) {
+													if ( $size == $full_size ) {
 														continue;
+													}
 													echo '<option '.selected( $size, $image_size, false ).' value="'.$size.'">'.$this->get_image_size_desc($size).'</option>';
 												}
 											}
@@ -576,7 +605,7 @@ class Theme_Blvd_Sliders_Admin {
 
 									<select class="slide-position slide-position-video" name="slides[<?php echo $slide_id; ?>][position_video]">
 										<?php
-										foreach( $slider_types[$slider_type]['positions'] as $key => $value ) {
+										foreach ( $slider_types[$slider_type]['positions'] as $key => $value ) {
 					        				// Set name for option
 					        				$name = '';
 					        				switch( $key ) {
@@ -607,17 +636,17 @@ class Theme_Blvd_Sliders_Admin {
 								<?php endif; ?>
 							</div><!-- .slide-section (end) -->
 
-							<?php if( ! empty( $slider_types ) && ! empty( $slider_types[$slider_type]['elements'] ) ) : ?>
+							<?php if ( ! empty( $slider_types ) && ! empty( $slider_types[$slider_type]['elements'] ) ) : ?>
 								<div class="slide-section">
 									<h4><?php _e( 'Slide Elements', 'themeblvd_sliders' ); ?></h4>
 									<table class="widefat slide-elements">
 										<tbody>
 										<?php
-										foreach( $slider_types[$slider_type]['elements'] as $element ) {
-											switch( $element ) {
+										foreach ( $slider_types[$slider_type]['elements'] as $element ) {
+											switch ( $element ) {
 
 												case 'image_link' :
-													if( $key != 'video' ) {	// A video would never be wrapped in a link
+													if ( $key != 'video' ) {	// A video would never be wrapped in a link
 														?>
 														<tr class="element-image_link slide-element-header">
 															<td class="slide-element-check"><input value="image_link" type="checkbox" name="slides[<?php echo $slide_id; ?>][elements][include][]"<?php echo $this->slide_value($slide_options, 'include', 'image_link'); ?> /></td>
@@ -730,7 +759,7 @@ class Theme_Blvd_Sliders_Admin {
 						</div><!-- .slide-include-elements (end) -->
 						<div class="clear"></div>
 					</div><!-- .grid-wrap (end) -->
-					<?php if( array_key_exists( 'custom', $slider_types[$slider_type]['types'] ) ) : ?>
+					<?php if ( array_key_exists( 'custom', $slider_types[$slider_type]['types'] ) ) : ?>
 					<div class="controls slide-custom">
 						<h3><?php echo $slider_types[$slider_type]['types']['custom']['main_title']; ?></h3>
 						<?php $custom = $this->slide_value( $slide_options, 'custom' ); ?>
@@ -762,7 +791,7 @@ class Theme_Blvd_Sliders_Admin {
 		$slider = get_post($id);
 
 		// Check for no post object returned from ID.
-		if( ! $slider ) {
+		if ( ! $slider ) {
 			echo '<div class="error"><p>'.__('The slider could not be found.', 'themeblvd_sliders').'</p></div>';
 			return;
 		}
@@ -776,7 +805,7 @@ class Theme_Blvd_Sliders_Admin {
 		$settings = get_post_meta( $post_id, 'settings', true );
 
 		// Check if slider type is valid.
-		if( ! $api->is_slider( $type ) ) {
+		if ( ! $api->is_slider( $type ) ) {
 			echo '<div class="error"><p>'.sprintf(__('The slider type "%s" is not valid.', 'themeblvd_sliders'), $type).'</p></div>';
 			return;
 		}
@@ -835,7 +864,7 @@ class Theme_Blvd_Sliders_Admin {
 						?>
 					</div><!-- .tb-widget-content (end) -->
 				</div><!-- .post-box (end) -->
-				<?php if( $options ) : ?>
+				<?php if ( $options ) : ?>
 					<div id="slider-options" class="postbox postbox-options closed">
 						<div class="handlediv" title="<?php echo __('Click to toggle', 'themeblvd_sliders'); ?>"><br></div>
 						<h3 class="hndle"><?php echo $type_info['name'].' '.__( 'Options', 'themeblvd_sliders' ); ?></h3>
@@ -860,8 +889,8 @@ class Theme_Blvd_Sliders_Admin {
 					</div><!-- #titlediv (end) -->
 					<div id="sortable">
 						<?php
-						if( ! empty( $current_slides ) ) {
-							foreach( $current_slides as $slide_id => $slide ) {
+						if ( ! empty( $current_slides ) ) {
+							foreach ( $current_slides as $slide_id => $slide ) {
 								$this->edit_slide( $post_id, $type, $slide_id, $slide );
 							}
 						} else {
@@ -887,40 +916,45 @@ class Theme_Blvd_Sliders_Admin {
 		global $_wp_additional_image_sizes;
 
 		// Can we just skip the dimensions?
-		if( $exclude_dimensions ) {
+		if ( $exclude_dimensions ) {
 			$desc = $name ? $name : $id;
 			return apply_filters( 'themeblvd_sliders_image_size_desc', $desc, $id, $name );
 		}
 
 		// Determine width, height, and crop mode
-		if( isset( $_wp_additional_image_sizes[$id]['width'] ) )
+		if ( isset( $_wp_additional_image_sizes[$id]['width'] ) ) {
 			$width = intval( $_wp_additional_image_sizes[$id]['width'] ); // For theme-added sizes
-		else
+		} else {
 			$width = get_option( "{$id}_size_w" ); // For default sizes set in options
+		}
 
-		if( isset( $_wp_additional_image_sizes[$id]['height'] ) )
+		if ( isset( $_wp_additional_image_sizes[$id]['height'] ) ) {
 			$height = intval( $_wp_additional_image_sizes[$id]['height'] ); // For theme-added sizes
-		else
+		} else {
 			$height = get_option( "{$id}_size_h" ); // For default sizes set in options
+		}
 
-		if( isset( $_wp_additional_image_sizes[$id]['crop'] ) )
+		if ( isset( $_wp_additional_image_sizes[$id]['crop'] ) ) {
 			$crop = intval( $_wp_additional_image_sizes[$id]['crop'] ); // For theme-added sizes
-		else
+		} else {
 			$crop = get_option( "{$id}_crop" ); // For default sizes set in options
+		}
 
 		// Crop mode message
-		if( $crop )
+		if ( $crop ) {
 			$crop_desc = __('hard crop', 'themeblvd_sliders');
-		else if( $height == 9999 )
+		} else if ( $height == 9999 ) {
 			$crop_desc = __('no height crop', 'themeblvd_sliders');
-		else
+		} else {
 			$crop_desc = __('soft crop', 'themeblvd_sliders');
+		}
 
 		// Piece together description
 		$desc = $name ? $name : $id;
 		$desc = sprintf( "$desc (%d x %d, %s)", $width, $height, $crop_desc );
-		if( ! isset( $_wp_additional_image_sizes[$id] ) )
+		if ( ! isset( $_wp_additional_image_sizes[$id] ) ) {
 			$desc .= ' -- '.__('WordPress size', 'themeblvd_sliders');
+		}
 
 		return apply_filters( 'themeblvd_sliders_image_size_desc', $desc, $id, $name );
 	}
