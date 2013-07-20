@@ -153,7 +153,9 @@ function themeblvd_get_slide_media( $atts, $settings, $slider_type = 'standard' 
 
 function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
 
+	$lightbox = false;
 	$output = '';
+	$link_target = '';
 
 	// Image
 	$image = sprintf( '<img src="%s" alt="%s" width="%s" height="%s" />', $atts['url'], $atts['alt'], $atts['width'], $atts['height'] );
@@ -165,37 +167,55 @@ function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
 		switch( $atts['link']['target'] ) {
 
 			case 'lightbox_video' :
+				$lightbox = true;
 				$anchor_class = 'slide-thumbnail-link video';
-				$link_target = ' rel="featured_themeblvd_lightbox"';
 				break;
 
 			case 'lightbox' :
+				$lightbox = true;
 				$anchor_class = 'slide-thumbnail-link image';
-				$link_target = ' rel="featured_themeblvd_lightbox"';
 				break;
 
 			case '_blank' :
 				$anchor_class = 'slide-thumbnail-link external';
-				$link_target = ' target="_blank"';
+				$link_target = $atts['link']['target'];
 				break;
 
 			default :
 				$anchor_class = 'slide-thumbnail-link post';
-				$link_target = ' target="_self"';
+				$link_target = $atts['link']['target'];
+
 		}
 
 		// Markup used for image overlay in to work with framework javascript
 		$overlay = '';
-		if( $slider_type != 'fallback' )
-			$overlay = '<span class="image-overlay"><span class="image-overlay-bg"></span><span class="image-overlay-icon"></span></span>';
+		if( $slider_type != 'fallback' ) {
+			if ( function_exists( 'themeblvd_get_image_overlay' ) ) {
+				$overlay = themeblvd_get_image_overlay();
+			} else {
+				$overlay = '<span class="image-overlay"><span class="image-overlay-bg"></span><span class="image-overlay-icon"></span></span>';
+			}
+		}
 
 		$overlay = apply_filters( 'themeblvd_sliders_image_overlay', $overlay, $atts, $link_target, $slider_type );
 
-		// Final link format
-		$link_fmt = apply_filters( 'themeblvd_sliders_image_link_format', '<a href="'.$atts['link']['url'].'" title="'.$atts['link']['title'].'"'.$link_target.' class="'.$anchor_class.'">%s'.$overlay.'</a>', $atts, $link_target, $slider_type );
+		// Wrap image in link
+		if ( $lightbox && function_exists( 'themeblvd_get_link_to_lightbox' ) ) {
 
-		// Wrap link around Image for final $output
-		$output .= sprintf( $link_fmt, $image );
+			$args = apply_filters( 'themeblvd_sliders_lightbox_args', array(
+				'item'	=> $image.$overlay,
+				'link'	=> $atts['link']['url'],
+				'class'	=> $anchor_class,
+				'title'	=> $atts['link']['title']
+			), $atts, $image, $slider_type );
+
+			$output = themeblvd_get_link_to_lightbox( $args );
+
+		} else {
+
+			$output = sprintf( '<a href="%s" title="%s" target="%s" class="%s">%s</a>', $atts['link']['url'], $atts['link']['title'], $link_target, $anchor_class, $image.$overlay );
+
+		}
 
 	} else {
 
@@ -204,7 +224,7 @@ function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
 
 	}
 
-	return apply_filters( 'themeblvd_sliders_image', $output, $atts, $image, $slider_type );
+	return apply_filters( 'themeblvd_sliders_image', $output, $atts, $image, $slider_type, $lightbox );
 }
 
 /**
