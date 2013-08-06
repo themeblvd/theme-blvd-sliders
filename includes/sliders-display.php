@@ -453,8 +453,9 @@ function themeblvd_shortcode_slider_auto( $atts ) {
 		'image_link' 		=> 'permalink',		// Where image link goes - option, permalink, lightbox, none
 		'button' 			=> '',				// Text for button to lead to permalink - leave empty to hide
 		'tag' 				=> '',				// Tag(s) to include/exclude
-		'category_name'		=> '',				// Category slug(s) to include/exclude
-		'cat'				=> '',				// Category ID(s) to include/exclude
+		'category'			=> '',				// Category slug(s) to include
+		//'category_name'	=> '',				// Category slug(s) to include
+		//'cat'				=> '',				// Category ID(s) to include/exclude
 		'portfolio'     	=> '',				// Portfolio(s) slugs to include, requires Portfolios plugin
         'portfolio_tag' 	=> '',				// Portfolio Tag(s) to include, requires Portfolios plugin
 		'numberposts' 		=> '5',				// Number of posts/slides

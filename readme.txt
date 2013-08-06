@@ -44,6 +44,10 @@ Sliders you create can be utilized within your website in two ways.
 
 == Changelog ==
 
+= 1.1.1 =
+
+* Fixed "category" parameter not working with `[post_slider]` shortcode.
+
 = 1.1.0 =
 
 * Improved and moved Sliders API functionality to plugin.
