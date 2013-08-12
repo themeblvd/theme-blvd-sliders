@@ -67,8 +67,10 @@ class Theme_Blvd_Sliders_Admin {
 		wp_enqueue_script( 'jquery-ui-core');
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'postbox' );
-		if ( function_exists('wp_enqueue_media') && function_exists('themeblvd_media_uploader') )
+
+		if ( function_exists('wp_enqueue_media') && function_exists('themeblvd_media_uploader') ) {
 			wp_enqueue_media();
+		}
 
 		// Theme Blvd scripts
 		wp_enqueue_script( 'themeblvd_admin', TB_FRAMEWORK_URI . '/admin/assets/js/shared.min.js', array('jquery'), TB_FRAMEWORK_VERSION );
