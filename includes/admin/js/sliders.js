@@ -239,10 +239,12 @@ jQuery(document).ready(function($) {
 				}
 				else if(value == 'video')
 				{
+
 					opposite = 'image';
 
 					helper_text = parent.find('.slide-set-video .video-link input').val();
 					parent.find('.slide-summary').addClass('video');
+
 					if( helper_text )
 						parent.find('.slide-summary').text(helper_text).fadeIn(200);
 
@@ -253,6 +255,7 @@ jQuery(document).ready(function($) {
 					parent.find('.slide-crop').hide();
 					parent.find('.image-note').hide();
 					parent.find('.slide-element-header').show();
+
 					if(position == 'full')
 					{
 						parent.find('.slide-elements').hide();
@@ -274,7 +277,8 @@ jQuery(document).ready(function($) {
 		// Slide's position of media - full width, aligned right, aligned left
 		position : function( object )
 		{
-			if( object.closest('.widget-content').hasClass('type-video') )
+
+			if( object.closest('.widget').hasClass('type-video') )
 			{
 				var value = object.val(), parent = object.closest('.widget-content');
 				parent.find('.slide-elements .element-image_link').hide();
@@ -289,8 +293,9 @@ jQuery(document).ready(function($) {
 					parent.find('.slide-elements').show();
 				}
 			}
-			else if( object.closest('.widget-content').hasClass('type-image') )
+			else if( object.closest('.widget').hasClass('type-image') )
 			{
+
 				var slide_crop = object.closest('.widget-content').find('.slide-crop');
 				if(object.val() == 'full')
 				{

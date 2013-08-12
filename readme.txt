@@ -46,6 +46,8 @@ Sliders you create can be utilized within your website in two ways.
 
 = 1.1.2 =
 
+* Fixed Slider Manager UI bug with switching "Media Display" and "Slide Elements" not adjusting correctly.
+
 = 1.1.1 =
 
 * Fixed "category" parameter not working with `[post_slider]` shortcode.
