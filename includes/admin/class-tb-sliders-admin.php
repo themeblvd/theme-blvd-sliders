@@ -251,8 +251,8 @@ class Theme_Blvd_Sliders_Admin {
 
 	    	// Image position
 	    	case 'image_size' :
-	    		if ( isset( $slide_options['image_size'] ) ) {
-	    			$value = $slide_options['image_size'];
+	    		if ( isset( $slide_options['image']['size'] ) ) {
+	    			$value = $slide_options['image']['size'];
 	    		}
 	    		break;
 
@@ -600,7 +600,7 @@ class Theme_Blvd_Sliders_Admin {
 											}
 
 											// Add option for raw image, with no crop.
-											echo '<option '.selected( $size, $image_size, false ).' value="full">'.__('Do not crop image.', 'themeblvd_sliders').'</option>';
+											echo '<option '.selected( 'full', $image_size, false ).' value="full">'.__('Do not crop image.', 'themeblvd_sliders').'</option>';
 											?>
 										</select>
 									<?php endif; ?>

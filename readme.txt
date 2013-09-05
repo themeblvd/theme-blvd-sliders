@@ -18,7 +18,7 @@ When using a Theme Blvd theme, this plugin gives you slick interface to build cu
 * A shortcode for inserting custom sliders into pages and posts - `[slider id="your-slider"]`
 * A shortcode for inserting sliders generated from posts (with Theme Blvd framework v2.2.1+) - `[post_slider category="foo"]` `[post_slider tag="bar"]`
 * Sliders are responsive and will scale to fit their surrounding container.
-* Two slider types included by default - [Flexslider](http://flexslider.woothemes.com) and [Roundabout](http://fredhq.com/projects/roundabout)
+* Three slider types included by default for custom sliders - [Flexslider](http://flexslider.woothemes.com), [Nivo](http://dev7studios.com/nivo-slider/), and [Roundabout](http://fredhq.com/projects/roundabout)
 * Slider types are extendable through Theme Blvd framework API. - [View Docs](http://dev.themeblvd.com/tutorial/add-custom-slider/)
 
 **NOTE: For this plugin to do anything, you must have a theme with Theme Blvd framework v2.2+ activated.**
@@ -45,6 +45,8 @@ Sliders you create can be utilized within your website in two ways.
 == Changelog ==
 
 = 1.1.3 =
+
+* Fixed bug with Slider Manager not showing currently selected image crop size properly.
 
 = 1.1.2 =
 
