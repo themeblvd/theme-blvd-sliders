@@ -348,13 +348,13 @@ jQuery(document).ready(function($) {
 	}
 
 	// Edit slider binded events
-	$('#slider_blvd .slide-set-type select').live('change', function(){
+	$('#slider_blvd').on( 'change', '.slide-set-type select', function() {
 		slider_blvd.type( $(this) );
 	});
-	$('#slider_blvd .slide-position').live('change', function(){
+	$('#slider_blvd').on( 'change', '.slide-position', function() {
 		slider_blvd.position( $(this) );
 	});
-	$('#slider_blvd .slide-element-check input').live('change', function(){
+	$('#slider_blvd').on( 'change', '.slide-element-check input', function() {
 		slider_blvd.elements( $(this) );
 	});
 
@@ -363,7 +363,7 @@ jQuery(document).ready(function($) {
 	/*-----------------------------------------------------------------------------------*/
 
 	// Edit slider (via Edit Link on manage page)
-	$('#slider_blvd #manage .edit-tb_slider').live( 'click', function(){
+	$('#slider_blvd').on( 'click', '#manage .edit-tb_slider', function() {
 		var name = $(this).closest('tr').find('.post-title .title-link').text(),
 			id = $(this).attr('href'),
 			id = id.replace('#', '');
@@ -385,14 +385,14 @@ jQuery(document).ready(function($) {
 	});
 
 	// Delete slider (via Delete Link on manage page)
-	$('#slider_blvd .row-actions .trash a').live( 'click', function(){
+	$('#slider_blvd').on( 'click', '.row-actions .trash a', function() {
 		var href = $(this).attr('href'), id = href.replace('#', ''), ids = 'posts%5B%5D='+id;
 		slider_blvd.delete_slider( ids, 'click' );
 		return false;
 	});
 
 	// Delete sliders via bulk action
-	$('#manage_sliders').live( 'submit', function(){
+	$('#slider_blvd').on( 'submit', '#manage_sliders', function() {
 		var value = $(this).find('select[name="action"]').val(), ids = $(this).serialize();
 		if(value == 'trash')
 			slider_blvd.delete_slider( ids, 'submit' );
@@ -465,7 +465,7 @@ jQuery(document).ready(function($) {
 	/*-----------------------------------------------------------------------------------*/
 
 	// Add new slide
-	$('#optionsframework #add_new_slide').live( 'click', function(){
+	$('#optionsframework').on( 'click', '#add_new_slide', function() {
 		var el = $(this),
 			id,
 			trim_front,
@@ -509,7 +509,7 @@ jQuery(document).ready(function($) {
 	});
 
 	// Save Slider
-	$('#optionsframework #edit_slider').live('submit', function(){
+	$('#optionsframework').on( 'submit', '#edit_slider', function() {
 		var el = $(this),
 			data = el.serialize(),
 			load = el.find('.publishing-action .ajax-loading'),
@@ -566,14 +566,14 @@ jQuery(document).ready(function($) {
 	});
 
 	// Delete slider (via Delete Link on edit slider page)
-	$('#slider_blvd #edit .delete_slider').live( 'click', function(){
+	$('#slider_blvd #edit').on( 'click', '.delete_slider', function() {
 		var href = $(this).attr('href'), id = href.replace('#', ''), ids = 'posts%5B%5D='+id;
 		slider_blvd.delete_slider( ids, 'click', 'edit_page' );
 		return false;
 	});
 
 	// Update helper text in slide title
-	$('#slider_blvd #edit .video-link input').live( 'change', function(){
+	$('#slider_blvd #edit').on( 'change', '.video-link input', function() {
 		var widget = $(this).closest('.widget'), helper_text = $(this).val();
 		if( helper_text )
 			widget.find('.slide-summary').text(helper_text).fadeIn(200);
