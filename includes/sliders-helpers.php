@@ -355,7 +355,7 @@ function themeblvd_get_slide_content( $slider, $slide, $settings, $slider_type =
 
 		// Headline
 		if ( themeblvd_slide_has_element( 'headline', $slide ) ) {
-			$content .= sprintf( '<div class="slide-title"><span>%s</span></div>', stripslashes( $slide['elements']['headline'] ) );
+			$content .= sprintf( '<div class="slide-title"><span>%s</span></div>', apply_filters( 'themeblvd_sliders_headline_text', stripslashes( $slide['elements']['headline'] ) ) );
 		}
 
 		// Description + Button
@@ -366,7 +366,7 @@ function themeblvd_get_slide_content( $slider, $slide, $settings, $slider_type =
 			// Description text
 			if ( themeblvd_slide_has_element( 'description', $slide ) ) {
 
-				$text = stripslashes( $slide['elements']['description'] );
+				$text = apply_filters( 'themeblvd_sliders_desc_text', stripslashes( $slide['elements']['description'] ) );
 
 				if ( apply_filters( 'themeblvd_'.$slider_type.'_slider_desc', true, $slide, $slider, $settings ) ) {
 					$text = apply_filters( 'themeblvd_the_content', $text );
@@ -380,7 +380,7 @@ function themeblvd_get_slide_content( $slider, $slide, $settings, $slider_type =
 			if ( themeblvd_slide_has_element( 'button', $slide ) ) {
 
 				$button_atts = apply_filters( 'themeblvd_'.$slider_type.'_slider_button', array(
-					'text' 		=> $slide['elements']['button']['text'],
+					'text' 		=> apply_filters( 'themeblvd_sliders_button_text', $slide['elements']['button']['text'] ),
 					'url'		=> $slide['elements']['button']['url'],
 					'color'		=> 'default',
 					'target'	=> $slide['elements']['button']['target'],

@@ -46,6 +46,8 @@ Sliders you create can be utilized within your website in two ways.
 
 = 1.1.5 =
 
+Added filters onto slider headline, description, and button text.
+
 = 1.1.4 =
 
 * Admin jQuery improvements for 1.9 - Converted all .live() to .on()
