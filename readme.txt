@@ -46,6 +46,8 @@ Sliders you create can be utilized within your website in two ways.
 
 = 1.1.6 =
 
+* Admin style updates for WordPress 3.8 and MP6 (requires Theme Blvd framework v2.4+).
+
 = 1.1.5 =
 
 Added filters onto slider headline, description, and button text.

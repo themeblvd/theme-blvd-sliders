@@ -537,7 +537,7 @@ class Theme_Blvd_Sliders_Admin {
 												*/
 												?>
 												<p class="explain">
-													<?php _e( 'Enter in a video URL compatible with <a href="http://codex.wordpress.org/Embeds">WordPress\'s oEmbed</a>.<br><br>Ex: http://youtube.com/watch?v=HPPj6viIBmU<br>Ex: http://vimeo.com/11178250', 'themeblvd_sliders' ); ?>
+													<?php _e( 'Enter in a video URL compatible with <a href="http://codex.wordpress.org/Embeds" target="_blank">WordPress\'s oEmbed</a>.<br><br>Ex: http://youtube.com/watch?v=HPPj6viIBmU<br>Ex: http://vimeo.com/11178250', 'themeblvd_sliders' ); ?>
 													<?php /* @todo if ( function_exists('wp_video_shortcode') ) : ?>
 														<br><?php _e('Ex: http://yoursite.com/uploads/video.mp4', 'themeblvd_sliders'); ?>
 													<?php endif; */ ?>
@@ -653,7 +653,7 @@ class Theme_Blvd_Sliders_Admin {
 														<tr class="element-image_link slide-element-header">
 															<td class="slide-element-check"><input value="image_link" type="checkbox" name="slides[<?php echo $slide_id; ?>][elements][include][]"<?php echo $this->slide_value($slide_options, 'include', 'image_link'); ?> /></td>
 															<td class="slide-element-name"><?php _e( 'Image Link', 'themeblvd_sliders' ); ?></td>
-															<td class="slide-element-help"><a href="#" class="help-icon tooltip-link" title="<?php _e( 'This will allow you to apply a link to the image of this slide. You can configure it to open a webpage or a lightbox popup of different media types. If you\'re linking to a Lightbox Image, use the image file URL. If you\'re linking to a Lightbox Video, you can put in the URL to the Vimeo or YouTube video page.', 'themeblvd_sliders' ); ?>">Help</a></td>
+															<td class="slide-element-help"><a href="#" class="help-icon tb-icon-help-circled tooltip-link" title="<?php _e( 'This will allow you to apply a link to the image of this slide. You can configure it to open a webpage or a lightbox popup of different media types. If you\'re linking to a Lightbox Image, use the image file URL. If you\'re linking to a Lightbox Video, you can put in the URL to the Vimeo or YouTube video page.', 'themeblvd_sliders' ); ?>"></a></td>
 														</tr>
 														<tr class="element-image_link slide-element-options">
 															<td colspan="3">
@@ -684,7 +684,7 @@ class Theme_Blvd_Sliders_Admin {
 													<tr class="element-headline slide-element-header">
 														<td class="slide-element-check"><input value="headline" type="checkbox" name="slides[<?php echo $slide_id; ?>][elements][include][]"<?php echo $this->slide_value($slide_options, 'include', 'headline'); ?> /></td>
 														<td class="slide-element-name"><?php _e( 'Headline', 'themeblvd_sliders' ) ?></td>
-														<td class="slide-element-help"><a href="#" class="help-icon tooltip-link" title="<?php _e( 'This will allow you to insert a simple headline on your slide. The location and style of this headline will vary depending on the design of the current theme.', 'themeblvd_sliders' ); ?>">Help</a></td>
+														<td class="slide-element-help"><a href="#" class="help-icon tb-icon-help-circled tooltip-link" title="<?php _e( 'This will allow you to insert a simple headline on your slide. The location and style of this headline will vary depending on the design of the current theme.', 'themeblvd_sliders' ); ?>"></a></td>
 													</tr>
 													<tr class="element-headline slide-element-options">
 														<td colspan="3">
@@ -704,7 +704,7 @@ class Theme_Blvd_Sliders_Admin {
 													<tr class="element-description slide-element-header">
 														<td class="slide-element-check"><input value="description" type="checkbox" name="slides[<?php echo $slide_id; ?>][elements][include][]"<?php echo $this->slide_value($slide_options, 'include', 'description'); ?> /></td>
 														<td class="slide-element-name"><?php _e( 'Description', 'themeblvd_sliders' ); ?></td>
-														<td class="slide-element-help"><a href="#" class="help-icon tooltip-link" title="<?php _e( 'This will allow you to insert a simple description on your slide. The location and style of this description will vary depending on the design of the current theme.', 'themeblvd_sliders' ); ?>">Help</a></td>
+														<td class="slide-element-help"><a href="#" class="help-icon tb-icon-help-circled tooltip-link" title="<?php _e( 'This will allow you to insert a simple description on your slide. The location and style of this description will vary depending on the design of the current theme.', 'themeblvd_sliders' ); ?>"></a></td>
 													</tr>
 													<tr class="element-description slide-element-options">
 														<td colspan="3">
@@ -724,7 +724,7 @@ class Theme_Blvd_Sliders_Admin {
 													<tr class="element-button slide-element-header">
 														<td class="slide-element-check"><input value="button" type="checkbox" name="slides[<?php echo $slide_id; ?>][elements][include][]"<?php echo $this->slide_value( $slide_options, 'include', 'button'); ?> /></td>
 														<td class="slide-element-name"><?php _e( 'Button', 'themeblvd_sliders' ); ?></td>
-														<td class="slide-element-help"><a href="#" class="help-icon tooltip-link" title="<?php _e( 'This will allow you to include a button on your slide. You can configure it to open a webpage or a lightbox popup of different media types.', 'themeblvd_sliders' ); ?>">Help</a></td>
+														<td class="slide-element-help"><a href="#" class="help-icon tb-icon-help-circled tooltip-link" title="<?php _e( 'This will allow you to include a button on your slide. You can configure it to open a webpage or a lightbox popup of different media types.', 'themeblvd_sliders' ); ?>"></a></td>
 													</tr>
 													<tr class="element-button slide-element-options">
 														<td colspan="3">
