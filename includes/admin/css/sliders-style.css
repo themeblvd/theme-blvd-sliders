@@ -228,10 +228,10 @@
 /* =WordPress 3.8 (MP6)
 -----------------------------------------------*/
 
-.mp6 #slider_blvd #edit_slider .widget-name {
+.themeblvd-ui #slider_blvd #edit_slider .widget-name {
 	background: #ffffff;
 }
-.mp6 #slider_blvd #edit_slider .section-upload .tb-icon-help-circled {
+.themeblvd-ui #slider_blvd #edit_slider .section-upload .tb-icon-help-circled {
 	background-image: none;
 	font-size: 16px;
 	margin-right: -5px;
@@ -240,24 +240,24 @@
 	width: auto;
 	height: auto;
 }
-.mp6 #slider_blvd #optionsframework .widget-content .controls input.trigger {
+.themeblvd-ui #slider_blvd #optionsframework .widget-content .controls input.trigger {
 	width: auto;
 }
-.mp6 #slider_blvd #edit_slider .slide-set-type select {
+.themeblvd-ui #slider_blvd #edit_slider .slide-set-type select {
 	font-size: 13px;
 	height: auto;
 	padding: 0;
 }
-.mp6 #slider_blvd .widefat.slide-elements {
+.themeblvd-ui #slider_blvd .widefat.slide-elements {
 	border-bottom: none;
 }
-.mp6 #slider_blvd .widefat.slide-elements td {
+.themeblvd-ui #slider_blvd .widefat.slide-elements td {
 	border-bottom: 1px solid #dedede;
 }
-.mp6 #slider_blvd .widefat.slide-elements .slide-element-name {
+.themeblvd-ui #slider_blvd .widefat.slide-elements .slide-element-name {
 	padding-left: 0;
 }
-.mp6 #slider_blvd #edit_slider .slide-element-help .tb-icon-help-circled {
+.themeblvd-ui #slider_blvd #edit_slider .slide-element-help .tb-icon-help-circled {
 	background-image: none;
 	font-size: 18px;
 	margin: 0 -5px 0 0;
@@ -265,16 +265,16 @@
 	width: auto;
 	height: auto;
 }
-.mp6 #post-body #post-body-content .slide-custom h3 {
+.themeblvd-ui #post-body #post-body-content .slide-custom h3 {
 	margin: 0;
 	padding: 0 0 10px 5px;
 }
-.mp6 #slider_blvd #optionsframework .widget-footer {
+.themeblvd-ui #slider_blvd #optionsframework .widget-footer {
 	border-top: 1px solid #eeeeee;
 }
-.mp6 #slider_blvd #edit_slider .slide-include-elements {
+.themeblvd-ui #slider_blvd #edit_slider .slide-include-elements {
 	border-left-color: #eeeeee;
 }
-.mp6 #slider_blvd #edit_slider #titlediv #add_new_slide {
+.themeblvd-ui #slider_blvd #edit_slider #titlediv #add_new_slide {
 	margin: 0;
 }
