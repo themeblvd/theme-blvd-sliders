@@ -6,7 +6,9 @@
  */
 
 function themeblvd_carrousel_slider_js_default( $id, $options ) {
-	wp_enqueue_script( 'roundabout' ); // JS file registered and located within theme framework
+	if ( version_compare( TB_FRAMEWORK_VERSION, '2.4.0', '<' ) ) {
+		wp_enqueue_script( 'roundabout' ); // @deprecated
+	}
 	?>
 	<script>
 	jQuery(document).ready(function($) {
@@ -34,7 +36,9 @@ function themeblvd_carrousel_slider_js_default( $id, $options ) {
  */
 
 function themeblvd_nivo_slider_js_default( $id, $options ) {
-	wp_enqueue_script( 'nivo' ); // JS file registered and located within theme framework
+	if ( version_compare( TB_FRAMEWORK_VERSION, '2.4.0', '<' ) ) {
+		wp_enqueue_script( 'nivo' ); // @deprecated
+	}
 	?>
 	<script>
 	jQuery(document).ready(function($) {
