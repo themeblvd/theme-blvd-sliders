@@ -4,7 +4,6 @@
  *
  * @since 1.0.0
  */
-
 function themeblvd_carrousel_slider_js_default( $id, $options ) {
 	if ( version_compare( TB_FRAMEWORK_VERSION, '2.4.0', '<' ) ) {
 		wp_enqueue_script( 'roundabout' ); // @deprecated
@@ -34,7 +33,6 @@ function themeblvd_carrousel_slider_js_default( $id, $options ) {
  *
  * @since 1.1.0
  */
-
 function themeblvd_nivo_slider_js_default( $id, $options ) {
 	if ( version_compare( TB_FRAMEWORK_VERSION, '2.4.0', '<' ) ) {
 		wp_enqueue_script( 'nivo' ); // @deprecated
@@ -82,7 +80,6 @@ function themeblvd_nivo_slider_js_default( $id, $options ) {
  * @param array $settings Current settings for slider
  * @param array $slides Current slides for slider
  */
-
 function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 
 	// Extend slides
@@ -91,12 +88,17 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 	// With some different user options and ways this function
 	// can be utilized, there are going to be some inconsitancy
 	// with booleans. Let's fix that.
-	if ( $settings['nav_standard'] === false || $settings['nav_standard'] == '0' || $settings['nav_standard'] == 'false' )
+	if ( $settings['nav_standard'] === false || $settings['nav_standard'] == '0' || $settings['nav_standard'] == 'false' ) {
 		$settings['nav_standard'] = false;
-	if ( $settings['nav_arrows'] === false || $settings['nav_arrows'] == '0' || $settings['nav_arrows'] == 'false' )
+	}
+
+	if ( $settings['nav_arrows'] === false || $settings['nav_arrows'] == '0' || $settings['nav_arrows'] == 'false' ) {
 		$settings['nav_arrows'] = false;
-	if ( $settings['pause_play'] === false || $settings['pause_play'] == '0' || $settings['pause_play'] == 'false' )
+	}
+
+	if ( $settings['pause_play'] === false || $settings['pause_play'] == '0' || $settings['pause_play'] == 'false' ) {
 		$settings['pause_play'] = false;
+	}
 
 	// Configure additional CSS classes
 	$classes = themeblvd_get_classes( 'slider_standard', true );
@@ -110,9 +112,11 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 
 	// Hide on mobile?
 	$hide = '';
-	if ( isset( $settings['mobile_fallback'] ) )
-		if ( $settings['mobile_fallback'] == 'full_list' || $settings['mobile_fallback'] == 'first_slide' )
+	if ( isset( $settings['mobile_fallback'] ) ) {
+		if ( $settings['mobile_fallback'] == 'full_list' || $settings['mobile_fallback'] == 'first_slide' ) {
 			$hide = true;
+		}
+	}
 
 	// Start output
 	do_action( 'themeblvd_standard_slider_plugin_js', $slider, $settings );
@@ -173,7 +177,6 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
  * @param array $settings Current settings for slider
  * @param array $slides Current slides for slider
  */
-
 function themeblvd_carrousel_slider_default( $slider, $settings, $slides ) {
 
 	// Extend slides
@@ -236,7 +239,6 @@ function themeblvd_carrousel_slider_default( $slider, $settings, $slides ) {
  * @param array $settings Current settings for slider
  * @param array $slides Current slides for slider
  */
-
 function themeblvd_nivo_slider_default( $slider, $settings, $slides ) {
 
 	// Extend slides
@@ -245,10 +247,13 @@ function themeblvd_nivo_slider_default( $slider, $settings, $slides ) {
 	// With some different user options and ways this function
 	// can be utilized, there are going to be some inconsitancy
 	// with booleans. Let's fix that.
-	if ( $settings['nav_standard'] === false || $settings['nav_standard'] == '0' || $settings['nav_standard'] == 'false' )
+	if ( $settings['nav_standard'] === false || $settings['nav_standard'] == '0' || $settings['nav_standard'] == 'false' ) {
 		$settings['nav_standard'] = false;
-	if ( $settings['nav_arrows'] === false || $settings['nav_arrows'] == '0' || $settings['nav_arrows'] == 'false' )
+	}
+
+	if ( $settings['nav_arrows'] === false || $settings['nav_arrows'] == '0' || $settings['nav_arrows'] == 'false' ) {
 		$settings['nav_arrows'] = false;
+	}
 
 	// Configure additional CSS classes
 	$classes = themeblvd_get_classes( 'slider_nivo', true );
@@ -322,7 +327,6 @@ function themeblvd_nivo_slider_default( $slider, $settings, $slides ) {
  * @param string $fallback Type of fallback, full_list or first_slide
  * @param array $settings All current settings for slider
  */
-
 function themeblvd_slider_fallback_default( $slider, $slides, $fallback, $settings = array() ) {
 
 	echo '<div class="slider-fallback">';
@@ -343,8 +347,9 @@ function themeblvd_slider_fallback_default( $slider, $slides, $fallback, $settin
 				} else {
 
 					// Headline
-					if ( themeblvd_slide_has_element( 'headline', $slide ) )
+					if ( themeblvd_slide_has_element( 'headline', $slide ) ) {
 						printf( '<h2>%s</h2>', stripslashes($slide['elements']['headline']) );
+					}
 
 					// Media (Image or Video)
 					themeblvd_slide_media( themeblvd_sliders_get_media_atts( $slider, $slide, $settings, 'fallback' ), array(), 'fallback' );
@@ -404,7 +409,6 @@ function themeblvd_slider_fallback_default( $slider, $slides, $fallback, $settin
  *
  * @param array $atts Standard WordPress shortcode attributes
  */
-
 function themeblvd_shortcode_slider( $atts ) {
 	$default = array(
         'id' => ''
@@ -437,7 +441,6 @@ function themeblvd_shortcode_slider( $atts ) {
  *
  * @param array $atts Standard WordPress shortcode attributes
  */
-
 function themeblvd_shortcode_slider_auto( $atts ) {
 
 	if ( ! function_exists( 'themeblvd_slider_auto' ) ) {
