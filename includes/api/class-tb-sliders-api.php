@@ -114,12 +114,17 @@ class Theme_Blvd_Sliders_API {
 			'nivo' => array(
 				'name' 			=> 'Nivo',
 				'id'			=> 'nivo',
-				'custom_size' 	=> true 		// Custom size not allowed for full size position
+				'custom_size' 	=> true 		// Custom size allowed for full size position
 			),
 			'carrousel' => array(
-				'name' 			=> 'Carrousel 3D',
+				'name' 			=> '3D Carousel',
 				'id'			=> 'carrousel',
 				'custom_size' 	=> false 		// Custom size not allowed for full size position
+			),
+			'bootstrap' => array(
+				'name' 			=> 'Bootstrap Carousel',
+				'id'			=> 'bootstrap',
+				'custom_size' 	=> false 		// Custom size allowed for full size position
 			)
 		);
 
@@ -416,6 +421,71 @@ class Theme_Blvd_Sliders_API {
 				'id'		=> 'mobile_fallback',
 				'name'		=> __( 'How to display on mobile devices?', 'themeblvd_sliders' ),
 				'std'		=> 'full_list',
+				'type'		=> 'radio',
+				'options'	=> array(
+		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd_sliders' ),
+		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'themeblvd_sliders' ),
+		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'themeblvd_sliders' )
+				)
+			)
+		);
+
+		/*--------------------------------------------*/
+		/* (4) Bootstrap Carousel
+		/*--------------------------------------------*/
+
+		// Slide Types
+		$this->core_sliders['bootstrap']['types'] = array(
+			'image' => array(
+				'name' 			=> __( 'Image Slide', 'themeblvd_sliders' ),
+				'main_title'	=> __( 'Setup Image', 'themeblvd_sliders' )
+			)
+		);
+
+		// Slide Media Positions
+		$this->core_sliders['bootstrap']['positions'] = array(
+			'full' => 'slider-large' // Default
+		);
+
+		// Slide Elements
+		$this->core_sliders['bootstrap']['elements'] = array(
+			'image_link',
+			'headline',
+			'description'
+		);
+
+		// Slider Options
+		$this->core_sliders['bootstrap']['options'] = array(
+			array(
+				'id'		=> 'interval',
+				'name' 		=> __( 'Seconds between each transition?', 'themeblvd_sliders' ),
+				'std'		=> '5',
+				'type'		=> 'text'
+		    ),
+			array(
+				'id'		=> 'pause',
+				'name'		=> __( 'Enable pause on hover?', 'themeblvd_sliders' ),
+				'std'		=> 'true',
+				'type'		=> 'select',
+				'options'	=> array(
+		            'hover'		=> __( 'Yes, pause slider on hover.', 'themeblvd_sliders' ),
+		            'false'		=> __( 'No, don\'t pause slider on hover.', 'themeblvd_sliders' )
+				)
+			),
+			array(
+				'id'		=> 'wrap',
+				'name'		=> __( 'Cycle carousel continuously?', 'themeblvd_sliders' ),
+				'std'		=> 'true',
+				'type'		=> 'select',
+				'options'	=> array(
+		            'true'		=> __( 'Yes, cycle continuously.', 'themeblvd_sliders' ),
+		            'false'		=> __( 'No, stop cycling.', 'themeblvd_sliders' )
+				)
+			),
+			array(
+				'id'		=> 'mobile_fallback',
+				'name'		=> __( 'How to display on mobile devices?', 'themeblvd_sliders' ),
+				'std'		=> 'display',
 				'type'		=> 'radio',
 				'options'	=> array(
 		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd_sliders' ),

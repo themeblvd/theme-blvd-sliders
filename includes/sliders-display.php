@@ -200,8 +200,8 @@ function themeblvd_carrousel_slider_default( $slider, $settings, $slides ) {
 		<div class="slider-inner">
 			<?php if ( $settings['nav_arrows'] ) : ?>
 			<div class="roundabout-nav">
-				<a href="#" title="Previous" class="prev"><i class="icon-circle-arrow-left"></i></a>
-				<a href="#" title="Next" class="next"><i class="icon-circle-arrow-right"></i></a>
+				<a href="#" title="Previous" class="prev"><i class="fa fa-arrow-circle-left"></i></a>
+				<a href="#" title="Next" class="next"><i class="fa fa-arrow-circle-right"></i></a>
 			</div><!-- .roundabout-nav (end) -->
 			<?php endif; ?>
 			<ul class="carrousel-slider">
@@ -315,6 +315,102 @@ function themeblvd_nivo_slider_default( $slider, $settings, $slides ) {
 			do_action( 'themeblvd_slider_fallback', $slider, $slides, $settings['mobile_fallback'], $settings );
 		}
 	}
+}
+
+/**
+ * Bootstrap Carousel Slider - default action for themeblvd_bootstrap_slider
+ *
+ * @since 1.2.0
+ *
+ * @param var $slider ID of current slider
+ * @param array $settings Current settings for slider
+ * @param array $slides Current slides for slider
+ */
+function themeblvd_bootstrap_slider_default( $slider, $settings, $slides ) {
+
+	// Extend slides
+	$slides = apply_filters( 'themeblvd_bootstrap_slides', $slides, $slider, $settings );
+
+	// Insert javascript -- Nothing hooked here by default
+	do_action( 'themeblvd_bootstrap_slider_js', $slider, $settings );
+
+	// CSS Classes
+	$classes = themeblvd_get_classes( 'slider_bootstrap', true );
+
+	// Hide on mobile?
+	if ( isset( $settings['mobile_fallback'] ) ) {
+		if ( $settings['mobile_fallback'] == 'full_list' || $settings['mobile_fallback'] == 'first_slide' ) {
+			$classes .= ' slider_has_mobile_fallback';
+		}
+	}
+
+	// Speed
+	$speed = '0';
+	if ( $settings['interval'] ) {
+		$speed = $settings['interval'].'000';
+	}
+	?>
+	<div id="tb-slider-<?php echo $slider; ?>" class="tb-bootstrap-carousel carousel slide <?php echo $classes; ?>" data-ride="carousel" data-interval="<?php echo $speed; ?>" data-pause="<?php echo $settings['pause']; ?>" data-wrap="<?php echo $settings['wrap']; ?>">
+
+		<!-- Indicators -->
+		<?php if ( $slides ) : ?>
+			<?php $counter = 0; ?>
+			<ol class="carousel-indicators">
+				<?php foreach ( $slides as $slide ) : ?>
+					<li data-target="#tb-slider-<?php echo $slider; ?>" data-slide-to="<?php echo $counter; ?>" class="<?php if( $counter == 0 ) echo 'active'; ?>"></li>
+					<?php $counter++; ?>
+				<?php endforeach; ?>
+			</ol>
+		<?php endif; ?>
+
+		<!-- Controls -->
+		<a class="left carousel-control" href="#tb-slider-<?php echo $slider; ?>" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left"></span>
+		</a>
+		<a class="right carousel-control" href="#tb-slider-<?php echo $slider; ?>" data-slide="next">
+			<span class="glyphicon glyphicon-chevron-right"></span>
+		</a>
+
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner">
+
+			<?php if ( $slides ) : ?>
+				<?php $counter = 0; ?>
+				<?php foreach ( $slides as $slide ) : ?>
+					<div class="item <?php if( $counter == 0 ) echo 'active'; ?>">
+
+						<?php echo themeblvd_slide_media( themeblvd_sliders_get_media_atts( $slider, $slide, $settings, 'bootstrap' ), $settings, 'bootstrap' ); ?>
+
+						<?php if ( themeblvd_slide_has_element( 'headline', $slide ) || themeblvd_slide_has_element( 'description', $slide ) ) : ?>
+							<div class="carousel-caption">
+
+								<?php if ( themeblvd_slide_has_element( 'headline', $slide ) ) : ?>
+									<h3><?php echo stripslashes( $slide['elements']['headline'] ); ?></h3>
+								<?php endif; ?>
+
+								<?php if ( themeblvd_slide_has_element( 'description', $slide ) ) : ?>
+									<?php echo apply_filters( 'themeblvd_the_content', stripslashes( $slide['elements']['description'] ) ); ?>
+								<?php endif; ?>
+
+							</div><!-- .carousel-caption (end) -->
+						<?php endif; ?>
+
+					</div><!-- .item (end) -->
+					<?php $counter++; ?>
+				<?php endforeach; ?>
+			<?php endif; ?>
+
+		</div><!-- .carousel-inner (end) -->
+
+	</div>
+	<?php
+    // Display fallback if necessary
+	if ( isset( $settings['mobile_fallback'] ) ) {
+		if ( $settings['mobile_fallback'] == 'full_list' || $settings['mobile_fallback'] == 'first_slide' ) {
+			do_action( 'themeblvd_slider_fallback', $slider, $slides, $settings['mobile_fallback'], $settings );
+		}
+	}
+
 }
 
 /**
