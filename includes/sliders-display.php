@@ -288,7 +288,7 @@ function themeblvd_nivo_slider_default( $slider, $settings, $slides ) {
 					            $image = themeblvd_get_slide_media( themeblvd_sliders_get_media_atts( $slider, $slide, $settings, 'nivo' ), $settings, 'nivo' );
 			        			if ( themeblvd_slide_has_element( 'headline', $slide ) || themeblvd_slide_has_element( 'description', $slide ) )
 			        				$image = str_replace( ' />', sprintf(' title="#%s" />', $slide['slide_id'].'_desc'), $image );
-			        			echo $image."\n";
+			        			echo $image = apply_filters( 'themeblvd_nivo_image', $image, $slider, $slide, $settings )."\n";
 			        		endforeach;
 			        		?>
 				        </div><!-- .nivoSlider (end) -->
