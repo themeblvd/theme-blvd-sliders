@@ -48,7 +48,7 @@ Sliders you create can be utilized within your website in two ways.
 
 * Admin style updates for WordPress 3.8 (requires Theme Blvd framework v2.4+).
 * Added "Bootstrap Carousel" slider type.
-* Fixed Carousel slider's navigation for FontAwesome 4.
+* Fixed 3D Carousel slider's navigation for FontAwesome 4.
 * Added filter `themeblvd_nivo_image` to image output of Nivo type sliders.
 
 = 1.1.5 =
