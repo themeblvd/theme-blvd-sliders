@@ -278,3 +278,6 @@
 .themeblvd-ui #slider_blvd #edit_slider #titlediv #add_new_slide {
 	margin: 0;
 }
+.themeblvd-ui #slider_blvd .ajax-overlay {
+	background-color: #f1f1f1;
+}
