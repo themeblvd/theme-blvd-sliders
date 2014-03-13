@@ -483,6 +483,36 @@ class Theme_Blvd_Sliders_API {
 				)
 			),
 			array(
+				'id'		=> 'nav_standard',
+				'name'		=> __( 'Show standard slideshow navigation?', 'themeblvd_sliders' ),
+				'std'		=> '1',
+				'type'		=> 'select',
+				'options'	=> array(
+		            '1'	=> __( 'Yes, show navigation.', 'themeblvd_sliders' ),
+		            '0'	=> __( 'No, don\'t show it.', 'themeblvd_sliders' )
+				)
+			),
+			array(
+				'id'		=> 'nav_arrows',
+				'name'		=> __( 'Show next/prev arrows?', 'themeblvd_sliders' ),
+				'std'		=> '1',
+				'type'		=> 'select',
+				'options'	=> array(
+		            '1'	=> __( 'Yes, show arrows.', 'themeblvd_sliders' ),
+		            '0'	=> __( 'No, don\'t show them.', 'themeblvd_sliders' )
+				)
+			),
+			array(
+				'id'		=> 'nav_thumbs',
+				'name'		=> __( 'Show thumbnail navigation?', 'themeblvd_sliders' ),
+				'std'		=> '0',
+				'type'		=> 'select',
+				'options'	=> array(
+		            '1'	=> __( 'Yes, show thumbnail navigation.', 'themeblvd_sliders' ),
+		            '0'	=> __( 'No, don\'t show it.', 'themeblvd_sliders' )
+				)
+			),
+			array(
 				'id'		=> 'mobile_fallback',
 				'name'		=> __( 'How to display on mobile devices?', 'themeblvd_sliders' ),
 				'std'		=> 'display',

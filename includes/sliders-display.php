@@ -331,6 +331,27 @@ function themeblvd_bootstrap_slider_default( $slider, $settings, $slides ) {
 	// Extend slides
 	$slides = apply_filters( 'themeblvd_bootstrap_slides', $slides, $slider, $settings );
 
+	$nav_standard = true;
+	if ( isset( $settings['nav_standard'] ) ) {
+		if ( $settings['nav_standard'] === false || $settings['nav_standard'] == '0' || $settings['nav_standard'] == 'false' ) {
+			$nav_standard = false;
+		}
+	}
+
+	$nav_arrows = true;
+	if ( isset( $settings['nav_arrows'] ) ) {
+		if ( $settings['nav_arrows'] === false || $settings['nav_arrows'] == '0' || $settings['nav_arrows'] == 'false' ) {
+			$nav_arrows = false;
+		}
+	}
+
+	$nav_thumbs = false;
+	if ( isset( $settings['nav_thumbs'] ) ) {
+		if ( $settings['nav_thumbs'] === true || $settings['nav_thumbs'] == '1' || $settings['nav_thumbs'] == 'true' ) {
+			$nav_thumbs = true;
+		}
+	}
+
 	// Insert javascript -- Nothing hooked here by default
 	do_action( 'themeblvd_bootstrap_slider_js', $slider, $settings );
 
@@ -352,55 +373,74 @@ function themeblvd_bootstrap_slider_default( $slider, $settings, $slides ) {
 	?>
 	<div id="tb-slider-<?php echo $slider; ?>" class="tb-bootstrap-carousel carousel slide <?php echo $classes; ?>" data-ride="carousel" data-interval="<?php echo $speed; ?>" data-pause="<?php echo $settings['pause']; ?>" data-wrap="<?php echo $settings['wrap']; ?>">
 
-		<!-- Indicators -->
-		<?php if ( $slides ) : ?>
+		<div class="carousel-control-wrap">
+
+			<!-- Indicators -->
+			<?php if ( $nav_standard && $slides ) : ?>
+				<?php $counter = 0; ?>
+				<ol class="carousel-indicators">
+					<?php foreach ( $slides as $slide ) : ?>
+						<li data-target="#tb-slider-<?php echo $slider; ?>" data-slide-to="<?php echo $counter; ?>" class="<?php if( $counter == 0 ) echo 'active'; ?>"></li>
+						<?php $counter++; ?>
+					<?php endforeach; ?>
+				</ol>
+			<?php endif; ?>
+
+			<!-- Controls -->
+			<?php if ( $nav_arrows ) : ?>
+				<a class="left carousel-control" href="#tb-slider-<?php echo $slider; ?>" data-slide="prev">
+					<span class="glyphicon glyphicon-chevron-left"></span>
+				</a>
+				<a class="right carousel-control" href="#tb-slider-<?php echo $slider; ?>" data-slide="next">
+					<span class="glyphicon glyphicon-chevron-right"></span>
+				</a>
+			<?php endif; ?>
+
+			<!-- Wrapper for slides (according to Bootstrap specs) -->
+			<div class="carousel-inner">
+
+				<?php if ( $slides ) : ?>
+					<?php $counter = 0; ?>
+					<?php foreach ( $slides as $slide ) : ?>
+						<div class="item <?php if( $counter == 0 ) echo 'active'; ?>">
+
+							<?php echo themeblvd_slide_media( themeblvd_sliders_get_media_atts( $slider, $slide, $settings, 'bootstrap' ), $settings, 'bootstrap' ); ?>
+
+							<?php if ( themeblvd_slide_has_element( 'headline', $slide ) || themeblvd_slide_has_element( 'description', $slide ) ) : ?>
+								<div class="carousel-caption">
+
+									<?php if ( themeblvd_slide_has_element( 'headline', $slide ) ) : ?>
+										<h3><?php echo stripslashes( $slide['elements']['headline'] ); ?></h3>
+									<?php endif; ?>
+
+									<?php if ( themeblvd_slide_has_element( 'description', $slide ) ) : ?>
+										<?php echo apply_filters( 'themeblvd_the_content', stripslashes( $slide['elements']['description'] ) ); ?>
+									<?php endif; ?>
+
+								</div><!-- .carousel-caption (end) -->
+							<?php endif; ?>
+
+						</div><!-- .item (end) -->
+						<?php $counter++; ?>
+					<?php endforeach; ?>
+				<?php endif; ?>
+
+			</div><!-- .carousel-inner (end) -->
+
+		</div><!-- .carousel-control-wrap (end) -->
+
+		<!-- Thumbnail Indicators -->
+		<?php if ( $nav_thumbs && $slides ) : ?>
 			<?php $counter = 0; ?>
-			<ol class="carousel-indicators">
+			<ul class="carousel-thumb-nav list-unstyled clearfix">
 				<?php foreach ( $slides as $slide ) : ?>
-					<li data-target="#tb-slider-<?php echo $slider; ?>" data-slide-to="<?php echo $counter; ?>" class="<?php if( $counter == 0 ) echo 'active'; ?>"></li>
+					<li data-target="#tb-slider-<?php echo $slider; ?>" data-slide-to="<?php echo $counter; ?>" class="<?php if( $counter == 0 ) echo 'active'; ?>">
+						<?php themeblvd_slide_thumbnail( $slider, $slide, $settings, 'bootstrap' ); ?>
+					</li>
 					<?php $counter++; ?>
 				<?php endforeach; ?>
 			</ol>
 		<?php endif; ?>
-
-		<!-- Controls -->
-		<a class="left carousel-control" href="#tb-slider-<?php echo $slider; ?>" data-slide="prev">
-			<span class="glyphicon glyphicon-chevron-left"></span>
-		</a>
-		<a class="right carousel-control" href="#tb-slider-<?php echo $slider; ?>" data-slide="next">
-			<span class="glyphicon glyphicon-chevron-right"></span>
-		</a>
-
-		<!-- Wrapper for slides -->
-		<div class="carousel-inner">
-
-			<?php if ( $slides ) : ?>
-				<?php $counter = 0; ?>
-				<?php foreach ( $slides as $slide ) : ?>
-					<div class="item <?php if( $counter == 0 ) echo 'active'; ?>">
-
-						<?php echo themeblvd_slide_media( themeblvd_sliders_get_media_atts( $slider, $slide, $settings, 'bootstrap' ), $settings, 'bootstrap' ); ?>
-
-						<?php if ( themeblvd_slide_has_element( 'headline', $slide ) || themeblvd_slide_has_element( 'description', $slide ) ) : ?>
-							<div class="carousel-caption">
-
-								<?php if ( themeblvd_slide_has_element( 'headline', $slide ) ) : ?>
-									<h3><?php echo stripslashes( $slide['elements']['headline'] ); ?></h3>
-								<?php endif; ?>
-
-								<?php if ( themeblvd_slide_has_element( 'description', $slide ) ) : ?>
-									<?php echo apply_filters( 'themeblvd_the_content', stripslashes( $slide['elements']['description'] ) ); ?>
-								<?php endif; ?>
-
-							</div><!-- .carousel-caption (end) -->
-						<?php endif; ?>
-
-					</div><!-- .item (end) -->
-					<?php $counter++; ?>
-				<?php endforeach; ?>
-			<?php endif; ?>
-
-		</div><!-- .carousel-inner (end) -->
 
 	</div>
 	<?php

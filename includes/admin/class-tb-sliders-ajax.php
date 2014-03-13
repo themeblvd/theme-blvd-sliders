@@ -138,16 +138,19 @@ class Theme_Blvd_Sliders_Ajax {
 
 						// Expand the saved image data
 						$slides[$key]['image'] = array(
-							'id'		=> $attachment_id,		// Attachment ID of image
-							'url'		=> $raw_image[0],		// Raw image URL, uncropped
-							'title'		=> '',					// Attachment title
-							'mime_type'	=> '',					// Post mime type, i.e. image/jpeg, image/png, etc
-							'display'	=> '',					// Cropped Image URL for slider display
-							'width'		=> '',					// Width of cropped image
-							'height'	=> '',					// Height of cropped image
-							'size'		=> 'full',				// Name of crop size, 'full' if not registered or selected by user
-							'crop'		=> 0,					// Crop mode, true for hard or false for soft
-							'cropped'	=> 0					// Whether the cropped image actually exists, or WP has returned original
+							'id'			=> $attachment_id,		// Attachment ID of image
+							'url'			=> $raw_image[0],		// Raw image URL, uncropped
+							'title'			=> '',					// Attachment title
+							'mime_type'		=> '',					// Post mime type, i.e. image/jpeg, image/png, etc
+							'display'		=> '',					// Cropped Image URL for slider display
+							'width'			=> '',					// Width of cropped image
+							'height'		=> '',					// Height of cropped image
+							'size'			=> 'full',				// Name of crop size, 'full' if not registered or selected by user
+							'crop'			=> 0,					// Crop mode, true for hard or false for soft
+							'cropped'		=> 0,					// Whether the cropped image actually exists, or WP has returned original
+							'thumb'			=> '',					// URL of thumbnail
+							'thumb_width'	=> 0,					// Width of thumbnail
+							'thumb_height'	=> 0					// Height of thumbnail
 						);
 
 						// Items from attachment post object - title and mime type
@@ -191,6 +194,13 @@ class Theme_Blvd_Sliders_Ajax {
 						if ( $raw_image[0] != $display[0] ) {
 							$slides[$key]['image']['cropped'] = 1;
 						}
+
+						// Thumbnail -- Potentially used for a thumbnail navigation setup
+						$thumb_size = apply_filters( 'themeblvd_sliders_thumb_nav_size', 'square_smallest' );
+						$thumb = wp_get_attachment_image_src( $attachment_id, $thumb_size );
+						$slides[$key]['image']['thumb'] = $thumb[0];
+						$slides[$key]['image']['thumb_width'] = $thumb[1];
+						$slides[$key]['image']['thumb_height'] = $thumb[2];
 
 					}
 

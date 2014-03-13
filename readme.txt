@@ -46,6 +46,8 @@ Sliders you create can be utilized within your website in two ways.
 
 = 1.2.1 =
 
+* Added support for thumbnail navigation with Bootstrap Carousel (requires Theme Blvd framework v2.4.2+).
+
 = 1.2.0 =
 
 * Admin style updates for WordPress 3.8 (requires Theme Blvd framework v2.4+).

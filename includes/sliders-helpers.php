@@ -7,10 +7,9 @@
  * @param string $slider ID of slider
  * @param array $slide All data for slide
  * @param array $settings Settings for slider
- * @param string $slider_type Type of slider, standard, nivo, carrousel, or fallback
+ * @param string $slider_type Type of slider, standard, nivo, carrousel, bootstrap, or fallback
  * @return array $atts Attributes for media, size, url, alt title, video
  */
-
 function themeblvd_sliders_get_media_atts( $slider, $slide, $settings, $slider_type = 'standard' ) {
 
 	// This only should be used with image/video slides.
@@ -114,9 +113,8 @@ function themeblvd_sliders_get_media_atts( $slider, $slide, $settings, $slider_t
  *
  * @param array $atts Media attributes from themeblvd_sliders_get_media_atts()
  * @param array $settings Current settings of slider
- * @param string $slider_type Type of slider, standard, nivo, carrousel, or fallback
+ * @param string $slider_type Type of slider, standard, nivo, carrousel, bootstrap, or fallback
  */
-
 function themeblvd_slide_media( $atts, $settings, $slider_type = 'standard' ) {
 	echo themeblvd_get_slide_media( $atts, $settings, $slider_type );
 }
@@ -128,10 +126,9 @@ function themeblvd_slide_media( $atts, $settings, $slider_type = 'standard' ) {
  *
  * @param array $atts Media attributes from themeblvd_sliders_get_media_atts()
  * @param array $settings Current settings of slider
- * @param string $slider_type standard, nivo, carrousel, or fallback
+ * @param string $slider_type standard, nivo, carrousel, bootstrap, or fallback
  * @return array $output HTML output for media
  */
-
 function themeblvd_get_slide_media( $atts, $settings, $slider_type = 'standard' ) {
 
 	$output = '';
@@ -155,10 +152,9 @@ function themeblvd_get_slide_media( $atts, $settings, $slider_type = 'standard' 
  * @since 1.1.0
  *
  * @param array $atts Media attributes from themeblvd_sliders_get_media_atts()
- * @param string $slider_type Type of slider, standard, nivo, carrousel, or fallback
+ * @param string $slider_type Type of slider, standard, nivo, carrousel, bootstrap, or fallback
  * @return string $output HTML output for image
  */
-
 function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
 
 	$lightbox = false;
@@ -241,10 +237,9 @@ function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
  * @since 1.1.0
  *
  * @param array $media_atts Media attributes from themeblvd_sliders_get_media_atts()
- * @param string $slider_type Type of slider, standard, nivo, carrousel, or fallback
+ * @param string $slider_type Type of slider, standard, nivo, carrousel, bootstrap, or fallback
  * @return string $video Embed code for video
  */
-
 function themeblvd_sliders_get_video( $media_atts, $slider_type = 'standard' ){
 
 	// This only should be used with videos.
@@ -317,11 +312,12 @@ function themeblvd_sliders_get_video( $media_atts, $slider_type = 'standard' ){
  *
  * @param array $slider ID of slider
  * @param array $slide Data for individual slide
- * @param string $slider_type Type of slider, standard, nivo, carrousel, or fallback
+ * @param array $settings Settings for slider
+ * @param string $slider_type Type of slider, standard, nivo, carrousel, bootstrap, or fallback
  */
 
 function themeblvd_slide_content( $slider, $slide, $settings, $slider_type = 'standard' ){
-	echo themeblvd_get_slide_content( $slider, $slide, $slider_type );
+	echo themeblvd_get_slide_content( $slider, $slide, $settings, $slider_type );
 }
 
 /**
@@ -330,11 +326,12 @@ function themeblvd_slide_content( $slider, $slide, $settings, $slider_type = 'st
  *
  * @since 1.1.0
  *
+ * @param array $slider ID of slider
  * @param array $slide Data for individual slide
- * @param string $slider_type Type of slider, standard, nivo, carrousel, or fallback
+ * @param array $settings Settings for slider
+ * @param string $slider_type Type of slider, standard, nivo, carrousel, bootstrap, or fallback
  * @return string $output Final HTML markup for content section
  */
-
 function themeblvd_get_slide_content( $slider, $slide, $settings, $slider_type = 'standard' ){
 
 	$output = '';
@@ -399,7 +396,67 @@ function themeblvd_get_slide_content( $slider, $slide, $settings, $slider_type =
 		$output = sprintf( $wrap_fmt, $content );
 	}
 
-	return apply_filters( 'themeblvd_slide_content', $output, $slider, $slide, $slider_type );
+	return apply_filters( 'themeblvd_slide_content', $output, $slider, $slide, $settings, $slider_type );
+}
+
+/**
+ * Display thumbnail image for a slide.
+ *
+ * @since 1.2.1
+ *
+ * @param array $slider ID of slider
+ * @param array $slide Data for individual slide
+ * @param array $settings Settings for slider
+ * @param string $slider_type Type of slider, standard, nivo, carrousel, bootstrap, or fallback
+ */
+
+function themeblvd_slide_thumbnail( $slider, $slide, $settings, $slider_type = 'standard' ){
+	echo themeblvd_get_slide_thumbnail( $slider, $slide, $settings, $slider_type );
+}
+
+/**
+ * Get thumbnail image for a slide.
+ *
+ * @since 1.2.1
+ *
+ * @param array $slider ID of slider
+ * @param array $slide Data for individual slide
+ * @param array $settings Settings for slider
+ * @param string $slider_type Type of slider, standard, nivo, carrousel, bootstrap, or fallback
+ * @return string $output Final HTML markup for content section
+ */
+
+function themeblvd_get_slide_thumbnail( $slider, $slide, $settings, $slider_type = 'standard' ){
+
+	$output = '';
+
+	if ( ! empty( $slide['image']['thumb'] ) ) {
+
+		// Image URL
+		$src = $slide['image']['thumb'];
+
+		// Width
+		$width = 0;
+		if ( ! empty( $slide['image']['thumb_width'] ) ) {
+			$width = $slide['image']['thumb_width'];
+		}
+
+		// Height
+		$height = 0;
+		if ( ! empty( $slide['image']['thumb_height'] ) ) {
+			$height = $slide['image']['thumb_height'];
+		}
+
+		$title = '';
+		if ( ! empty( $slide['image']['title'] ) ) {
+			$title = $slide['image']['title'];
+		}
+
+		$output = sprintf( '<img src="%s" width="%s" height="%s" alt="%s" />', $src, $width, $height, $title );
+
+	}
+
+	return apply_filters( 'themeblvd_slide_thumbnail', $output, $slider, $slide, $settings, $slider_type );
 }
 
 /**
@@ -412,7 +469,6 @@ function themeblvd_get_slide_content( $slider, $slide, $settings, $slider_type =
  * @param array $slide All data for slide
  * @return array $elements Elements for displaying in the slide
  */
-
 function themeblvd_slide_has_element( $element, $slide ) {
 
 	$include = false;
@@ -442,7 +498,6 @@ function themeblvd_slide_has_element( $element, $slide ) {
  * @param array $slide All data for slide
  * @return string $classes CSS classes for slide
  */
-
 function themeblvd_sliders_get_slide_classes( $slider, $slide, $media ) {
 
 	if ( $slide['slide_type'] == 'custom' ) {
@@ -478,7 +533,6 @@ function themeblvd_sliders_get_slide_classes( $slider, $slide, $media ) {
  * @param string $url URL of some asset
  * @return boolean True if there's a conflict
  */
-
 if ( ! function_exists( 'themeblvd_ssl_conflict' ) ) {
 	function themeblvd_ssl_conflict( $url ) {
 		if ( ( ! is_ssl() && strpos( $url, 'https://' ) !== false ) || ( is_ssl() && strpos( $url, 'http://' ) !== false ) ) {
