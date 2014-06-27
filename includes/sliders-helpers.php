@@ -341,11 +341,7 @@ function themeblvd_get_slide_content( $slider, $slide, $settings, $slider_type =
 		themeblvd_slide_has_element( 'button', $slide ) ) {
 
 		// Setup markup to wrap content area.
-		$wrap_class = 'content';
-		if ( $slide['position'] != 'full' ) {
-			$wrap_class .= ' grid_fifth_2';
-		}
-
+		$wrap_class = sprintf('content %s', themeblvd_sliders_get_grid_class( $slide['position'], 'content' ));
 		$wrap_fmt = apply_filters( 'themeblvd_slide_content_wrap', '<div class="'.$wrap_class.'"><div class="content-inner">%s</div></div>' );
 
 		$content = '';
@@ -519,6 +515,43 @@ function themeblvd_sliders_get_slide_classes( $slider, $slide, $media ) {
 	}
 
 	return apply_filters( 'themeblvd_sliders_slide_classes', $classes );
+}
+
+/**
+ * Get grid class for slides with staged media.
+ *
+ * @since 1.2.2
+ *
+ * @param string $position Media position of slide
+ * @param string $type Type of column, media or content
+ * @return string $class CSS class for column
+ */
+function themeblvd_sliders_get_grid_class( $position, $type ){
+
+	$stack = apply_filters( 'themeblvd_slide_grid_stack', 'sm' );
+	$class = '';
+
+	if ( $position != 'full' ) {
+		if ( $type == 'media' ) {
+
+			if ( function_exists('themeblvd_grid_class') ) {
+				$class = themeblvd_grid_class( '3/5', $stack );
+			} else {
+				$class = 'grid_fifth_3';
+			}
+
+		} else if ( $type == 'content' ) {
+
+			if ( function_exists('themeblvd_grid_class') ) {
+				$class = themeblvd_grid_class( '2/5', $stack );
+			} else {
+				$class = 'grid_fifth_2';
+			}
+
+		}
+	}
+
+	return apply_filters( 'themeblvd_sliders_grid_class', $class, $position, $type );
 }
 
 /**

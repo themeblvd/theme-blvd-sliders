@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Theme Blvd Sliders
-Description: This plugin works in conjuction with the Theme Blvd framework and its core addons to allow you to add sliders to your website.
+Description: This plugin works in conjunction with the Theme Blvd framework and its core addons to allow you to add sliders to your website.
 Version: 1.2.2
 Author: Theme Blvd
 Author URI: http://themeblvd.com

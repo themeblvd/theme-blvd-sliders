@@ -133,12 +133,12 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 									<?php $media_atts = themeblvd_sliders_get_media_atts( $slider, $slide, $settings ); ?>
 									<li class="slide tight <?php echo themeblvd_sliders_get_slide_classes( $slider, $slide, $media_atts ); ?>">
 										<div class="slide-body">
-											<div class="grid-protection clearfix">
+											<div class="row tight">
 												<?php if ( isset( $slide['custom'] ) ) : ?>
 													<?php echo apply_filters( 'themeblvd_sliders_custom_content', $slide['custom'] ); ?>
 												<?php else : ?>
 													<?php themeblvd_slide_content( $slider, $slide, $settings ); ?>
-													<div class="media <?php echo $slide['slide_type']; if ($slide['position'] != 'full') echo ' grid_fifth_3'; ?>">
+													<div class="media <?php echo $slide['slide_type']; ?> <?php echo themeblvd_sliders_get_grid_class( $slide['position'], 'media' ); ?>">
 														<div class="media-inner">
 															<?php themeblvd_slide_media( $media_atts, $settings ); ?>
 														</div><!-- .media-inner (end) -->

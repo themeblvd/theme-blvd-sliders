@@ -44,7 +44,9 @@ Sliders you create can be utilized within your website in two ways.
 
 == Changelog ==
 
-= 1.2.1 =
+= 1.2.2 =
+
+* Minor fix to work with updated Bootstrap grid system in Theme Blvd framework v2.5+.
 
 = 1.2.1 =
 
