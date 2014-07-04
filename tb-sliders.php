@@ -59,7 +59,9 @@ function themeblvd_sliders_init() {
 			$_themeblvd_sliders_admin = new Theme_Blvd_Sliders_Admin();
 		}
 
-	} else {
+	}
+
+	if ( ! is_admin() || ( defined('DOING_AJAX') && DOING_AJAX ) ) {
 
 		include_once( TB_SLIDERS_PLUGIN_DIR . '/includes/sliders-helpers.php' );
 		include_once( TB_SLIDERS_PLUGIN_DIR . '/includes/sliders-display.php' );
