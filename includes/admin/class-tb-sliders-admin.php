@@ -730,7 +730,7 @@ class Theme_Blvd_Sliders_Admin {
 														<td colspan="3">
 															<div class="field">
 																<h5><?php _e( 'What should the button say?', 'themeblvd_sliders' ); ?></h5>
-																<input name="slides[<?php echo $slide_id; ?>][elements][button][text]" type="text" value="<?php echo $this->slide_value($slide_options, 'button', 'text'); ?>" class="input" />
+																<input name="slides[<?php echo $slide_id; ?>][elements][button][text]" type="text" value="<?php echo esc_attr( $this->slide_value($slide_options, 'button', 'text') ); ?>" class="input" />
 															</div><!-- .field (end) -->
 															<div class="field">
 																<h5><?php _e( 'Where should the link open?', 'themeblvd_sliders' ); ?></h5>
@@ -744,7 +744,7 @@ class Theme_Blvd_Sliders_Admin {
 															</div><!-- .field (end) -->
 															<div class="field">
 																<h5><?php _e( 'Where should the link go?', 'themeblvd_sliders' ); ?></h5>
-																<input name="slides[<?php echo $slide_id; ?>][elements][button][url]" type="text" value="<?php echo $this->slide_value($slide_options, 'button', 'url'); ?>" class="input" />
+																<input name="slides[<?php echo $slide_id; ?>][elements][button][url]" type="text" value="<?php echo esc_attr( $this->slide_value($slide_options, 'button', 'url') ); ?>" class="input" />
 															</div><!-- .field (end) -->
 														</td>
 													</tr>
