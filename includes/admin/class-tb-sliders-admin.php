@@ -476,7 +476,7 @@ class Theme_Blvd_Sliders_Admin {
 		<div id="<?php echo $slide_id; ?>" class="widget slide-options"<?php if ( $visibility == 'hide' ) echo ' style="display:none"'; ?>>
 			<div class="widget-name">
 				<a href="#" class="widget-name-arrow">Toggle</a>
-				<h3 class="image"><?php echo $slider_types[$slider_type]['types'][$current_slide_type]['name']; ?></h3>
+				<h3 class="image"><!-- Inserted here with JS --></h3>
 				<span class="slide-summary"></span>
 			</div><!-- .element-name (end) -->
 			<div class="widget-content">
