@@ -172,21 +172,21 @@ function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
 
 			case 'lightbox_video' :
 				$lightbox = true;
-				$anchor_class = 'slide-thumbnail-link video';
+				$anchor_class = 'tb-thumb-link slide-thumbnail-link video';
 				break;
 
 			case 'lightbox' :
 				$lightbox = true;
-				$anchor_class = 'slide-thumbnail-link image';
+				$anchor_class = 'tb-thumb-link slide-thumbnail-link image';
 				break;
 
 			case '_blank' :
-				$anchor_class = 'slide-thumbnail-link external';
+				$anchor_class = 'tb-thumb-link slide-thumbnail-link external';
 				$link_target = $atts['link']['target'];
 				break;
 
 			default :
-				$anchor_class = 'slide-thumbnail-link post';
+				$anchor_class = 'tb-thumb-link slide-thumbnail-link post';
 				$link_target = $atts['link']['target'];
 
 		}
