@@ -194,10 +194,12 @@ function themeblvd_sliders_get_image( $atts, $slider_type = 'standard' ){
 		// Markup used for image overlay in to work with framework javascript
 		$overlay = '';
 		if ( $slider_type != 'fallback' ) {
-			if ( function_exists( 'themeblvd_get_image_overlay' ) ) {
-				$overlay = themeblvd_get_image_overlay();
-			} else {
-				$overlay = '<span class="image-overlay"><span class="image-overlay-bg"></span><span class="image-overlay-icon"></span></span>';
+			if ( version_compare( TB_FRAMEWORK_VERSION, '2.5.0', '<' ) ) {
+				if ( function_exists( 'themeblvd_get_image_overlay' ) ) {
+					$overlay = themeblvd_get_image_overlay();
+				} else {
+					$overlay = '<span class="image-overlay"><span class="image-overlay-bg"></span><span class="image-overlay-icon"></span></span>';
+				}
 			}
 		}
 
