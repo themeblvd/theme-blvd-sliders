@@ -564,6 +564,7 @@ function themeblvd_slider_fallback_default( $slider, $slides, $fallback, $settin
  * @param array $atts Standard WordPress shortcode attributes
  */
 function themeblvd_shortcode_slider( $atts ) {
+
 	$default = array(
         'id' => ''
     );
@@ -571,20 +572,31 @@ function themeblvd_shortcode_slider( $atts ) {
 
 	// CSS classes for element
 	$slider_id = themeblvd_post_id_by_name( $id, 'tb_slider' );
-	$type = get_post_meta( $slider_id, 'type', true );
-	$classes = 'element element-slider element-slider-'.$type.themeblvd_get_classes( 'element_slider', true );
 
 	// Output
 	ob_start();
-	echo '<div class="'.$classes.'">';
-	echo '<div class="element-inner">';
-	echo '<div class="element-inner-wrap">';
-	echo '<div class="grid-protection">';
-	themeblvd_slider( $id );
-	echo '</div><!-- .grid-protection (end) -->';
-	echo '</div><!-- .element-inner-wrap (end) -->';
-	echo '</div><!-- .element-inner (end) -->';
-	echo '</div><!-- .element (end) -->';
+
+	if ( version_compare( TB_FRAMEWORK_VERSION, '2.5.0', '>=' ) ) {
+
+		themeblvd_slider( $id );
+
+	} else {
+
+		$type = get_post_meta( $slider_id, 'type', true );
+		$classes = 'element element-slider element-slider-'.$type.themeblvd_get_classes( 'element_slider', true );
+
+		echo '<div class="'.$classes.'">';
+		echo '<div class="element-inner">';
+		echo '<div class="element-inner-wrap">';
+		echo '<div class="grid-protection">';
+		themeblvd_slider( $id );
+		echo '</div><!-- .grid-protection (end) -->';
+		echo '</div><!-- .element-inner-wrap (end) -->';
+		echo '</div><!-- .element-inner (end) -->';
+		echo '</div><!-- .element (end) -->';
+
+	}
+
 	return ob_get_clean();
 }
 
