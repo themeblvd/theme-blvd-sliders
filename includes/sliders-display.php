@@ -101,10 +101,16 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 	}
 
 	// Configure additional CSS classes
-	$classes = themeblvd_get_classes( 'slider_standard', true );
+	$classes = '';
+
+	if ( function_exists('themeblvd_get_classes') ) {
+		$classes = themeblvd_get_classes( 'slider_standard', true );
+	}
+
 	$classes .= $settings['nav_standard'] ? ' show-nav_standard' : ' hide-nav_standard';
 	$classes .= $settings['nav_arrows'] ? ' show-nav_arrows' : ' hide-nav_arrows';
 	$classes .= $settings['pause_play'] ? ' show-pause_play' : ' hide-pause_play';
+
 	if ( ! $settings['nav_standard'] && ! $settings['nav_arrows'] ) {
 		$classes .= ' hide-full_nav';
 	}
@@ -186,7 +192,10 @@ function themeblvd_carrousel_slider_default( $slider, $settings, $slides ) {
 	do_action( 'themeblvd_carrousel_slider_js', $slider, $settings );
 
 	// CSS Classes
-	$classes = themeblvd_get_classes( 'slider_carrousel', true );
+	$classes = '';
+	if ( function_exists('themeblvd_get_classes') ) {
+		$classes = themeblvd_get_classes( 'slider_carrousel', true );
+	}
 
 	// Hide on mobile?
 	if ( isset( $settings['mobile_fallback'] ) ) {
@@ -256,7 +265,12 @@ function themeblvd_nivo_slider_default( $slider, $settings, $slides ) {
 	}
 
 	// Configure additional CSS classes
-	$classes = themeblvd_get_classes( 'slider_nivo', true );
+	$classes = '';
+
+	if ( function_exists('themeblvd_get_classes') ) {
+		$classes = themeblvd_get_classes( 'slider_nivo', true );
+	}
+
 	$classes .= $settings['nav_standard'] ? ' show-nav_standard' : ' hide-nav_standard';
 	$classes .= $settings['nav_arrows'] ? ' show-nav_arrows' : ' hide-nav_arrows';
 	if ( ! $settings['nav_standard'] && ! $settings['nav_arrows'] ) {
@@ -356,7 +370,11 @@ function themeblvd_bootstrap_slider_default( $slider, $settings, $slides ) {
 	do_action( 'themeblvd_bootstrap_slider_js', $slider, $settings );
 
 	// CSS Classes
-	$classes = themeblvd_get_classes( 'slider_bootstrap', true );
+	$classes = '';
+
+	if ( function_exists('themeblvd_get_classes') ) {
+		$classes = themeblvd_get_classes( 'slider_bootstrap', true );
+	}
 
 	// Hide on mobile?
 	if ( isset( $settings['mobile_fallback'] ) ) {
