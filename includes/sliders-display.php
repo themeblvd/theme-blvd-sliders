@@ -604,6 +604,7 @@ function themeblvd_shortcode_slider( $atts ) {
  * Post slider shortcode - [post_slider]
  *
  * @since 1.0.2
+ * @deprecated 1.2.2
  *
  * @param array $atts Standard WordPress shortcode attributes
  */

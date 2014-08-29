@@ -89,7 +89,12 @@ function themeblvd_sliders_init() {
 
 		// Slider shortcodes
 		add_shortcode( 'slider', 'themeblvd_shortcode_slider' );
-		add_shortcode( 'post_slider', 'themeblvd_shortcode_slider_auto' );
+
+		if ( version_compare( TB_FRAMEWORK_VERSION, '2.5.0', '<' ) ) {
+			// If using TB framework 2.5+, [post_slider] is part of the shortcodes plugin
+			add_shortcode( 'post_slider', 'themeblvd_shortcode_slider_auto' );
+		}
+
 	}
 
 }
