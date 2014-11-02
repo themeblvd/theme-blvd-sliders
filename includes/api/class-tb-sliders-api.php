@@ -129,7 +129,7 @@ class Theme_Blvd_Sliders_API {
 		);
 
 		/*--------------------------------------------*/
-		/* (1) Standard
+		/* Standard
 		/*--------------------------------------------*/
 
 		// Slide Types
@@ -256,7 +256,7 @@ class Theme_Blvd_Sliders_API {
 		);
 
 		/*--------------------------------------------*/
-		/* (2) Nivo
+		/* Nivo
 		/*--------------------------------------------*/
 
 		// Slide Types
@@ -384,54 +384,57 @@ class Theme_Blvd_Sliders_API {
 		);
 
 		/*--------------------------------------------*/
-		/* (3) Carrousel
+		/* Carrousel @depracated
 		/*--------------------------------------------*/
 
-		// Slide Types
-		$this->core_sliders['carrousel']['types'] = array(
-			'image' => array(
-				'name' 			=> __( 'Image Slide', 'themeblvd_sliders' ),
-				'main_title' 	=> __( 'Setup Image', 'themeblvd_sliders' )
-			)
-		);
+		if ( version_compare( TB_FRAMEWORK_VERSION, '2.5.0', '<' ) ) { // (only for themes prior to framwork 2.5)
 
-		// Slide Media Positions
-		$this->core_sliders['carrousel']['positions'] = array(
-			'full' => 'grid_4' // Default
-		);
-
-		// Slide Elements
-		$this->core_sliders['carrousel']['elements'] = array(
-			'image_link'
-		);
-
-		// Slider Options
-		$this->core_sliders['carrousel']['options'] = array(
-			array(
-				'id'		=> 'nav_arrows',
-				'name'		=> __( 'Show next/prev arrows?', 'themeblvd_sliders' ),
-				'std'		=> '1',
-				'type'		=> 'select',
-				'options'	=> array(
-		            '1'	=> __( 'Yes, show arrows.', 'themeblvd_sliders' ),
-		            '0'	=> __( 'No, don\'t show them.', 'themeblvd_sliders' )
+			// Slide Types
+			$this->core_sliders['carrousel']['types'] = array(
+				'image' => array(
+					'name' 			=> __( 'Image Slide', 'themeblvd_sliders' ),
+					'main_title' 	=> __( 'Setup Image', 'themeblvd_sliders' )
 				)
-			),
-			array(
-				'id'		=> 'mobile_fallback',
-				'name'		=> __( 'How to display on mobile devices?', 'themeblvd_sliders' ),
-				'std'		=> 'full_list',
-				'type'		=> 'radio',
-				'options'	=> array(
-		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd_sliders' ),
-		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'themeblvd_sliders' ),
-		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'themeblvd_sliders' )
+			);
+
+			// Slide Media Positions
+			$this->core_sliders['carrousel']['positions'] = array(
+				'full' => 'grid_4' // Default
+			);
+
+			// Slide Elements
+			$this->core_sliders['carrousel']['elements'] = array(
+				'image_link'
+			);
+
+			// Slider Options
+			$this->core_sliders['carrousel']['options'] = array(
+				array(
+					'id'		=> 'nav_arrows',
+					'name'		=> __( 'Show next/prev arrows?', 'themeblvd_sliders' ),
+					'std'		=> '1',
+					'type'		=> 'select',
+					'options'	=> array(
+			            '1'	=> __( 'Yes, show arrows.', 'themeblvd_sliders' ),
+			            '0'	=> __( 'No, don\'t show them.', 'themeblvd_sliders' )
+					)
+				),
+				array(
+					'id'		=> 'mobile_fallback',
+					'name'		=> __( 'How to display on mobile devices?', 'themeblvd_sliders' ),
+					'std'		=> 'full_list',
+					'type'		=> 'radio',
+					'options'	=> array(
+			            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd_sliders' ),
+			            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'themeblvd_sliders' ),
+			            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'themeblvd_sliders' )
+					)
 				)
-			)
-		);
+			);
+		}
 
 		/*--------------------------------------------*/
-		/* (4) Bootstrap Carousel
+		/* Bootstrap Carousel
 		/*--------------------------------------------*/
 
 		// Slide Types
