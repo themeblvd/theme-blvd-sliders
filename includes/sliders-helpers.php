@@ -430,27 +430,16 @@ function themeblvd_get_slide_thumbnail( $slider, $slide, $settings, $slider_type
 
 	if ( ! empty( $slide['image']['thumb'] ) ) {
 
-		// Image URL
 		$src = $slide['image']['thumb'];
 
-		// Width
-		$width = 0;
-		if ( ! empty( $slide['image']['thumb_width'] ) ) {
-			$width = $slide['image']['thumb_width'];
-		}
-
-		// Height
-		$height = 0;
-		if ( ! empty( $slide['image']['thumb_height'] ) ) {
-			$height = $slide['image']['thumb_height'];
-		}
+		$width = apply_filters('themeblvd_slide_thumbnail_display_size', 70);
 
 		$title = '';
 		if ( ! empty( $slide['image']['title'] ) ) {
 			$title = $slide['image']['title'];
 		}
 
-		$output = sprintf( '<img src="%s" width="%s" height="%s" alt="%s" />', $src, $width, $height, $title );
+		$output = sprintf( '<img src="%s" width="%s" alt="%s" />', $src, apply_filters('themeblvd_slide_thumbnail_display_size', 70), $title );
 
 	}
 

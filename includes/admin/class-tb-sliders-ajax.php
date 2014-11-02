@@ -196,8 +196,12 @@ class Theme_Blvd_Sliders_Ajax {
 						}
 
 						// Thumbnail -- Potentially used for a thumbnail navigation setup
-						$thumb_size = apply_filters( 'themeblvd_sliders_thumb_nav_size', 'square_smallest' );
-						$thumb = wp_get_attachment_image_src( $attachment_id, $thumb_size );
+						if ( version_compare(TB_FRAMEWORK_VERSION, '2.5.0', '>=') ) {
+							$thumb_size = 'tb_thumb';
+						} else {
+							$thumb_size = 'square_smallest';
+						}
+						$thumb = wp_get_attachment_image_src( $attachment_id, apply_filters( 'themeblvd_sliders_thumb_nav_size', $thumb_size ) );
 						$slides[$key]['image']['thumb'] = $thumb[0];
 						$slides[$key]['image']['thumb_width'] = $thumb[1];
 						$slides[$key]['image']['thumb_height'] = $thumb[2];
