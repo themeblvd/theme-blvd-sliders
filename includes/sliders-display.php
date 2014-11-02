@@ -34,6 +34,19 @@ function themeblvd_carrousel_slider_js_default( $id, $options ) {
  * @since 1.1.0
  */
 function themeblvd_nivo_slider_js_default( $id, $options ) {
+
+	if ( empty( $options['slices'] ) ) {
+		$options['slices'] = '15';
+	}
+
+	if ( empty( $options['boxcols'] ) ) {
+		$options['boxcols'] = '8';
+	}
+
+	if ( empty( $options['boxrows'] ) ) {
+		$options['boxrows'] = '4';
+	}
+
 	if ( version_compare( TB_FRAMEWORK_VERSION, '2.4.0', '<' ) ) {
 		wp_enqueue_script( 'nivo' ); // @deprecated
 	}

@@ -46,7 +46,8 @@ Sliders you create can be utilized within your website in two ways.
 
 = 1.2.2 =
 
-* Minor fix to work with updated Bootstrap grid system in Theme Blvd framework v2.5+.
+* Fixes for themes with Theme Blvd Framework 2.5+
+* Removed "3D Carousel" slider type for themes with Theme Blvd Framework 2.5+
 
 = 1.2.1 =
 
