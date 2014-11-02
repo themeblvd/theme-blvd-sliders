@@ -146,7 +146,11 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 				<div class="slides-inner">
 					<?php if ( ! empty( $slides ) ) : ?>
 						<div class="slider standard-slider flexslider">
-							<div class="tb-loader"></div>
+							<?php if ( function_exists('themeblvd_loader') ) : ?>
+								<?php themeblvd_loader(); ?>
+							<?php else : ?>
+								<div class="tb-loader"></div>
+							<?php endif; ?>
 							<ul class="slides">
 								<?php foreach ( $slides as $slide ) : ?>
 									<?php $media_atts = themeblvd_sliders_get_media_atts( $slider, $slide, $settings ); ?>
@@ -307,7 +311,11 @@ function themeblvd_nivo_slider_default( $slider, $settings, $slides ) {
 		<div class="slider-inner<?php echo $classes; ?>">
 			<div class="slides-wrapper slides-wrapper-<?php echo $slider; ?>">
 				<div class="slides-inner">
-					<div class="tb-loader"></div>
+					<?php if ( function_exists('themeblvd_loader') ) : ?>
+						<?php themeblvd_loader(); ?>
+					<?php else : ?>
+						<div class="tb-loader"></div>
+					<?php endif; ?>
 					<?php if ( $slides ) : ?>
 						<div class="slider nivoSlider">
 							<?php
@@ -402,7 +410,7 @@ function themeblvd_bootstrap_slider_default( $slider, $settings, $slides ) {
 		$speed = $settings['interval'].'000';
 	}
 	?>
-	<div id="tb-slider-<?php echo $slider; ?>" class="tb-bootstrap-carousel carousel slide <?php echo $classes; ?>" data-ride="carousel" data-interval="<?php echo $speed; ?>" data-pause="<?php echo $settings['pause']; ?>" data-wrap="<?php echo $settings['wrap']; ?>">
+	<div id="tb-slider-<?php echo $slider; ?>" class="tb-bootstrap-carousel tb-simple-slider carousel slide <?php echo $classes; ?>" data-ride="carousel" data-interval="<?php echo $speed; ?>" data-pause="<?php echo $settings['pause']; ?>" data-wrap="<?php echo $settings['wrap']; ?>">
 
 		<div class="carousel-control-wrap">
 
@@ -481,7 +489,6 @@ function themeblvd_bootstrap_slider_default( $slider, $settings, $slides ) {
 			do_action( 'themeblvd_slider_fallback', $slider, $slides, $settings['mobile_fallback'], $settings );
 		}
 	}
-
 }
 
 /**
