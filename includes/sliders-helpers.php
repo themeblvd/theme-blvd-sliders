@@ -525,18 +525,18 @@ function themeblvd_sliders_get_grid_class( $position, $type ){
 	if ( $position != 'full' ) {
 		if ( $type == 'media' ) {
 
-			if ( function_exists('themeblvd_grid_class') ) {
+			if ( version_compare(TB_FRAMEWORK_VERSION, '2.5.0', '>=') ) {
 				$class = themeblvd_grid_class( '3/5', $stack );
 			} else {
-				$class = 'grid_fifth_3';
+				$class = 'grid_fifth_3'; // @deprecated
 			}
 
 		} else if ( $type == 'content' ) {
 
-			if ( function_exists('themeblvd_grid_class') ) {
+			if ( version_compare(TB_FRAMEWORK_VERSION, '2.5.0', '>=') ) {
 				$class = themeblvd_grid_class( '2/5', $stack );
 			} else {
-				$class = 'grid_fifth_2';
+				$class = 'grid_fifth_2';  // @deprecated
 			}
 
 		}

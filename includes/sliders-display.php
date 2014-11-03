@@ -129,6 +129,12 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 	}
 	$classes = apply_filters( 'themeblvd_slider_wrapper_classes', $classes );
 
+	$row_class = 'row tight';
+
+	if ( version_compare(TB_FRAMEWORK_VERSION, '2.5.0', '<') ) {
+		$row_class = 'grid-protection';
+	}
+
 	// Hide on mobile?
 	$hide = '';
 	if ( isset( $settings['mobile_fallback'] ) ) {
@@ -156,7 +162,7 @@ function themeblvd_standard_slider_default( $slider, $settings, $slides ) {
 									<?php $media_atts = themeblvd_sliders_get_media_atts( $slider, $slide, $settings ); ?>
 									<li class="slide tight <?php echo themeblvd_sliders_get_slide_classes( $slider, $slide, $media_atts ); ?>">
 										<div class="slide-body">
-											<div class="row tight">
+											<div class="<?php echo $row_class; ?>">
 												<?php if ( isset( $slide['custom'] ) ) : ?>
 													<?php echo apply_filters( 'themeblvd_sliders_custom_content', $slide['custom'] ); ?>
 												<?php else : ?>
