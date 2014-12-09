@@ -46,9 +46,11 @@ Sliders you create can be utilized within your website in two ways.
 
 = 1.2.4 =
 
+* Minor security fix.
+
 = 1.2.3 =
 
-* Fixed image alignment issues on “Standard” slider type that occurred from of previous update. 
+* Fixed image alignment issues on “Standard” slider type that occurred from of previous update.
 
 = 1.2.2 =
 
