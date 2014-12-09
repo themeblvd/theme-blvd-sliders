@@ -372,7 +372,7 @@ class Theme_Blvd_Sliders_Ajax {
 		// Display update message
 		// echo 'DEBUG: <pre>'; print_r($debug); echo '</pre>';
 		echo '<div id="setting-error-save_options" class="updated fade settings-error ajax-update">';
-		echo '	<p><strong>'.__( 'Slider saved.', 'themeblvd_sliders' ).'</strong></p>';
+		echo '	<p><strong>'.__( 'Slider saved.', 'theme-blvd-sliders' ).'</strong></p>';
 		echo '</div>';
 		die();
 	}
@@ -431,7 +431,7 @@ class Theme_Blvd_Sliders_Ajax {
 
 			// Display update message
 			echo '<div id="setting-error-delete_slider" class="updated fade settings-error ajax-update">';
-			echo '	<p><strong>'.__( 'Slider(s) deleted.', 'themeblvd_sliders' ).'</strong></p>';
+			echo '	<p><strong>'.__( 'Slider(s) deleted.', 'theme-blvd-sliders' ).'</strong></p>';
 			echo '</div>';
 
 		}

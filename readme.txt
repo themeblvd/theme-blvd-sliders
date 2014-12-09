@@ -46,6 +46,7 @@ Sliders you create can be utilized within your website in two ways.
 
 = 1.2.4 =
 
+* GlotPress compatibility (for 2015 wordpress.org release).
 * Minor security fix.
 
 = 1.2.3 =

@@ -143,6 +143,6 @@ function themeblvd_sliders_registered_elements( $elements ) {
  * @since 1.0.0
  */
 function themeblvd_sliders_textdomain() {
-	load_plugin_textdomain( 'themeblvd_sliders', false, TB_SLIDERS_PLUGIN_DIR . '/lang' );
+	load_plugin_textdomain('theme-blvd-sliders');
 }
-add_action( 'plugins_loaded', 'themeblvd_sliders_textdomain' );
+add_action( 'init', 'themeblvd_sliders_textdomain' );

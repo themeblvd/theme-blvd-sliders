@@ -135,16 +135,16 @@ class Theme_Blvd_Sliders_API {
 		// Slide Types
 		$this->core_sliders['standard']['types'] = array(
 			'image' => array(
-				'name'			=> __( 'Image Slide', 'themeblvd_sliders' ),
-				'main_title' 	=> __( 'Setup Image', 'themeblvd_sliders' )
+				'name'			=> __( 'Image Slide', 'theme-blvd-sliders' ),
+				'main_title' 	=> __( 'Setup Image', 'theme-blvd-sliders' )
 			),
 			'video' => array(
-				'name' 			=> __( 'Video Slide', 'themeblvd_sliders' ),
-				'main_title' 	=> __( 'Setup Video', 'themeblvd_sliders' )
+				'name' 			=> __( 'Video Slide', 'theme-blvd-sliders' ),
+				'main_title' 	=> __( 'Setup Video', 'theme-blvd-sliders' )
 			),
 			'custom' => array(
-				'name' 			=> __( 'Custom Slide', 'themeblvd_sliders' ),
-				'main_title' 	=> __( 'Setup Custom Content', 'themeblvd_sliders' )
+				'name' 			=> __( 'Custom Slide', 'theme-blvd-sliders' ),
+				'main_title' 	=> __( 'Setup Custom Content', 'theme-blvd-sliders' )
 			)
 		);
 
@@ -172,7 +172,7 @@ class Theme_Blvd_Sliders_API {
 		    ),
 			array(
 				'id'		=> 'fx',
-				'name'		=> __( 'How to transition between slides?', 'themeblvd_sliders' ),
+				'name'		=> __( 'How to transition between slides?', 'theme-blvd-sliders' ),
 				'std'		=> 'fade',
 				'type'		=> 'select',
 				'options'	=> array(
@@ -183,7 +183,7 @@ class Theme_Blvd_Sliders_API {
 			),
 			array(
 				'id'		=> 'smoothheight',
-				'name'		=> __( 'Allow height to adjust on each transition?', 'themeblvd_sliders' ),
+				'name'		=> __( 'Allow height to adjust on each transition?', 'theme-blvd-sliders' ),
 				'std'		=> 'false',
 				'type'		=> 'select',
 				'options'	=> array(
@@ -197,60 +197,60 @@ class Theme_Blvd_Sliders_API {
 		    ),
 			array(
 				'id'		=> 'timeout',
-				'name' 		=> __( 'Seconds between each transition?', 'themeblvd_sliders' ),
+				'name' 		=> __( 'Seconds between each transition?', 'theme-blvd-sliders' ),
 				'std'		=> '5',
 				'type'		=> 'text'
 		    ),
 			array(
 				'id'		=> 'nav_standard',
-				'name'		=> __( 'Show standard slideshow navigation?', 'themeblvd_sliders' ),
+				'name'		=> __( 'Show standard slideshow navigation?', 'theme-blvd-sliders' ),
 				'std'		=> '1',
 				'type'		=> 'select',
 				'options'	=> array(
-		            '1'	=> __( 'Yes, show navigation.', 'themeblvd_sliders' ),
-		            '0'	=> __( 'No, don\'t show it.', 'themeblvd_sliders' )
+		            '1'	=> __( 'Yes, show navigation.', 'theme-blvd-sliders' ),
+		            '0'	=> __( 'No, don\'t show it.', 'theme-blvd-sliders' )
 				)
 			),
 			array(
 				'id'		=> 'nav_arrows',
-				'name'		=> __( 'Show next/prev arrows?', 'themeblvd_sliders' ),
+				'name'		=> __( 'Show next/prev arrows?', 'theme-blvd-sliders' ),
 				'std'		=> '1',
 				'type'		=> 'select',
 				'options'	=> array(
-		            '1'	=> __( 'Yes, show arrows.', 'themeblvd_sliders' ),
-		            '0'	=> __( 'No, don\'t show them.', 'themeblvd_sliders' )
+		            '1'	=> __( 'Yes, show arrows.', 'theme-blvd-sliders' ),
+		            '0'	=> __( 'No, don\'t show them.', 'theme-blvd-sliders' )
 				)
 			),
 			array(
 				'id'		=> 'pause_play',
-				'name'		=> __( 'Show pause/play button?', 'themeblvd_sliders' ),
+				'name'		=> __( 'Show pause/play button?', 'theme-blvd-sliders' ),
 				'std'		=> '1',
 				'type'		=> 'select',
 				'options'	=> array(
-		            '1'	=> __( 'Yes, show pause/play button.', 'themeblvd_sliders' ),
-		            '0'	=> __( 'No, don\'t show it.', 'themeblvd_sliders' )
+		            '1'	=> __( 'Yes, show pause/play button.', 'theme-blvd-sliders' ),
+		            '0'	=> __( 'No, don\'t show it.', 'theme-blvd-sliders' )
 				)
 			),
 			array(
 				'id'		=> 'pause_on_hover',
-				'name'		=> __( 'Enable pause on hover?', 'themeblvd_sliders' ),
+				'name'		=> __( 'Enable pause on hover?', 'theme-blvd-sliders' ),
 				'std'		=> 'pause_on',
 				'type'		=> 'select',
 				'options'	=> array(
-		            'pause_on'		=> __( 'Pause on hover only.', 'themeblvd_sliders' ),
-		            'pause_on_off'	=> __( 'Pause on hover and resume when hovering off.', 'themeblvd_sliders' ),
-		            'disable'		=> __( 'No, disable this all together.', 'themeblvd_sliders' )
+		            'pause_on'		=> __( 'Pause on hover only.', 'theme-blvd-sliders' ),
+		            'pause_on_off'	=> __( 'Pause on hover and resume when hovering off.', 'theme-blvd-sliders' ),
+		            'disable'		=> __( 'No, disable this all together.', 'theme-blvd-sliders' )
 				)
 			),
 			array(
 				'id'		=> 'mobile_fallback',
-				'name'		=> __( 'How to display on mobile devices?', 'themeblvd_sliders' ),
+				'name'		=> __( 'How to display on mobile devices?', 'theme-blvd-sliders' ),
 				'std'		=> 'full_list',
 				'type'		=> 'radio',
 				'options'	=> array(
-		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd_sliders' ),
-		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'themeblvd_sliders' ),
-		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'themeblvd_sliders' )
+		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'theme-blvd-sliders' ),
+		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'theme-blvd-sliders' ),
+		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'theme-blvd-sliders' )
 				)
 			)
 		);
@@ -262,8 +262,8 @@ class Theme_Blvd_Sliders_API {
 		// Slide Types
 		$this->core_sliders['nivo']['types'] = array(
 			'image' => array(
-				'name' 			=> __( 'Image Slide', 'themeblvd_sliders' ),
-				'main_title'	=> __( 'Setup Image', 'themeblvd_sliders' )
+				'name' 			=> __( 'Image Slide', 'theme-blvd-sliders' ),
+				'main_title'	=> __( 'Setup Image', 'theme-blvd-sliders' )
 			)
 		);
 
@@ -287,7 +287,7 @@ class Theme_Blvd_Sliders_API {
 		    ),
 		    array(
 				'id'		=> 'fx',
-				'name'		=> __( 'How to transition between slides?', 'themeblvd_sliders' ),
+				'name'		=> __( 'How to transition between slides?', 'theme-blvd-sliders' ),
 				'std'		=> 'random',
 				'type'		=> 'select',
 				'options'	=> array(
@@ -312,21 +312,21 @@ class Theme_Blvd_Sliders_API {
 			),
 		    array(
 				'id'		=> 'boxcols',
-				'name' 		=> __( 'Number of box columns for transition?', 'themeblvd_sliders' ),
+				'name' 		=> __( 'Number of box columns for transition?', 'theme-blvd-sliders' ),
 				'std'		=> '8',
 				'type'		=> 'text',
 				'class'		=> 'hide receiver receiver-boxRandom receiver-boxRain receiver-boxRainReverse receiver-boxRainGrow receiver-boxRainGrowReverse'
 		    ),
 		    array(
 				'id'		=> 'boxrows',
-				'name' 		=> __( 'Number of box rows for transition?', 'themeblvd_sliders' ),
+				'name' 		=> __( 'Number of box rows for transition?', 'theme-blvd-sliders' ),
 				'std'		=> '4',
 				'type'		=> 'text',
 				'class'		=> 'hide receiver receiver-boxRandom receiver-boxRain receiver-boxRainReverse receiver-boxRainGrow receiver-boxRainGrowReverse'
 		    ),
 			array(
 				'id'		=> 'slices',
-				'name' 		=> __( 'Number of slices for transition?', 'themeblvd_sliders' ),
+				'name' 		=> __( 'Number of slices for transition?', 'theme-blvd-sliders' ),
 				'std'		=> '15',
 				'type'		=> 'text',
 				'class'		=> 'hide receiver receiver-sliceDown receiver-sliceDownLeft receiver-sliceUp receiver-sliceUpLeft receiver-sliceUpDown receiver-sliceUpDownLeft'
@@ -336,49 +336,49 @@ class Theme_Blvd_Sliders_API {
 		    ),
 			array(
 				'id'		=> 'timeout',
-				'name' 		=> __( 'Seconds between each transition?', 'themeblvd_sliders' ),
+				'name' 		=> __( 'Seconds between each transition?', 'theme-blvd-sliders' ),
 				'std'		=> '5',
 				'type'		=> 'text'
 		    ),
 			array(
 				'id'		=> 'nav_standard',
-				'name'		=> __( 'Show standard slideshow navigation?', 'themeblvd_sliders' ),
+				'name'		=> __( 'Show standard slideshow navigation?', 'theme-blvd-sliders' ),
 				'std'		=> 'true',
 				'type'		=> 'select',
 				'options'	=> array(
-		            'true'	=> __( 'Yes, show navigation.', 'themeblvd_sliders' ),
-		            'false'	=> __( 'No, don\'t show it.', 'themeblvd_sliders' )
+		            'true'	=> __( 'Yes, show navigation.', 'theme-blvd-sliders' ),
+		            'false'	=> __( 'No, don\'t show it.', 'theme-blvd-sliders' )
 				)
 			),
 			array(
 				'id'		=> 'nav_arrows',
-				'name'		=> __( 'Show next/prev arrows?', 'themeblvd_sliders' ),
+				'name'		=> __( 'Show next/prev arrows?', 'theme-blvd-sliders' ),
 				'std'		=> 'true',
 				'type'		=> 'select',
 				'options'	=> array(
-		            'true'	=> __( 'Yes, show arrows.', 'themeblvd_sliders' ),
-		            'false'	=> __( 'No, don\'t show them.', 'themeblvd_sliders' )
+		            'true'	=> __( 'Yes, show arrows.', 'theme-blvd-sliders' ),
+		            'false'	=> __( 'No, don\'t show them.', 'theme-blvd-sliders' )
 				)
 			),
 			array(
 				'id'		=> 'pause_on_hover',
-				'name'		=> __( 'Enable pause on hover?', 'themeblvd_sliders' ),
+				'name'		=> __( 'Enable pause on hover?', 'theme-blvd-sliders' ),
 				'std'		=> 'true',
 				'type'		=> 'select',
 				'options'	=> array(
-		            'true'		=> __( 'Yes, pause slider on hover.', 'themeblvd_sliders' ),
-		            'false'		=> __( 'No, don\'t pause slider on hover.', 'themeblvd_sliders' )
+		            'true'		=> __( 'Yes, pause slider on hover.', 'theme-blvd-sliders' ),
+		            'false'		=> __( 'No, don\'t pause slider on hover.', 'theme-blvd-sliders' )
 				)
 			),
 			array(
 				'id'		=> 'mobile_fallback',
-				'name'		=> __( 'How to display on mobile devices?', 'themeblvd_sliders' ),
+				'name'		=> __( 'How to display on mobile devices?', 'theme-blvd-sliders' ),
 				'std'		=> 'full_list',
 				'type'		=> 'radio',
 				'options'	=> array(
-		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd_sliders' ),
-		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'themeblvd_sliders' ),
-		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'themeblvd_sliders' )
+		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'theme-blvd-sliders' ),
+		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'theme-blvd-sliders' ),
+		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'theme-blvd-sliders' )
 				)
 			)
 		);
@@ -392,8 +392,8 @@ class Theme_Blvd_Sliders_API {
 			// Slide Types
 			$this->core_sliders['carrousel']['types'] = array(
 				'image' => array(
-					'name' 			=> __( 'Image Slide', 'themeblvd_sliders' ),
-					'main_title' 	=> __( 'Setup Image', 'themeblvd_sliders' )
+					'name' 			=> __( 'Image Slide', 'theme-blvd-sliders' ),
+					'main_title' 	=> __( 'Setup Image', 'theme-blvd-sliders' )
 				)
 			);
 
@@ -411,23 +411,23 @@ class Theme_Blvd_Sliders_API {
 			$this->core_sliders['carrousel']['options'] = array(
 				array(
 					'id'		=> 'nav_arrows',
-					'name'		=> __( 'Show next/prev arrows?', 'themeblvd_sliders' ),
+					'name'		=> __( 'Show next/prev arrows?', 'theme-blvd-sliders' ),
 					'std'		=> '1',
 					'type'		=> 'select',
 					'options'	=> array(
-			            '1'	=> __( 'Yes, show arrows.', 'themeblvd_sliders' ),
-			            '0'	=> __( 'No, don\'t show them.', 'themeblvd_sliders' )
+			            '1'	=> __( 'Yes, show arrows.', 'theme-blvd-sliders' ),
+			            '0'	=> __( 'No, don\'t show them.', 'theme-blvd-sliders' )
 					)
 				),
 				array(
 					'id'		=> 'mobile_fallback',
-					'name'		=> __( 'How to display on mobile devices?', 'themeblvd_sliders' ),
+					'name'		=> __( 'How to display on mobile devices?', 'theme-blvd-sliders' ),
 					'std'		=> 'full_list',
 					'type'		=> 'radio',
 					'options'	=> array(
-			            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd_sliders' ),
-			            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'themeblvd_sliders' ),
-			            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'themeblvd_sliders' )
+			            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'theme-blvd-sliders' ),
+			            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'theme-blvd-sliders' ),
+			            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'theme-blvd-sliders' )
 					)
 				)
 			);
@@ -440,8 +440,8 @@ class Theme_Blvd_Sliders_API {
 		// Slide Types
 		$this->core_sliders['bootstrap']['types'] = array(
 			'image' => array(
-				'name' 			=> __( 'Image Slide', 'themeblvd_sliders' ),
-				'main_title'	=> __( 'Setup Image', 'themeblvd_sliders' )
+				'name' 			=> __( 'Image Slide', 'theme-blvd-sliders' ),
+				'main_title'	=> __( 'Setup Image', 'theme-blvd-sliders' )
 			)
 		);
 
@@ -461,69 +461,69 @@ class Theme_Blvd_Sliders_API {
 		$this->core_sliders['bootstrap']['options'] = array(
 			array(
 				'id'		=> 'interval',
-				'name' 		=> __( 'Seconds between each transition?', 'themeblvd_sliders' ),
+				'name' 		=> __( 'Seconds between each transition?', 'theme-blvd-sliders' ),
 				'std'		=> '5',
 				'type'		=> 'text'
 		    ),
 			array(
 				'id'		=> 'pause',
-				'name'		=> __( 'Enable pause on hover?', 'themeblvd_sliders' ),
+				'name'		=> __( 'Enable pause on hover?', 'theme-blvd-sliders' ),
 				'std'		=> 'true',
 				'type'		=> 'select',
 				'options'	=> array(
-		            'hover'		=> __( 'Yes, pause slider on hover.', 'themeblvd_sliders' ),
-		            'false'		=> __( 'No, don\'t pause slider on hover.', 'themeblvd_sliders' )
+		            'hover'		=> __( 'Yes, pause slider on hover.', 'theme-blvd-sliders' ),
+		            'false'		=> __( 'No, don\'t pause slider on hover.', 'theme-blvd-sliders' )
 				)
 			),
 			array(
 				'id'		=> 'wrap',
-				'name'		=> __( 'Cycle carousel continuously?', 'themeblvd_sliders' ),
+				'name'		=> __( 'Cycle carousel continuously?', 'theme-blvd-sliders' ),
 				'std'		=> 'true',
 				'type'		=> 'select',
 				'options'	=> array(
-		            'true'		=> __( 'Yes, cycle continuously.', 'themeblvd_sliders' ),
-		            'false'		=> __( 'No, stop cycling.', 'themeblvd_sliders' )
+		            'true'		=> __( 'Yes, cycle continuously.', 'theme-blvd-sliders' ),
+		            'false'		=> __( 'No, stop cycling.', 'theme-blvd-sliders' )
 				)
 			),
 			array(
 				'id'		=> 'nav_standard',
-				'name'		=> __( 'Show standard slideshow navigation?', 'themeblvd_sliders' ),
+				'name'		=> __( 'Show standard slideshow navigation?', 'theme-blvd-sliders' ),
 				'std'		=> '1',
 				'type'		=> 'select',
 				'options'	=> array(
-		            '1'	=> __( 'Yes, show navigation.', 'themeblvd_sliders' ),
-		            '0'	=> __( 'No, don\'t show it.', 'themeblvd_sliders' )
+		            '1'	=> __( 'Yes, show navigation.', 'theme-blvd-sliders' ),
+		            '0'	=> __( 'No, don\'t show it.', 'theme-blvd-sliders' )
 				)
 			),
 			array(
 				'id'		=> 'nav_arrows',
-				'name'		=> __( 'Show next/prev arrows?', 'themeblvd_sliders' ),
+				'name'		=> __( 'Show next/prev arrows?', 'theme-blvd-sliders' ),
 				'std'		=> '1',
 				'type'		=> 'select',
 				'options'	=> array(
-		            '1'	=> __( 'Yes, show arrows.', 'themeblvd_sliders' ),
-		            '0'	=> __( 'No, don\'t show them.', 'themeblvd_sliders' )
+		            '1'	=> __( 'Yes, show arrows.', 'theme-blvd-sliders' ),
+		            '0'	=> __( 'No, don\'t show them.', 'theme-blvd-sliders' )
 				)
 			),
 			array(
 				'id'		=> 'nav_thumbs',
-				'name'		=> __( 'Show thumbnail navigation?', 'themeblvd_sliders' ),
+				'name'		=> __( 'Show thumbnail navigation?', 'theme-blvd-sliders' ),
 				'std'		=> '0',
 				'type'		=> 'select',
 				'options'	=> array(
-		            '1'	=> __( 'Yes, show thumbnail navigation.', 'themeblvd_sliders' ),
-		            '0'	=> __( 'No, don\'t show it.', 'themeblvd_sliders' )
+		            '1'	=> __( 'Yes, show thumbnail navigation.', 'theme-blvd-sliders' ),
+		            '0'	=> __( 'No, don\'t show it.', 'theme-blvd-sliders' )
 				)
 			),
 			array(
 				'id'		=> 'mobile_fallback',
-				'name'		=> __( 'How to display on mobile devices?', 'themeblvd_sliders' ),
+				'name'		=> __( 'How to display on mobile devices?', 'theme-blvd-sliders' ),
 				'std'		=> 'display',
 				'type'		=> 'radio',
 				'options'	=> array(
-		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'themeblvd_sliders' ),
-		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'themeblvd_sliders' ),
-		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'themeblvd_sliders' )
+		            'full_list'		=> __( 'List out slides for a more user-friendly mobile experience.', 'theme-blvd-sliders' ),
+		            'first_slide'	=> __( 'Show first slide only for a more simple mobile experience.', 'theme-blvd-sliders' ),
+		            'display'		=> __( 'Attempt to show full animated slider on mobile devices.', 'theme-blvd-sliders' )
 				)
 			)
 		);
@@ -602,22 +602,22 @@ class Theme_Blvd_Sliders_API {
 
 						case 'image' :
 							$new_slider['types']['image'] = array(
-								'name' 			=> __( 'Image Slide', 'themeblvd_sliders' ),
-								'main_title' 	=> __( 'Setup Image', 'themeblvd_sliders' )
+								'name' 			=> __( 'Image Slide', 'theme-blvd-sliders' ),
+								'main_title' 	=> __( 'Setup Image', 'theme-blvd-sliders' )
 							);
 							break;
 
 						case 'video' :
 							$new_slider['types']['video'] = array(
-								'name' 			=> __( 'Video Slide', 'themeblvd_sliders' ),
-								'main_title' 	=> __( 'Video Link', 'themeblvd_sliders' )
+								'name' 			=> __( 'Video Slide', 'theme-blvd-sliders' ),
+								'main_title' 	=> __( 'Video Link', 'theme-blvd-sliders' )
 							);
 							break;
 
 						case 'custom' :
 							$new_slider['types']['custom'] = array(
-								'name' 			=> __( 'Custom Slide', 'themeblvd_sliders' ),
-								'main_title' 	=> __( 'Setup Custom Content', 'themeblvd_sliders' )
+								'name' 			=> __( 'Custom Slide', 'theme-blvd-sliders' ),
+								'main_title' 	=> __( 'Setup Custom Content', 'theme-blvd-sliders' )
 							);
 							break;
 

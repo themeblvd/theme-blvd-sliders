@@ -637,7 +637,7 @@ function themeblvd_shortcode_slider( $atts ) {
 function themeblvd_shortcode_slider_auto( $atts ) {
 
 	if ( ! function_exists( 'themeblvd_slider_auto' ) ) {
-		return __( 'Your theme does not support the [post_slider] shortcode.', 'themeblvd_sliders' );
+		return __( 'Your theme does not support the [post_slider] shortcode.', 'theme-blvd-sliders' );
 	}
 
 	$default = array(
