@@ -14,7 +14,7 @@ function themeblvd_sliders_warning() {
 
 	if( ! get_user_meta( $current_user->ID, 'tb-nag-sliders-no-framework' ) ) {
 		echo '<div class="updated">';
-		echo '<p><strong>Theme Blvd Sliders: </strong>'.__( 'You are not using a theme with the Theme Blvd Framework, and so this plugin will not do anything.', 'theme-blvd-shortcodes' ).'</p>';
+		echo '<p><strong>Theme Blvd Sliders: </strong>'.__( 'You are not using a theme with the Theme Blvd Framework v2.2+, and so this plugin will not do anything.', 'theme-blvd-shortcodes' ).'</p>';
 		echo '<p><a href="'.themeblvd_sliders_disable_url('sliders-no-framework').'">'.__('Dismiss this notice', 'theme-blvd-sliders').'</a> | <a href="http://www.themeblvd.com" target="_blank">'.__('Visit ThemeBlvd.com', 'theme-blvd-sliders').'</a></p>';
 		echo '</div>';
 	}
