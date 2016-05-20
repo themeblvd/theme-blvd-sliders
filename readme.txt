@@ -46,6 +46,8 @@ Sliders you create can be utilized within your website in two ways.
 
 = 1.2.5 =
 
+* Improvement: Use `add_menu_page` instead of `add_object_page`, which was deprecated in WordPress 4.5.
+
 = 1.2.4 =
 
 * GlotPress compatibility (for 2015 wordpress.org release).

@@ -32,7 +32,7 @@ class Theme_Blvd_Sliders_Admin {
 	public function add_page() {
 
 		// Create new admin page
-		$admin_page = add_object_page( 'Slider Manager', 'Sliders', themeblvd_admin_module_cap( 'sliders' ), 'themeblvd_sliders', array( $this, 'admin_page' ), 'div', 31 );
+		$admin_page = add_menu_page( __('Slider Manager', 'theme-blvd-sliders'), __('Sliders', 'theme-blvd-sliders'), themeblvd_admin_module_cap('sliders'), 'themeblvd_sliders', array($this, 'admin_page'), null, 31 );
 
 		// Attach assets to new admin page
 		add_action( 'admin_print_styles-'.$admin_page, array( $this, 'load_styles' ) );
